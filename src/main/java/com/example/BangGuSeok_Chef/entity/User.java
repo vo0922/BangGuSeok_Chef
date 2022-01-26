@@ -30,6 +30,7 @@ public class User {
     @Column
     private Long year;
 
+
     public void patch(User user) {
 
     }
