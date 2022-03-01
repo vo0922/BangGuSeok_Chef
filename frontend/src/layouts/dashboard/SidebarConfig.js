@@ -13,37 +13,27 @@ const getIcon = (name) => <Icon icon={name} width={22} height={22} />;
 
 const sidebarConfig = [
   {
-    title: 'dashboard',
+    title: '홈',
     path: '/dashboard/app',
     icon: getIcon(pieChart2Fill)
   },
   {
-    title: 'user',
+    title: '레시피',
     path: '/dashboard/user',
     icon: getIcon(peopleFill)
   },
   {
-    title: 'product',
+    title: '셰프 랭킹',
     path: '/dashboard/products',
     icon: getIcon(shoppingBagFill)
   },
   {
-    title: 'blog',
+    title: 'Q & A',
     path: '/dashboard/blog',
     icon: getIcon(fileTextFill)
   },
   {
-    title: 'login',
-    path: '/login',
-    icon: getIcon(lockFill)
-  },
-  {
-    title: 'register',
-    path: '/register',
-    icon: getIcon(personAddFill)
-  },
-  {
-    title: 'Not found',
+    title: '공지사항',
     path: '/404',
     icon: getIcon(alertTriangleFill)
   }
