@@ -94,19 +94,15 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             bgcolor: 'grey.200'
           }}
         >
-          <Box
-            component="img"
-            src="/static/illustrations/illustration_avatar.png"
-            sx={{ width: 100, position: 'absolute', top: -50 }}
-          />
 
           <Button
             fullWidth
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-            target="_blank"
             variant="contained"
+            target="_self"
+            component={RouterLink}
+            to="/login"
           >
-            로그인 & 로그아웃
+            로그인
           </Button>
         </Stack>
       </Box>
