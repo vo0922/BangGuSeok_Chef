@@ -25,7 +25,7 @@ export default function AuthSocial() {
   });
 
   const handleLogin = (e) =>{
-    window.location.href = "/oauth2/authorization/naver";
+    window.location.href = "http://localhost:8080/oauth2/authorization/naver";
   }
 
   return (

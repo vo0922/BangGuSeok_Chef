@@ -46,11 +46,11 @@ export default function LoginForm() {
       localStorage.setItem('authenticatedUser', values.email);
       console.log(localStorage.getItem('token'))
       setupAxiosInterceptors();
-      navigate('/dashboard', {replace:true});
+      window.location.replace("/dashboard/app");
     })
     .catch((error) => {
       alert("로그인정보가 틀렸습니다.");
-      window.location.replace("/login")
+      window.location.replace("/login");
     })
     }
   });
