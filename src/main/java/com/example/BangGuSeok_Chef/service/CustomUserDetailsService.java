@@ -1,9 +1,5 @@
 package com.example.BangGuSeok_Chef.service;
 
-<<<<<<< HEAD
-=======
-import com.example.BangGuSeok_Chef.dto.MemberResponseDto;
->>>>>>> jaemin_0301
 import com.example.BangGuSeok_Chef.entity.Member;
 import com.example.BangGuSeok_Chef.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(username + " -> 데이터베이스에서 찾을 수 없습니다."));
     }
 
-<<<<<<< HEAD
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
-=======
->>>>>>> jaemin_0301
     private UserDetails createUserDetails(Member member) {
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(member.getAuthority().toString());
 
@@ -45,8 +38,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 Collections.singleton(grantedAuthority)
         );
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> jaemin_0301
