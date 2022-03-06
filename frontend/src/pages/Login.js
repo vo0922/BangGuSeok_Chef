@@ -45,7 +45,7 @@ export default function Login() {
       <AuthLayout>
         Don’t have an account? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/register">
-          Get started
+          회원가입
         </Link>
       </AuthLayout>
 
