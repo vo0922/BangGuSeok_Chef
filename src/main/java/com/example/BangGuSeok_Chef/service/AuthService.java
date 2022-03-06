@@ -10,6 +10,10 @@ import com.example.BangGuSeok_Chef.entity.RefreshToken;
 import com.example.BangGuSeok_Chef.repository.MemberRepository;
 import com.example.BangGuSeok_Chef.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
+<<<<<<< HEAD
+=======
+import org.springframework.http.ResponseEntity;
+>>>>>>> jaemin_0301
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -28,6 +32,7 @@ public class AuthService {
 
     @Transactional
     public MemberResponseDto signup(MemberRequestDto memberRequestDto) {
+<<<<<<< HEAD
         if (memberRepository.existsByEmail(memberRequestDto.getEmail())) {
             throw new RuntimeException("이미 가입되어 있는 유저입니다");
         }
@@ -37,6 +42,14 @@ public class AuthService {
 
         Member member = memberRequestDto.toMember(passwordEncoder);
         return MemberResponseDto.of(memberRepository.save(member));
+=======
+        if(memberRepository.existsByEmail(memberRequestDto.getEmail())){
+            throw new RuntimeException("이미 가입되어 있는 유저입니다.");
+        }
+
+        Member member = memberRequestDto.toMember(passwordEncoder);
+        return MemberResponseDto.SelectUser(memberRepository.save(member));
+>>>>>>> jaemin_0301
     }
 
     @Transactional

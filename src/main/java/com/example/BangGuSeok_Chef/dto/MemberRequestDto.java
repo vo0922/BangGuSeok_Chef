@@ -22,11 +22,15 @@ public class MemberRequestDto {
         return Member.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
+<<<<<<< HEAD
                 .authority(Authority.ROLE_USER)
                 .gender(gender)
                 .nickname(nickname)
                 .profile(profile)
                 .age(age)
+=======
+                .authority(Authority.USER)
+>>>>>>> jaemin_0301
                 .build();
     }
 

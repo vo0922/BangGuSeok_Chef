@@ -4,6 +4,7 @@ import com.example.BangGuSeok_Chef.config.security.jwt.JwtAccessDeniedHandler;
 import com.example.BangGuSeok_Chef.config.security.jwt.JwtAuthenticationEntryPoint;
 import com.example.BangGuSeok_Chef.config.security.jwt.JwtSecurityConfig;
 import com.example.BangGuSeok_Chef.config.security.jwt.TokenProvider;
+import com.example.BangGuSeok_Chef.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -25,6 +26,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -64,7 +66,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()// 나머지 API 는 전부 인증 필요
                 // JwtFilter 를 addFilterBefore 로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider));
+                .apply(new JwtSecurityConfig(tokenProvider))
+
+                // OAuth
+                .and()
+                .oauth2Login()
+                .userInfoEndpoint()
+                .userService(customOAuth2UserService);
+
     }
 
     @Bean
