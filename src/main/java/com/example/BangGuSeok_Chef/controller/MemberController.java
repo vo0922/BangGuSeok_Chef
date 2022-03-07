@@ -21,4 +21,5 @@ public class MemberController {
     public ResponseEntity<MemberResponseDto> getMemberInfo(@PathVariable String email) {
         return ResponseEntity.ok(memberService.getMemberInfo(email));
     }
+
 }

@@ -64,6 +64,23 @@ public class AuthService {
     }
 
     @Transactional
+    public TokenDto sociallogin(Authentication authentication) {
+        // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+
+        // 4. RefreshToken 저장
+        RefreshToken refreshToken = RefreshToken.builder()
+                ._key(authentication.getName())
+                .value(tokenDto.getRefreshToken())
+                .build();
+
+        refreshTokenRepository.save(refreshToken);
+
+        // 5. 토큰 발급
+        return tokenDto;
+    }
+
+    @Transactional
     public TokenDto reissue(TokenRequestDto tokenRequestDto) {
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {

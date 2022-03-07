@@ -44,7 +44,7 @@ export default function LoginForm() {
       console.log("===registerSuccessfulLoginForJwt===")
       localStorage.setItem('token', reponse.data.accessToken);
       localStorage.setItem('authenticatedUser', values.email);
-      console.log(localStorage.getItem('token'))
+      console.log(localStorage.getItem('token'));
       setupAxiosInterceptors();
       window.location.replace("/dashboard/app");
     })

@@ -10,7 +10,7 @@ import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
-
+import Teeessst from './components/authentication/login/teeessst';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -37,6 +37,7 @@ export default function Router() {
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
-    { path: '*', element: <Navigate to="/404" replace /> }
+    { path: '*', element: <Navigate to="/404" replace /> },
+    { path:'/test', element: <Teeessst />}
   ]);
 }
