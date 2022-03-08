@@ -3,9 +3,7 @@ package com.example.BangGuSeok_Chef.service;
 import com.example.BangGuSeok_Chef.dto.OAuthAttributes;
 import com.example.BangGuSeok_Chef.dto.SessionUser;
 import com.example.BangGuSeok_Chef.entity.Member;
-import com.example.BangGuSeok_Chef.entity.SocialMember;
 import com.example.BangGuSeok_Chef.repository.MemberRepository;
-import com.example.BangGuSeok_Chef.repository.SocialMemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -22,7 +20,6 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-    private final SocialMemberRepository socialMemberRepository;
     private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 

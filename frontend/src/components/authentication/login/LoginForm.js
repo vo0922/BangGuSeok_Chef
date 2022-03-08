@@ -46,7 +46,7 @@ export default function LoginForm() {
       localStorage.setItem('authenticatedUser', values.email);
       console.log(localStorage.getItem('token'));
       setupAxiosInterceptors();
-      window.location.replace("/dashboard/app");
+      window.location.replace("/");
     })
     .catch((error) => {
       alert("로그인정보가 틀렸습니다.");
@@ -128,7 +128,7 @@ export default function LoginForm() {
           variant="contained"
           loading={isSubmitting}
         >
-          Login
+          로그인
         </LoadingButton>
       </Form>
     </FormikProvider>

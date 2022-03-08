@@ -49,6 +49,11 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
+  const logoutClick = () => {
+    localStorage.clear();
+    window.location.replace("/login")
+  }
+
   const renderContent = (
     <Scrollbar
       sx={{
@@ -68,7 +73,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             <Avatar src={account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName}
+                {account.displayName !=="" ? account.displayName : "로그인 해주세요."}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {account.role}
@@ -94,7 +99,9 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
             bgcolor: 'grey.200'
           }}
         >
-
+{
+  !localStorage.getItem("token")
+  ?
           <Button
             fullWidth
             variant="contained"
@@ -104,6 +111,16 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           >
             로그인
           </Button>
+  :
+          <Button
+            fullWidth
+            variant="contained"
+            target="_self"
+            onClick={logoutClick}
+          >
+            로그아웃
+          </Button>
+}
         </Stack>
       </Box>
     </Scrollbar>

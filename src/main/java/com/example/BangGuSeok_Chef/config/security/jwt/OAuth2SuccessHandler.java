@@ -6,6 +6,8 @@ import com.example.BangGuSeok_Chef.entity.RefreshToken;
 import com.example.BangGuSeok_Chef.repository.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
@@ -25,6 +27,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     private final TokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
     private final HttpSession httpSession;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req, HttpServletResponse res, Authentication auth)
@@ -34,12 +37,14 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
 
     }
     protected String determineTargetUrl(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        String redirectUrl = "http://localhost:3000/test";
-        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+        String redirectUrl = "http://localhost:3000/auth/callback";
+
         SessionUser sessionUser = (SessionUser)httpSession.getAttribute("SocialMemberInfo");
         String email = sessionUser.getEmail();
 
-        // 4. RefreshToken 저장
+
+        TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
+
         RefreshToken refreshToken = RefreshToken.builder()
                 ._key(authentication.getName())
                 .value(tokenDto.getRefreshToken())

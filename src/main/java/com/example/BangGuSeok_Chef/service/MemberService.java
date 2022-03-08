@@ -3,7 +3,6 @@ package com.example.BangGuSeok_Chef.service;
 import com.example.BangGuSeok_Chef.config.security.SecurityUtil;
 import com.example.BangGuSeok_Chef.dto.MemberResponseDto;
 import com.example.BangGuSeok_Chef.repository.MemberRepository;
-import com.example.BangGuSeok_Chef.repository.SocialMemberRepository;
 import lombok.RequiredArgsConstructor;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-    private final SocialMemberRepository socialMemberRepository;
 
     @Transactional(readOnly = true)
     public MemberResponseDto getMemberInfo(String email) {

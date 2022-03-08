@@ -10,7 +10,7 @@ import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/User';
 import NotFound from './pages/Page404';
-import Teeessst from './components/authentication/login/teeessst';
+import SocialCallback from './components/authentication/login/SocialCallback';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -38,6 +38,6 @@ export default function Router() {
       ]
     },
     { path: '*', element: <Navigate to="/404" replace /> },
-    { path:'/test', element: <Teeessst />}
+    { path:'/auth/callback', element: <SocialCallback />}
   ]);
 }

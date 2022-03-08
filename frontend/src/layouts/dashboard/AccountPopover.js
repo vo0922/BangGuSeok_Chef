@@ -47,6 +47,11 @@ export default function AccountPopover() {
     setOpen(false);
   };
 
+  const logoutClick = () => {
+    localStorage.clear();
+    window.location.replace("/login")
+  }
+
   return (
     <>
       <IconButton
@@ -112,7 +117,7 @@ export default function AccountPopover() {
         ))}
 
         <Box sx={{ p: 2, pt: 1.5 }}>
-          <Button fullWidth color="inherit" variant="outlined">
+          <Button fullWidth color="inherit" variant="outlined" onClick={logoutClick}>
             Logout
           </Button>
         </Box>
