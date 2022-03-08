@@ -2,9 +2,9 @@ import axios from "axios";
 
 // ----------------------------------------------------------------------
 const account = {
-  displayName: "null",
-  email: "null",
-  photoURL: "null"
+  displayName: "",
+  email: "",
+  photoURL: ""
 };
 
 axios.get(`http://localhost:8080/api/${localStorage.getItem('authenticatedUser')}`, {
@@ -18,6 +18,5 @@ axios.get(`http://localhost:8080/api/${localStorage.getItem('authenticatedUser')
   account.photoURL = response.data.profile;
   console.log(account.displayName, account.email, account.photoURL)
 })
-
 
 export default account;
