@@ -1,27 +1,31 @@
 package com.example.BangGuSeok_Chef.dto;
 
 import com.example.BangGuSeok_Chef.entity.Authority;
-import com.example.BangGuSeok_Chef.entity.SocialMember;
+import com.example.BangGuSeok_Chef.entity.Member;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
 @Getter
+@Slf4j
 public class OAuthAttributes {
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
     private String email;
     private String picture;
+    private Integer age;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture, int age) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.picture = picture;
+        this.age = age;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String,Object> attributes) {
@@ -43,7 +47,7 @@ public class OAuthAttributes {
 
     private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes){
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
-
+        log.info(response.toString());
         return OAuthAttributes.builder()
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
@@ -54,12 +58,13 @@ public class OAuthAttributes {
     }
 
 
-    public SocialMember toEntity() {
-        return SocialMember.builder()
-                .name(name)
+    public Member toEntity() {
+        return Member.builder()
+                .nickname(name)
                 .email(email)
-                .picture(picture)
+                .profile(picture)
                 .authority(Authority.ROLE_USER)
+                .age(99)
                 .build();
     }
 }

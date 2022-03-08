@@ -1,11 +1,18 @@
-import React from 'react';
+import {React, useEffect} from 'react';
 
-function teeessst() {
+function Teeessst() {
+    const params = new URLSearchParams(window.location.search);
+
+    useEffect(() => {
+        localStorage.setItem('token', params.get("accesstoken"));
+        console.log(localStorage.getItem('token'))
+        window.location.replace('/')
+    }, [])
     return (
         <div>
-            123
+            콜백화면
         </div>
     );
 }
 
-export default teeessst;
+export default Teeessst;
