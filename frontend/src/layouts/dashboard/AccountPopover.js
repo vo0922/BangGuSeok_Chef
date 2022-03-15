@@ -1,5 +1,5 @@
 import { Icon } from '@iconify/react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import homeFill from '@iconify/icons-eva/home-fill';
 import personFill from '@iconify/icons-eva/person-fill';
 import settings2Fill from '@iconify/icons-eva/settings-2-fill';
@@ -9,11 +9,10 @@ import axios from 'axios';
 import { alpha } from '@mui/material/styles';
 import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '@mui/material';
 // components
+import { UserInfoContextStore } from '../../context/UserInfoContext';
 import MenuPopover from '../../components/MenuPopover';
 //
-import account from '../../_mocks_/account';
 import Http from '../../api'
-
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
@@ -37,6 +36,7 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
+  const UserInfo = useContext(UserInfoContextStore);
   const anchorRef = useRef(null);
   const [open, setOpen] = useState(false);
 
@@ -74,7 +74,7 @@ export default function AccountPopover() {
           })
         }}
       >
-        <Avatar src={account.photoURL} alt="photoURL" />
+        <Avatar src={UserInfo.account.photoURL} alt="photoURL" />
       </IconButton>
 
       <MenuPopover
@@ -85,10 +85,10 @@ export default function AccountPopover() {
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {account.displayName}
+            {UserInfo.account.displayName}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {UserInfo.account.email}
           </Typography>
         </Box>
 

@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -11,7 +11,7 @@ import NavSection from '../../components/NavSection';
 import { MHidden } from '../../components/@material-extend';
 //
 import sidebarConfig from './SidebarConfig';
-import account from '../../_mocks_/account';
+import {UserInfoContextStore} from '../../context/UserInfoContext';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +41,7 @@ DashboardSidebar.propTypes = {
 
 export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
   const { pathname } = useLocation();
+  const UserInfo = useContext(UserInfoContextStore);
 
   useEffect(() => {
     if (isOpenSidebar) {
@@ -51,7 +52,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
 
   const logoutClick = () => {
     localStorage.clear();
-    window.location.replace("/login")
+    window.location.replace("/login");
   }
 
   const renderContent = (
@@ -70,13 +71,13 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
       <Box sx={{ mb: 5, mx: 2.5 }}>
         <Link underline="none" component={RouterLink} to="#">
           <AccountStyle>
-            <Avatar src={account.photoURL} alt="photoURL" />
+            <Avatar src={UserInfo.account.photoURL} alt="photoURL" />
             <Box sx={{ ml: 2 }}>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {account.displayName !=="" ? account.displayName : "로그인 해주세요."}
+                {UserInfo.account.displayName !=="" ? UserInfo.account.displayName : "로그인 해주세요."}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                {account.role}
+                {UserInfo.account.email}
               </Typography>
             </Box>
           </AccountStyle>
