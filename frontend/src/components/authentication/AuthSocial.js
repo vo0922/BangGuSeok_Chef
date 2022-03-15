@@ -24,17 +24,11 @@ export default function AuthSocial() {
   //   NaverLogin();
   // });
 
-  const handleLogin = (e) =>{
-    window.location.href = "http://localhost:8080/oauth2/authorization/naver";
-  }
-
   return (
     <>
-      <Stack direction="row" spacing={2}>      
-        <Button fullWidth size="large" color="inherit" id="naverIdLogin" variant="outlined"/>
-        
-        <Button fullWidth onClick={handleLogin} size="large" color="inherit" variant="outlined">
-          <Icon icon={googleFill} color="#DF3E30" height={24} />
+      <Stack direction="row" spacing={2}>              
+        <Button fullWidth href="http://localhost:8080/oauth2/authorization/naver" size="large" color="inherit" variant="outlined">
+          <img src="/img/naver_white.png" height="40" alt="naver_login"/>
         </Button>
 
         <Button fullWidth href="http://localhost:8080/oauth2/authorization/google" size="large" color="inherit" variant="outlined">
