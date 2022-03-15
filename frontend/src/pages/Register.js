@@ -68,9 +68,7 @@ export default function Register() {
               회원정보를 입력하세요.
             </Typography>
           </Box>
-
-          <AuthSocial />
-
+          
           <RegisterForm />
 
           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>

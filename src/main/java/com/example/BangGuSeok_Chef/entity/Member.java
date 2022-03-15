@@ -42,6 +42,16 @@ public class Member {
         this.nickname = nickname;
         this.profile = profile;
         this.age = age;
+    }
 
+    public Member update(String name, String picture){
+        this.nickname = name;
+        this.profile = picture;
+
+        return this;
+    }
+
+    public String getAuthorityKey(){
+        return this.authority.getKey();
     }
 }

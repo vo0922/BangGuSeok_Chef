@@ -9,20 +9,20 @@ import { Stack, Button, Divider, Typography} from '@mui/material';
 // ----------------------------------------------------------------------
 const { naver } = window;
 export default function AuthSocial() {
-  function NaverLogin() {
-    const naverLogin = new naver.LoginWithNaverId({
-      clientId: "u11iH03SnTr8EtnWbasP",
-      callbackUrl: "http://localhost:3000/logincallback",
-      isPopup: false,
-      loginButton: {type: 1, height:40} ,
-      callbackHandle: true
-    });
-    naverLogin.init();
-  }
+  // function NaverLogin() {
+  //   const naverLogin = new naver.LoginWithNaverId({
+  //     clientId: "u11iH03SnTr8EtnWbasP",
+  //     callbackUrl: "http://localhost:3000/logincallback",
+  //     isPopup: false,
+  //     loginButton: {type: 1, height:40} ,
+  //     callbackHandle: true
+  //   });
+  //   naverLogin.init();
+  // }
 
-  useEffect(() => {
-    NaverLogin();
-  });
+  // useEffect(() => {
+  //   NaverLogin();
+  // });
 
   const handleLogin = (e) =>{
     window.location.href = "http://localhost:8080/oauth2/authorization/naver";

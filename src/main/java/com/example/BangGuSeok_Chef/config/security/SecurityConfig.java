@@ -1,9 +1,6 @@
 package com.example.BangGuSeok_Chef.config.security;
 
-import com.example.BangGuSeok_Chef.config.security.jwt.JwtAccessDeniedHandler;
-import com.example.BangGuSeok_Chef.config.security.jwt.JwtAuthenticationEntryPoint;
-import com.example.BangGuSeok_Chef.config.security.jwt.JwtSecurityConfig;
-import com.example.BangGuSeok_Chef.config.security.jwt.TokenProvider;
+import com.example.BangGuSeok_Chef.config.security.jwt.*;
 import com.example.BangGuSeok_Chef.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -27,7 +24,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
     private final CustomOAuth2UserService customOAuth2UserService;
-
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -71,6 +68,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // OAuth
                 .and()
                 .oauth2Login()
+                .successHandler(oAuth2SuccessHandler)
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService);
 

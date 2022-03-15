@@ -2,8 +2,8 @@ package com.example.BangGuSeok_Chef.service;
 
 import com.example.BangGuSeok_Chef.dto.OAuthAttributes;
 import com.example.BangGuSeok_Chef.dto.SessionUser;
-import com.example.BangGuSeok_Chef.entity.SocialMember;
-import com.example.BangGuSeok_Chef.repository.SocialMemberRepository;
+import com.example.BangGuSeok_Chef.entity.Member;
+import com.example.BangGuSeok_Chef.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,7 +20,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 @Service
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
-    private final SocialMemberRepository socialMemberRepository;
+    private final MemberRepository memberRepository;
     private final HttpSession httpSession;
 
     @Override
@@ -34,21 +34,21 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
-        SocialMember socialMember = saveOrUpdate(attributes);
-        httpSession.setAttribute("googleMember", new SessionUser(socialMember));
+        Member member = saveOrUpdate(attributes);
+        httpSession.setAttribute("SocialMemberInfo", new SessionUser(member));
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(socialMember.getAuthorityKey())),
+                Collections.singleton(new SimpleGrantedAuthority(member.getAuthorityKey())),
                 attributes.getAttributes(),
                 attributes.getNameAttributeKey());
     }
 
 
-    private SocialMember saveOrUpdate(OAuthAttributes attributes) {
-        SocialMember socialMember = socialMemberRepository.findByEmail(attributes.getEmail())
+    private Member saveOrUpdate(OAuthAttributes attributes) {
+        Member Member = memberRepository.findByEmail(attributes.getEmail())
                 .map(entity -> entity.update(attributes.getName(), attributes.getPicture()))
                 .orElse(attributes.toEntity());
 
-        return socialMemberRepository.save(socialMember);
+        return memberRepository.save(Member);
     }
 }

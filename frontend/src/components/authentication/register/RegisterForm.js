@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { values } from 'lodash';
-
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
@@ -97,22 +99,40 @@ export default function RegisterForm() {
             error={Boolean(touched.password && errors.password)}
             helperText={touched.password && errors.password}
           />
-          
-          <TextField
-            fullWidth
-            label="gender을 입력하세요."
+          <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">gender</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="성별을 선택하세요."
             {...getFieldProps('gender')}
             error={Boolean(touched.gender && errors.gender)}
-            helperText={touched.gender && errors.gender}
-          />
+          >
+            <MenuItem value='M'>M</MenuItem>
+            <MenuItem value='F'>F</MenuItem>
+          </Select>          
+          </FormControl>
 
-          <TextField
-            fullWidth
-            label="age를 입력하세요."
+          <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">age</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            label="연령대를 선택하세요."
             {...getFieldProps('age')}
             error={Boolean(touched.age && errors.age)}
-            helperText={touched.age && errors.age}
-          />
+          >
+            <MenuItem value={10}>10 대</MenuItem>
+            <MenuItem value={20}>20 대</MenuItem>
+            <MenuItem value={30}>30 대</MenuItem>
+            <MenuItem value={40}>40 대</MenuItem>
+            <MenuItem value={50}>50 대</MenuItem>
+            <MenuItem value={60}>60 대</MenuItem>
+            <MenuItem value={70}>70 대</MenuItem>
+            <MenuItem value={80}>80 대</MenuItem>
+          </Select>
+
+          </FormControl>
 
           <LoadingButton
             fullWidth
@@ -121,7 +141,7 @@ export default function RegisterForm() {
             variant="contained"
             loading={isSubmitting}
           >
-            Register
+            회원가입
           </LoadingButton>
         </Stack>
       </Form>
