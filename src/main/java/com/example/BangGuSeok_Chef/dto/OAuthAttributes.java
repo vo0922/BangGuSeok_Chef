@@ -16,16 +16,14 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String picture;
-    private Integer age;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture, int age) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String picture) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.picture = picture;
-        this.age = age;
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String,Object> attributes) {
@@ -36,6 +34,7 @@ public class OAuthAttributes {
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        log.info(attributes.toString());
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
@@ -49,7 +48,7 @@ public class OAuthAttributes {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         log.info(response.toString());
         return OAuthAttributes.builder()
-                .name((String) response.get("name"))
+                .name((String) response.get("nickname"))
                 .email((String) response.get("email"))
                 .picture((String) response.get("profile_image"))
                 .attributes(response)
@@ -63,8 +62,8 @@ public class OAuthAttributes {
                 .nickname(name)
                 .email(email)
                 .profile(picture)
+                .age(0)
                 .authority(Authority.ROLE_USER)
-                .age(99)
                 .build();
     }
 }
