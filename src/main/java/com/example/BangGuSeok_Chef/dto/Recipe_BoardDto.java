@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @ToString
-public class Recipe_boardDto {
+public class Recipe_BoardDto {
     private Long id;
 
     private String title;
@@ -30,7 +30,7 @@ public class Recipe_boardDto {
     private Integer recommend;
 
     @Builder
-    public Recipe_boardDto(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
+    public Recipe_BoardDto(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
         this.title = title;
         this.author = author;
         this.nickname = nickname;

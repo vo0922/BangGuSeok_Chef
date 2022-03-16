@@ -1,6 +1,6 @@
 package com.example.BangGuSeok_Chef.service;
 
-import com.example.BangGuSeok_Chef.dto.Recipe_boardDto;
+import com.example.BangGuSeok_Chef.dto.Recipe_BoardDto;
 import com.example.BangGuSeok_Chef.entity.Recipe_Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +24,10 @@ class Recipe_boardServiceTest {
         Integer click = 0;
         Integer recommend = 0;
 
-        Recipe_boardDto dto = new Recipe_boardDto(title, author, nickname, category, level, click, recommend);
+        Recipe_BoardDto dto = new Recipe_BoardDto(title, author, nickname, category, level, click, recommend);
 
         Recipe_Board recipe_board = recipe_boardService.create(dto);
+
         System.out.println(recipe_board.toString());
     }
 }
