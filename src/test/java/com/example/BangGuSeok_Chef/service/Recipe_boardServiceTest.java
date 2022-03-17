@@ -24,10 +24,10 @@ class Recipe_boardServiceTest {
         Integer click = 0;
         Integer recommend = 0;
 
-        Recipe_BoardDto dto = new Recipe_BoardDto(title, author, nickname, category, level, click, recommend);
+        //Recipe_BoardDto dto = new Recipe_BoardDto(title, author, nickname, category, level, click, recommend);
 
-        Recipe_Board recipe_board = recipe_boardService.create(dto);
+        //Recipe_Board recipe_board = recipe_boardService.create(dto);
 
-        System.out.println(recipe_board.toString());
+        //System.out.println(recipe_board.toString());
     }
 }

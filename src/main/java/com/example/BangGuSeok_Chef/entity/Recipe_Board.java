@@ -42,8 +42,7 @@ public class Recipe_Board {
     private Integer recommend;
 
     @Builder
-    public Recipe_Board(Long id, String title, String author, String nickname, LocalDateTime createDate, LocalDateTime lastupdatedDate, String category, String level, Integer click, Integer recommend) {
-        this.id = id;
+    public Recipe_Board(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
         this.title = title;
         this.author = author;
         this.nickname = nickname;

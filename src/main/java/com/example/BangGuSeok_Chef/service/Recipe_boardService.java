@@ -1,21 +1,22 @@
 package com.example.BangGuSeok_Chef.service;
 
-import com.example.BangGuSeok_Chef.dto.Recipe_BoardDto;
+import com.example.BangGuSeok_Chef.dto.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.Recipe_Board;
 import com.example.BangGuSeok_Chef.repository.Recipe_boardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class Recipe_boardService {
-    @Autowired
-    private Recipe_boardRepository recipe_boardRepository;
+
+    private final Recipe_boardRepository recipe_boardRepository;
 
     @Transactional
-    public Recipe_Board create(Recipe_BoardDto dto) {
-        Recipe_Board recipe_board = dto.toEntity();
+    public Recipe_Board create(RecipeDto dto) {
+        Recipe_Board recipe_board = dto.toRecipe();
         if(recipe_board.getId() != null) {
             return null;
         }

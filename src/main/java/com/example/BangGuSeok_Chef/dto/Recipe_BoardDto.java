@@ -41,8 +41,8 @@ public class Recipe_BoardDto {
     }
 
 
-    public Recipe_Board toEntity() {
+/*    public Recipe_Board toEntity() {
         return new Recipe_Board(id, title, author, nickname, createDate, lastupdatedDate,category, level, click, recommend);
-    }
+    }*/
 
 }

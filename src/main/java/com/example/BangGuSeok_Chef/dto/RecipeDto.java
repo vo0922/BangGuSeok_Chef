@@ -1,12 +1,18 @@
 package com.example.BangGuSeok_Chef.dto;
 
-import java.util.ArrayList;
+import com.example.BangGuSeok_Chef.entity.Ingredient;
+import com.example.BangGuSeok_Chef.entity.Recipe_Board;
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
 import java.util.List;
 
+@AllArgsConstructor
+@ToString
 public class RecipeDto {
     private Long recipe_id;
 
-    public RecipeDto(Long recipe_id) {
+    public void setrecipe_id(Long recipe_id) {
         this.recipe_id = recipe_id;
     }
 
@@ -32,15 +38,14 @@ public class RecipeDto {
 
     private String tip;
 
-    private List<Integer> ingredient_no;
+    private List<IngredientDto> ingredient;
 
-    private List<String> name;
+    public Recipe_Board toRecipe() {
+        return new Recipe_Board(title, author, nickname, category, level, click, recommend);
+    }
 
-    private List<String> amount;
-
-    private List<Integer> step_no;
-
-    private List<String> contents;
-
-    private List<String> image;
+    public List<Ingredient> toIngredient(Recipe_Board recipe_board) {
+        Ingredient newingredient = new Ingredient();
+        return newingredient.ingredients(recipe_board, ingredient);
+    }
 }
