@@ -16,14 +16,15 @@ import SocialCallback from './components/authentication/login/SocialCallback';
 export default function Router() {
   return useRoutes([
     {
-      path: '/dashboard',
+      path: '/home',
       element: <DashboardLayout />,
       children: [
-        { element: <Navigate to="/dashboard/app" replace /> },
+        { element: <Navigate to="/home/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
-        { path: 'user', element: <User /> },
-        { path: 'products', element: <Products /> },
-        { path: 'blog', element: <Blog /> }
+        { path: 'recipe', element: <Blog /> },
+        { path: 'rank', element: <User /> },
+        { path: 'qna', element: <Products />,
+      }
       ]
     },
     {
@@ -33,7 +34,7 @@ export default function Router() {
         { path: 'login', element: <Login />},
         { path: 'register', element: <Register /> },
         { path: '404', element: <NotFound /> },
-        { path: '/', element: <Navigate to="/dashboard" /> },
+        { path: '/', element: <Navigate to="/home" /> },
         { path: '*', element: <Navigate to="/404" /> }
       ]
     },
