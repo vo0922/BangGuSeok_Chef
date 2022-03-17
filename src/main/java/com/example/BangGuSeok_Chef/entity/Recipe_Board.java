@@ -46,8 +46,6 @@ public class Recipe_Board {
         this.title = title;
         this.author = author;
         this.nickname = nickname;
-        this.createDate = createDate;
-        this.lastupdatedDate = lastupdatedDate;
         this.category = category;
         this.level = level;
         this.click = click;

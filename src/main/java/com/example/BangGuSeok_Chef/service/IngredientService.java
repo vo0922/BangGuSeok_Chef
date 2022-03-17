@@ -21,7 +21,10 @@ public class IngredientService {
 
     @Transactional
     public List<Ingredient> create(RecipeDto r_dto, Recipe_Board recipe_board) {
-        List<Ingredient> ingredient = r_dto.toIngredient(recipe_board);
+        recipe_boardRepository.findById(r_dto.getRecipe_id())
+                .orElseThrow(() -> new IllegalArgumentException("재료 테이블 삽입 실패! 대상 개시글이 없습니다.!"));
+
+        List<Ingredient> ingredient = r_dto.toIngredient(r_dto, recipe_board);
 
         return ingredientRepository.saveAll(ingredient);
     }

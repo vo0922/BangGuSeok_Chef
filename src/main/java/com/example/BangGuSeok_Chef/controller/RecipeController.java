@@ -7,6 +7,7 @@ import com.example.BangGuSeok_Chef.service.IngredientService;
 import com.example.BangGuSeok_Chef.service.Recipe_boardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,5 +29,4 @@ public class RecipeController {
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
         return null;
     }
-
 }
