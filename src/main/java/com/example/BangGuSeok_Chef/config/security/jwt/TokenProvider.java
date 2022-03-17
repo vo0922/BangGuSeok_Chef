@@ -1,6 +1,6 @@
 package com.example.BangGuSeok_Chef.config.security.jwt;
 
-import com.example.BangGuSeok_Chef.dto.TokenDto;
+import com.example.BangGuSeok_Chef.dto.Member.TokenDto;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;

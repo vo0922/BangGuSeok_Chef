@@ -1,14 +1,14 @@
 package com.example.BangGuSeok_Chef.controller;
 
-import com.example.BangGuSeok_Chef.dto.RecipeDto;
-import com.example.BangGuSeok_Chef.entity.CookStep;
-import com.example.BangGuSeok_Chef.entity.Ingredient;
-import com.example.BangGuSeok_Chef.entity.RecipeBoard;
-import com.example.BangGuSeok_Chef.entity.RecipeContents;
-import com.example.BangGuSeok_Chef.service.Cook_stepService;
-import com.example.BangGuSeok_Chef.service.IngredientService;
-import com.example.BangGuSeok_Chef.service.Recipe_boardService;
-import com.example.BangGuSeok_Chef.service.Recipe_contentsService;
+import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.CookStepService;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.IngredientService;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeBoardService;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeContentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,19 +22,19 @@ import java.util.List;
 @Slf4j
 public class RecipeController {
 
-    private final Recipe_boardService recipe_boardService;
-    private final Recipe_contentsService recipe_contentsService;
+    private final RecipeBoardService recipeBoardService;
+    private final RecipeContentsService recipeContentsService;
     private final IngredientService ingredientService;
-    private final Cook_stepService cook_stepService;
+    private final CookStepService cookStepService;
 
 
     @PostMapping("/api/board/create")
     public ResponseEntity<RecipeBoard> post(@RequestBody RecipeDto dto) {
-        RecipeBoard recipe_board = recipe_boardService.create(dto);
+        RecipeBoard recipe_board = recipeBoardService.create(dto);
         dto.setrecipe_id(recipe_board.getId());
-        RecipeContents recipe_contents = recipe_contentsService.create(dto, recipe_board);
+        RecipeContents recipeContents = recipeContentsService.create(dto, recipe_board);
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
-        List<CookStep> cook_steps = cook_stepService.create(dto, recipe_board);
+        List<CookStep> cookSteps = cookStepService.create(dto, recipe_board);
         return null;
     }
 }
