@@ -56,7 +56,7 @@ public class RecipeDto {
         return new Recipe_Contents(recipe_board, introduce, video, tag, tip);
     }
 
-    public List<Ingredient> toIngredient(Recipe_Board recipe_board, RecipeDto recipeDto) {
+    public List<Ingredient> toIngredient(RecipeDto recipeDto, Recipe_Board recipe_board) {
         Ingredient newingredient = new Ingredient();
         if(recipeDto.getRecipe_id() != recipe_board.getId())
             throw new IllegalArgumentException("재료 테이블 삽입 실패! 게시글 ID가 잘못되었습니다.");
