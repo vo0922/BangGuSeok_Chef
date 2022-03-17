@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.dto;
 
+import com.example.BangGuSeok_Chef.entity.Cook_Step;
 import com.example.BangGuSeok_Chef.entity.Ingredient;
 import com.example.BangGuSeok_Chef.entity.Recipe_Board;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @ToString
+@Getter
 public class RecipeDto {
     private Long recipe_id;
 
@@ -42,6 +44,8 @@ public class RecipeDto {
 
     private List<IngredientDto> ingredient;
 
+    private List<Cook_Step> cook_steps;
+
     public Recipe_Board toRecipe() {
         return new Recipe_Board(title, author, nickname, category, level, click, recommend);
     }
@@ -52,5 +56,12 @@ public class RecipeDto {
 
         Ingredient newingredient = new Ingredient();
         return newingredient.ingredients(recipe_board, ingredient);
+    }
+
+    public List<Cook_Step> toCookstep(Recipe_Board recipe_board, RecipeDto recipeDto){
+        Cook_Step cook_step = new Cook_Step();
+        if(recipeDto.getRecipe_id() != recipe_board.getId())
+            throw new IllegalArgumentException("재료 테이블 삽입 실패! 게시글 ID가 잘못되었습니다.");
+        return cook_step.cook_steps(recipe_board, cook_steps);
     }
 }
