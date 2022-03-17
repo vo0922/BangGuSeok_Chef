@@ -10,7 +10,6 @@ import lombok.ToString;
 import java.util.List;
 
 @AllArgsConstructor
-@Getter
 @ToString
 @Getter
 public class RecipeDto {
