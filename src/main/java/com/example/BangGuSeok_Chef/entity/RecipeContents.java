@@ -9,7 +9,7 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Recipe_Contents {
+public class RecipeContents {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,7 +17,7 @@ public class Recipe_Contents {
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
-    private Recipe_Board recipe_board;
+    private RecipeBoard recipe_board;
 
     private String introduce;
 
@@ -28,7 +28,7 @@ public class Recipe_Contents {
     private String tip;
 
     @Builder
-    public Recipe_Contents(Recipe_Board recipe_board, String introduce, String video, String tag, String tip) {
+    public RecipeContents(RecipeBoard recipe_board, String introduce, String video, String tag, String tip) {
         this.recipe_board = recipe_board;
         this.introduce = introduce;
         this.video = video;

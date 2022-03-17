@@ -1,7 +1,5 @@
 package com.example.BangGuSeok_Chef.service;
 
-import com.example.BangGuSeok_Chef.dto.Recipe_BoardDto;
-import com.example.BangGuSeok_Chef.entity.Recipe_Board;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

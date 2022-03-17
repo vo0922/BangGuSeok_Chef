@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @ToString
 @Entity
-public class Recipe_Board {
+public class RecipeBoard {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,7 +42,7 @@ public class Recipe_Board {
     private Integer recommend;
 
     @Builder
-    public Recipe_Board(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
+    public RecipeBoard(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
         this.title = title;
         this.author = author;
         this.nickname = nickname;

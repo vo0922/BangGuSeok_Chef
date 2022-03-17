@@ -1,7 +1,7 @@
 package com.example.BangGuSeok_Chef.repository;
 
-import com.example.BangGuSeok_Chef.entity.Recipe_Contents;
+import com.example.BangGuSeok_Chef.entity.RecipeContents;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Recipe_contentsRepository extends JpaRepository<Recipe_Contents, Long> {
+public interface Recipe_contentsRepository extends JpaRepository<RecipeContents, Long> {
 }

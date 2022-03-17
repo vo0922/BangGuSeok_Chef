@@ -1,6 +1,5 @@
 package com.example.BangGuSeok_Chef.dto;
 
-import com.example.BangGuSeok_Chef.entity.Recipe_Board;
 import lombok.*;
 
 import java.time.LocalDateTime;
