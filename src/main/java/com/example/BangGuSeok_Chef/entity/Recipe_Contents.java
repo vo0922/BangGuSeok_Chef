@@ -1,9 +1,6 @@
 package com.example.BangGuSeok_Chef.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -29,4 +26,13 @@ public class Recipe_Contents {
     private String tag;
 
     private String tip;
+
+    @Builder
+    public Recipe_Contents(Recipe_Board recipe_board, String introduce, String video, String tag, String tip) {
+        this.recipe_board = recipe_board;
+        this.introduce = introduce;
+        this.video = video;
+        this.tag = tag;
+        this.tip = tip;
+    }
 }
