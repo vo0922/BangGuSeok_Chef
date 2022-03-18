@@ -57,12 +57,11 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-BlogPostCard.propTypes = {
-  post: PropTypes.object.isRequired,
-  index: PropTypes.number
-};
+export default function BlogPostCard({search }) {
+  const [cards, setCards] = useState({
+    body: ""
+  });
 
-export default function BlogPostCard({ post, index, search }) {
   useEffect(() => {
     if (search === "전체") {
       axios.get(`http://localhost:8080/api/recipeboard`, {
@@ -72,8 +71,100 @@ export default function BlogPostCard({ post, index, search }) {
       })
         .then(response => {
           console.log(response.data);
+          setCards({
+            body : 
+            response.data.map((data) => (
+              <Grid item xs={12} sm={3} md={3} key={data.id}>
+              <Card sx={{ position: 'relative' }}>
+              <CardMediaStyle
+                sx={{}}
+              >
+                <SvgIconStyle
+                  color="paper"
+                  src="/static/icons/shape-avatar.svg"
+                  sx={{
+                    width: 80,
+                    height: 36,
+                    zIndex: 9,
+                    bottom: -15,
+                    position: 'absolute',
+                  }}
+                />
+                <AvatarStyle
+                  alt={data.title}
+                  src={data.image}
+                  sx={{}}
+                />
+      
+                <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
+              </CardMediaStyle>
+      
+              <CardContent
+                sx={{
+                  pt: 4
+                }}
+              >
+                <Typography
+                  gutterBottom
+                  variant="caption"
+                  sx={{ color: 'text.disabled', display: 'block' }}
+                >
+                  {data.lastupdated_date}
+                </Typography>
+      
+                <TitleStyle
+                  to="#"
+                  color="inherit"
+                  variant="subtitle2"
+                  underline="hover"
+                  component={RouterLink}
+                  sx={{
+                    
+                  }}
+                >
+                  {data.title}
+                </TitleStyle>
+      
+                <InfoStyle>     
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ml: 1.5
+                      }}
+                    >
+                      <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ml: 1.5
+                      }}
+                    >
+                      <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ml: 1.5
+                      }}
+                    >
+                      <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                      <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
+                    </Box>
+                </InfoStyle>
+              </CardContent>
+            </Card>
+            </Grid>
+            ))
+            
+          }) 
         }).catch(err => {
-          localStorage.clear();
+          console.log(err);
         });
     } else {
       axios.get(`http://localhost:8080/api/recipeboard/category/${search}`, {
@@ -83,129 +174,104 @@ export default function BlogPostCard({ post, index, search }) {
       })
         .then(response => {
           console.log(response.data);
+          setCards({
+            body : 
+            response.data.map((data) => (
+              <Grid item xs={12} sm={3} md={3} key={data.id}>
+              <Card sx={{ position: 'relative' }}>
+              <CardMediaStyle
+                sx={{}}
+              >
+                <SvgIconStyle
+                  color="paper"
+                  src="/static/icons/shape-avatar.svg"
+                  sx={{
+                    width: 80,
+                    height: 36,
+                    zIndex: 9,
+                    bottom: -15,
+                    position: 'absolute',
+                  }}
+                />
+                <AvatarStyle
+                  alt={data.title}
+                  src={data.image}
+                  sx={{}}
+                />
+      
+                <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
+              </CardMediaStyle>
+      
+              <CardContent
+                sx={{
+                  pt: 4
+                }}
+              >
+                <Typography
+                  gutterBottom
+                  variant="caption"
+                  sx={{ color: 'text.disabled', display: 'block' }}
+                >
+                  {data.lastupdated_date}
+                </Typography>
+      
+                <TitleStyle
+                  to="#"
+                  color="inherit"
+                  variant="subtitle2"
+                  underline="hover"
+                  component={RouterLink}
+                  sx={{}}
+                >
+                  {data.title}
+                </TitleStyle>
+      
+                <InfoStyle>     
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ml: 1.5
+                      }}
+                    >
+                      <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ml: 1.5
+                      }}
+                    >
+                      <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+                    </Box>
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        ml: 1.5
+                      }}
+                    >
+                      <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                      <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
+                    </Box>
+                </InfoStyle>
+              </CardContent>
+            </Card>
+            </Grid>
+            ))
+            
+          }) 
         }).catch(err => {
-          localStorage.clear();
+          console.log(err);
         });
     }
   }, [search])
 
-  const { cover, title, view, comment, share, author, createdAt } = post;
-  const latestPostLarge = index === 0;
-  const latestPost = index === 1 || index === 2;
-
-  const POST_INFO = [
-    { number: comment, icon: messageCircleFill },
-    { number: view, icon: eyeFill },
-    { number: share, icon: shareFill }
-  ];
 
   return (
-    <Grid item xs={12} sm={latestPostLarge ? 12 : 6} md={latestPostLarge ? 6 : 3}>
-      <Card sx={{ position: 'relative' }}>
-        <CardMediaStyle
-          sx={{
-            ...((latestPostLarge || latestPost) && {
-              pt: 'calc(100% * 4 / 3)',
-              '&:after': {
-                top: 0,
-                content: "''",
-                width: '100%',
-                height: '100%',
-                position: 'absolute',
-                bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
-              }
-            }),
-            ...(latestPostLarge && {
-              pt: {
-                xs: 'calc(100% * 4 / 3)',
-                sm: 'calc(100% * 3 / 4.66)'
-              }
-            })
-          }}
-        >
-          <SvgIconStyle
-            color="paper"
-            src="/static/icons/shape-avatar.svg"
-            sx={{
-              width: 80,
-              height: 36,
-              zIndex: 9,
-              bottom: -15,
-              position: 'absolute',
-              ...((latestPostLarge || latestPost) && { display: 'none' })
-            }}
-          />
-          <AvatarStyle
-            alt={author.name}
-            src={author.avatarUrl}
-            sx={{
-              ...((latestPostLarge || latestPost) && {
-                zIndex: 9,
-                top: 24,
-                left: 24,
-                width: 40,
-                height: 40
-              })
-            }}
-          />
-
-          <CoverImgStyle alt={title} src={cover} />
-        </CardMediaStyle>
-
-        <CardContent
-          sx={{
-            pt: 4,
-            ...((latestPostLarge || latestPost) && {
-              bottom: 0,
-              width: '100%',
-              position: 'absolute'
-            })
-          }}
-        >
-          <Typography
-            gutterBottom
-            variant="caption"
-            sx={{ color: 'text.disabled', display: 'block' }}
-          >
-            {fDate(createdAt)}
-          </Typography>
-
-          <TitleStyle
-            to="#"
-            color="inherit"
-            variant="subtitle2"
-            underline="hover"
-            component={RouterLink}
-            sx={{
-              ...(latestPostLarge && { typography: 'h5', height: 60 }),
-              ...((latestPostLarge || latestPost) && {
-                color: 'common.white'
-              })
-            }}
-          >
-            {title}
-          </TitleStyle>
-
-          <InfoStyle>
-            {POST_INFO.map((info, index) => (
-              <Box
-                key={index}
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  ml: index === 0 ? 0 : 1.5,
-                  ...((latestPostLarge || latestPost) && {
-                    color: 'grey.500'
-                  })
-                }}
-              >
-                <Box component={Icon} icon={info.icon} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(info.number)}</Typography>
-              </Box>
-            ))}
-          </InfoStyle>
-        </CardContent>
-      </Card>
-    </Grid>
+      cards.body
   );
 }
