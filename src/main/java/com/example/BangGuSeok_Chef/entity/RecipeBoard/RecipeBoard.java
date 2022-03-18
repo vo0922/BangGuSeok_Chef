@@ -25,6 +25,8 @@ public class RecipeBoard {
 
     private String nickname;
 
+    private String image;
+
     @CreatedDate
     private LocalDateTime createDate;
 
@@ -41,14 +43,19 @@ public class RecipeBoard {
     @Column(columnDefinition = "integer default 0")
     private Integer recommend;
 
+    @Column(columnDefinition = "integer default 0")
+    private Integer comment;
+
     @Builder
-    public RecipeBoard(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
+    public RecipeBoard(String title, String author, String nickname, String image, String category, String level, Integer click, Integer recommend, Integer comment) {
         this.title = title;
         this.author = author;
         this.nickname = nickname;
+        this.image = image;
         this.category = category;
         this.level = level;
         this.click = click;
         this.recommend = recommend;
+        this.comment = comment;
     }
 }
