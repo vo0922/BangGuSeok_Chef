@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -62,20 +62,32 @@ BlogPostCard.propTypes = {
   index: PropTypes.number
 };
 
-export default function BlogPostCard({ post, index }) {
-  const {search} = useParams();
+export default function BlogPostCard({ post, index, search }) {
   useEffect(() => {
-    axios.get(`http://localhost:8080/api/category/${search}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-      .then(response => {
-        console.log(response);
-      }).catch(err => {
-        localStorage.clear();
-      });
-  }, [])
+    if (search === "전체") {
+      axios.get(`http://localhost:8080/api/recipeboard`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+        .then(response => {
+          console.log(response.data);
+        }).catch(err => {
+          localStorage.clear();
+        });
+    } else {
+      axios.get(`http://localhost:8080/api/recipeboard/category/${search}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+        .then(response => {
+          console.log(response.data);
+        }).catch(err => {
+          localStorage.clear();
+        });
+    }
+  }, [search])
 
   const { cover, title, view, comment, share, author, createdAt } = post;
   const latestPostLarge = index === 0;

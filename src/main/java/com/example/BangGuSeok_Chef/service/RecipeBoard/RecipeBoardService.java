@@ -3,9 +3,8 @@ package com.example.BangGuSeok_Chef.service.RecipeBoard;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
-import com.example.BangGuSeok_Chef.controller.RecipeBoard.RecipeBoardRepository;
+import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.TypeCache;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +43,7 @@ public class RecipeBoardService {
     }
 
     public List<RecipeBoardDto> categorySearch(String category){
-        return recipeBoardRepository.findByCategory(category)
+        return recipeBoardRepository.findByCategoryContaining(category)
                 .stream()
                 .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
                 .collect(Collectors.toList());

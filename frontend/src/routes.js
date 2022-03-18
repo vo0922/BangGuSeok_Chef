@@ -21,7 +21,7 @@ export default function Router() {
       children: [
         { element: <Navigate to="/home/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
-        { path: 'recipe', element: <Blog /> },
+        { path: 'recipe', element: <Navigate to="/home/recipe/전체" replace/>},
         { path: 'recipe/:search', element: <Blog /> },
         { path: 'rank', element: <User /> },
         { path: 'qna', element: <Products />,

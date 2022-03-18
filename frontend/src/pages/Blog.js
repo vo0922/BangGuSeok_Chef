@@ -27,7 +27,9 @@ export default function Blog() {
   const {search} = useParams();
   const [value, setValue] = useState("전체");
   useEffect(() => {
-    setValue(search)
+    if(search){
+      setValue(search);
+    }
   }, [value])
   const handleChange = (event, newValue) => {
     navigate(`/home/recipe/${newValue}`);
@@ -82,7 +84,7 @@ export default function Blog() {
 
         <Grid container spacing={3}>
           {POSTS.map((post, index) => (
-            <BlogPostCard key={post.id} post={post} index={index} />
+            <BlogPostCard key={post.id} post={post} index={index} search={search}/>
           ))}
         </Grid>
       </Container>

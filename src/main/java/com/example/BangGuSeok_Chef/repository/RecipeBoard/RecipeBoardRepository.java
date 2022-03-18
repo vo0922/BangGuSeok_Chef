@@ -1,4 +1,4 @@
-package com.example.BangGuSeok_Chef.controller.RecipeBoard;
+package com.example.BangGuSeok_Chef.repository.RecipeBoard;
 
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +16,7 @@ public interface RecipeBoardRepository extends JpaRepository<RecipeBoard, Long> 
 
     List<RecipeBoard>findByTitleContaining(String keyword);
 
-    List<RecipeBoard>findByCategory(String category);
+    List<RecipeBoard>findByCategoryContaining(String category);
 
 
 }
