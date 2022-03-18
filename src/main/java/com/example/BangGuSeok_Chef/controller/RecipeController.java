@@ -45,8 +45,8 @@ public class RecipeController {
 
     // 전체
     @GetMapping("/api/recipeboard")
-    public Page<RecipeBoard> index(Pageable pageable){
-        Page<RecipeBoard> page = recipeBoardRepository.findAll(pageable);
+    public List<RecipeBoardDto> index(Pageable pageable){
+        List<RecipeBoardDto> page = recipeBoardService.index(pageable);
         return page;
     }
 

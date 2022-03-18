@@ -31,10 +31,12 @@ public class RecipeBoardService {
     }
 
     // 전체
-    public List<RecipeBoard> index(){
-        Sort sort = Sort.by(Sort.Direction.DESC, "id");
+    public List<RecipeBoardDto> index(Pageable pageable){
 
-        return recipeBoardRepository.findAll(sort);
+        return recipeBoardRepository.findAll(pageable)
+                .stream()
+                .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
+                .collect(Collectors.toList());
     }
 
     // 제목 검색
