@@ -16,5 +16,7 @@ public interface RecipeBoardRepository extends JpaRepository<RecipeBoard, Long> 
 
     List<RecipeBoard>findByTitleContaining(String keyword);
 
+    List<RecipeBoard>findByCategory(String category);
+
 
 }

@@ -52,4 +52,13 @@ public class RecipeController {
 
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
+
+    // 카테고리별 검색
+    @GetMapping("/api/recipeboard/category/{category}")
+    public ResponseEntity<List<RecipeBoardDto>> categorySearch(@PathVariable String category){
+        List<RecipeBoardDto> dtos = recipeBoardService.categorySearch(category);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
 }
