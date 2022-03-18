@@ -3,7 +3,7 @@ package com.example.BangGuSeok_Chef.service.RecipeBoard;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
-import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
+import com.example.BangGuSeok_Chef.controller.RecipeBoard.RecipeBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

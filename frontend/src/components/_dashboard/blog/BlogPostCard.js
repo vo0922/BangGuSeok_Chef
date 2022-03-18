@@ -1,7 +1,9 @@
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useParams} from 'react-router-dom';
+import axios from 'axios';
 import shareFill from '@iconify/icons-eva/share-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
@@ -61,6 +63,20 @@ BlogPostCard.propTypes = {
 };
 
 export default function BlogPostCard({ post, index }) {
+  const {search} = useParams();
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/category/${search}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(response => {
+        console.log(response);
+      }).catch(err => {
+        localStorage.clear();
+      });
+  }, [])
+
   const { cover, title, view, comment, share, author, createdAt } = post;
   const latestPostLarge = index === 0;
   const latestPost = index === 1 || index === 2;

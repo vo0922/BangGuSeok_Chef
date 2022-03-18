@@ -1,4 +1,4 @@
-package com.example.BangGuSeok_Chef.repository.RecipeBoard;
+package com.example.BangGuSeok_Chef.controller.RecipeBoard;
 
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
 import org.springframework.data.jpa.repository.JpaRepository;

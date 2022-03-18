@@ -22,6 +22,7 @@ export default function Router() {
         { element: <Navigate to="/home/app" replace /> },
         { path: 'app', element: <DashboardApp /> },
         { path: 'recipe', element: <Blog /> },
+        { path: 'recipe/:search', element: <Blog /> },
         { path: 'rank', element: <User /> },
         { path: 'qna', element: <Products />,
       }
