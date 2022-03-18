@@ -1,7 +1,10 @@
 package com.example.BangGuSeok_Chef.controller;
 
-import com.example.BangGuSeok_Chef.dto.*;
-import com.example.BangGuSeok_Chef.service.AuthService;
+import com.example.BangGuSeok_Chef.dto.Member.MemberRequestDto;
+import com.example.BangGuSeok_Chef.dto.Member.MemberResponseDto;
+import com.example.BangGuSeok_Chef.dto.Member.TokenDto;
+import com.example.BangGuSeok_Chef.dto.Member.TokenRequestDto;
+import com.example.BangGuSeok_Chef.service.Member.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

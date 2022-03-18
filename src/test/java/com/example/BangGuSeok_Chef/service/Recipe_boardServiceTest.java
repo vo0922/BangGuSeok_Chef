@@ -1,7 +1,6 @@
 package com.example.BangGuSeok_Chef.service;
 
-import com.example.BangGuSeok_Chef.dto.Recipe_BoardDto;
-import com.example.BangGuSeok_Chef.entity.Recipe_Board;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeBoardService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +10,8 @@ import javax.transaction.Transactional;
 @SpringBootTest
 class Recipe_boardServiceTest {
 
-    @Autowired Recipe_boardService recipe_boardService;
+    @Autowired
+    RecipeBoardService recipe_boardService;
 
     @Test
     @Transactional

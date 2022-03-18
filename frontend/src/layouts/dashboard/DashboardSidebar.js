@@ -101,7 +101,7 @@ export default function DashboardSidebar({ isOpenSidebar, onCloseSidebar }) {
           }}
         >
 {
-  !localStorage.getItem("token")
+  UserInfo.account.email === ""
   ?
           <Button
             fullWidth

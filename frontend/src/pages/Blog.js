@@ -1,7 +1,9 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { Icon } from '@iconify/react';
 import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink ,useNavigate, useParams} from 'react-router-dom';
+
 // material
 import { Grid, Button, Container, Stack, Typography, Tab, Tabs, Box } from '@mui/material';
 // components
@@ -21,15 +23,20 @@ const SORT_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function Blog() {
-  const [value, setValue] = React.useState(0);
-
+  const navigate = useNavigate();
+  const {search} = useParams();
+  const [value, setValue] = useState("전체");
+  useEffect(() => {
+    setValue(search)
+  }, [value])
   const handleChange = (event, newValue) => {
+    navigate(`/home/recipe/${newValue}`);
     setValue(newValue);
   };
   return (
     <Page title="Dashboard: Blog | Minimal-UI">
       <Container>
-        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
+        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
           <Typography variant="h4" gutterBottom>
             레시피
           </Typography>
@@ -43,7 +50,7 @@ export default function Blog() {
           </Button>
         </Stack>
 
-        <Box sx={{ bgcolor: 'background.paper' }}>
+        <Box sx={{ bgcolor: 'background.paper', marginBottom: 5 }}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -51,13 +58,20 @@ export default function Blog() {
             scrollButtons="auto"
             aria-label="scrollable auto tabs example"
           >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
-            <Tab label="Item Four" />
-            <Tab label="Item Five" />
-            <Tab label="Item Six" />
-            <Tab label="Item Seven" />
+            <Tab label="전체" value="전체" />
+            <Tab label="탕" value="탕"/>
+            <Tab label="전골" value="전골"/>
+            <Tab label="찌개" value="찌개"/>
+            <Tab label="국" value="국"/>
+            <Tab label="볶음" value="볶음"/>
+            <Tab label="면" value="면"/>
+            <Tab label="밥" value="밥"/>
+            <Tab label="반찬" value="반찬"/>
+            <Tab label="안주" value="안주"/>
+            <Tab label="주류" value="주류"/>
+            <Tab label="튀김" value="튀김"/>
+            <Tab label="제과" value="제과"/>
+            <Tab label="제빵" value="제빵"/>
           </Tabs>
         </Box>
 

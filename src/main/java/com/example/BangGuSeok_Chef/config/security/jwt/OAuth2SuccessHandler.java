@@ -1,15 +1,13 @@
 package com.example.BangGuSeok_Chef.config.security.jwt;
 
-import com.example.BangGuSeok_Chef.dto.SessionUser;
-import com.example.BangGuSeok_Chef.dto.TokenDto;
-import com.example.BangGuSeok_Chef.entity.RefreshToken;
-import com.example.BangGuSeok_Chef.repository.RefreshTokenRepository;
+import com.example.BangGuSeok_Chef.dto.Member.SessionUser;
+import com.example.BangGuSeok_Chef.dto.Member.TokenDto;
+import com.example.BangGuSeok_Chef.entity.Member.RefreshToken;
+import com.example.BangGuSeok_Chef.repository.Member.RefreshTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
