@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.controller;
 
+import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
@@ -11,10 +12,10 @@ import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeBoardService;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeContentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -36,5 +37,19 @@ public class RecipeController {
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
         List<CookStep> cookSteps = cookStepService.create(dto, recipe_board);
         return null;
+    }
+
+    // 전체
+    @GetMapping("/api/recipeboard")
+    public List<RecipeBoard> index(){
+        return recipeBoardService.index();
+    }
+
+    // 검색
+    @GetMapping("/api/recipeboard/{keyword}")
+    public ResponseEntity<List<RecipeBoardDto>> search(@PathVariable String keyword){
+        List<RecipeBoardDto> dtos = recipeBoardService.search(keyword);
+
+        return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
 }

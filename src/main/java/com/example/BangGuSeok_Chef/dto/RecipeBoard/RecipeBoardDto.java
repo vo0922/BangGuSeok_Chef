@@ -1,10 +1,12 @@
 package com.example.BangGuSeok_Chef.dto.RecipeBoard;
 
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @ToString
 public class RecipeBoardDto {
@@ -28,6 +30,7 @@ public class RecipeBoardDto {
 
     private Integer recommend;
 
+
     @Builder
     public RecipeBoardDto(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
         this.title = title;
@@ -37,6 +40,22 @@ public class RecipeBoardDto {
         this.level = level;
         this.click = click;
         this.recommend = recommend;
+    }
+
+
+    public static RecipeBoardDto createRecipeBoardDto(RecipeBoard recipeBoard){
+        return new RecipeBoardDto(
+                recipeBoard.getId(),
+                recipeBoard.getTitle(),
+                recipeBoard.getAuthor(),
+                recipeBoard.getNickname(),
+                recipeBoard.getCreateDate(),
+                recipeBoard.getLastupdatedDate(),
+                recipeBoard.getCategory(),
+                recipeBoard.getLevel(),
+                recipeBoard.getClick(),
+                recipeBoard.getRecommend()
+        );
     }
 
 
