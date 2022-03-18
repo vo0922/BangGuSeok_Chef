@@ -6,12 +6,15 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
+import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.CookStepService;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.IngredientService;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeBoardService;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeContentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +27,7 @@ import java.util.List;
 public class RecipeController {
 
     private final RecipeBoardService recipeBoardService;
+    private final RecipeBoardRepository recipeBoardRepository;
     private final RecipeContentsService recipeContentsService;
     private final IngredientService ingredientService;
     private final CookStepService cookStepService;
@@ -41,22 +45,23 @@ public class RecipeController {
 
     // 전체
     @GetMapping("/api/recipeboard")
-    public List<RecipeBoard> index(){
-        return recipeBoardService.index();
+    public Page<RecipeBoard> index(Pageable pageable){
+        Page<RecipeBoard> page = recipeBoardRepository.findAll(pageable);
+        return page;
     }
 
     // 검색
     @GetMapping("/api/recipeboard/{keyword}")
-    public ResponseEntity<List<RecipeBoardDto>> search(@PathVariable String keyword){
-        List<RecipeBoardDto> dtos = recipeBoardService.search(keyword);
+    public List<RecipeBoardDto> search(@PathVariable String keyword, Pageable pageable){
+        List<RecipeBoardDto> page = recipeBoardService.search(keyword, pageable);
 
-        return ResponseEntity.status(HttpStatus.OK).body(dtos);
+        return page;
     }
 
     // 카테고리별 검색
     @GetMapping("/api/recipeboard/category/{category}")
-    public ResponseEntity<List<RecipeBoardDto>> categorySearch(@PathVariable String category){
-        List<RecipeBoardDto> dtos = recipeBoardService.categorySearch(category);
+    public ResponseEntity<List<RecipeBoardDto>> categorySearch(@PathVariable String category, Pageable pageable){
+        List<RecipeBoardDto> dtos = recipeBoardService.categorySearch(category, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
     }
