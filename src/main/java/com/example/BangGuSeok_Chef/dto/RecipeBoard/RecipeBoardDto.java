@@ -18,6 +18,8 @@ public class RecipeBoardDto {
 
     private String nickname;
 
+    private String image;
+
     private LocalDateTime createDate;
 
     private LocalDateTime lastupdatedDate;
@@ -29,6 +31,8 @@ public class RecipeBoardDto {
     private Integer click;
 
     private Integer recommend;
+
+    private Integer comment;
 
 
     @Builder
@@ -49,12 +53,14 @@ public class RecipeBoardDto {
                 recipeBoard.getTitle(),
                 recipeBoard.getAuthor(),
                 recipeBoard.getNickname(),
+                recipeBoard.getImage(),
                 recipeBoard.getCreateDate(),
                 recipeBoard.getLastupdatedDate(),
                 recipeBoard.getCategory(),
                 recipeBoard.getLevel(),
                 recipeBoard.getClick(),
-                recipeBoard.getRecommend()
+                recipeBoard.getRecommend(),
+                recipeBoard.getComment()
         );
     }
 

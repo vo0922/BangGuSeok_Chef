@@ -26,6 +26,8 @@ public class RecipeDto {
 
     private String nickname;
 
+    private String image;
+
     private String category;
 
     private String level;
@@ -33,6 +35,8 @@ public class RecipeDto {
     private Integer click;
 
     private Integer recommend;
+
+    private Integer comment;
 
     private String introduce;
 
@@ -47,7 +51,7 @@ public class RecipeDto {
     private List<CookStep> cook_steps;
 
     public RecipeBoard toRecipe() {
-        return new RecipeBoard(title, author, nickname, category, level, click, recommend);
+        return new RecipeBoard(title, author, nickname, image, category, level, click, recommend, comment);
     }
 
     public RecipeContents toRecipe_Contents(RecipeBoard recipe_board, RecipeDto recipeDto){
