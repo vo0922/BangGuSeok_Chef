@@ -5,6 +5,9 @@ import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -35,15 +38,15 @@ public class RecipeBoardService {
     }
 
     // 제목 검색
-    public List<RecipeBoardDto> search(String keyword){
-        return recipeBoardRepository.findByTitleContaining(keyword)
+    public List<RecipeBoardDto> search(String keyword, Pageable pageable){
+        return recipeBoardRepository.findByTitleContaining(keyword, pageable)
                 .stream()  // 변환 : 엔티티 -> DTO
                 .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
                 .collect(Collectors.toList());
     }
 
-    public List<RecipeBoardDto> categorySearch(String category){
-        return recipeBoardRepository.findByCategoryContaining(category)
+    public List<RecipeBoardDto> categorySearch(String category, Pageable pageable){
+        return recipeBoardRepository.findByCategoryContaining(category, pageable)
                 .stream()
                 .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
                 .collect(Collectors.toList());
