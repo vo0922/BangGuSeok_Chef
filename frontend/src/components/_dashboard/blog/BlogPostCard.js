@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -61,217 +62,128 @@ export default function BlogPostCard({search }) {
   const [cards, setCards] = useState({
     body: ""
   });
+  const [items, setItems] = useState([]);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [ref, inView] = useInView();
+
+  const getItems = useCallback(async () => {
+    setLoading(true);
+    await axios.get(`http://localhost:8080/api/recipeboard/?page=${page}&size=20&sort=id,desc`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+    .then(response => {
+      if(!response.data.length) return;
+      setItems(prevState => prevState.concat(response.data));
+      console.log(items);
+      setLoading(false);
+    }).catch(err => {
+      console.log(err);
+    });
+    
+  }, [page])
+
+  useEffect(() =>{
+    getItems()
+  }, [getItems])
 
   useEffect(() => {
-    if (search === "전체") {
-      axios.get(`http://localhost:8080/api/recipeboard`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-        .then(response => {
-          console.log(response.data);
-          setCards({
-            body : 
-            response.data.map((data) => (
-              <Grid item xs={12} sm={3} md={3} key={data.id}>
-              <Card sx={{ position: 'relative' }}>
-              <CardMediaStyle
-                sx={{}}
-              >
-                <SvgIconStyle
-                  color="paper"
-                  src="/static/icons/shape-avatar.svg"
-                  sx={{
-                    width: 80,
-                    height: 36,
-                    zIndex: 9,
-                    bottom: -15,
-                    position: 'absolute',
-                  }}
-                />
-                <AvatarStyle
-                  alt={data.title}
-                  src={data.image}
-                  sx={{}}
-                />
-      
-                <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
-              </CardMediaStyle>
-      
-              <CardContent
-                sx={{
-                  pt: 4
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  variant="caption"
-                  sx={{ color: 'text.disabled', display: 'block' }}
-                >
-                  {data.lastupdated_date}
-                </Typography>
-      
-                <TitleStyle
-                  to="#"
-                  color="inherit"
-                  variant="subtitle2"
-                  underline="hover"
-                  component={RouterLink}
-                  sx={{
-                    
-                  }}
-                >
-                  {data.title}
-                </TitleStyle>
-      
-                <InfoStyle>     
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        ml: 1.5
-                      }}
-                    >
-                      <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        ml: 1.5
-                      }}
-                    >
-                      <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        ml: 1.5
-                      }}
-                    >
-                      <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                      <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
-                    </Box>
-                </InfoStyle>
-              </CardContent>
-            </Card>
-            </Grid>
-            ))
-            
-          }) 
-        }).catch(err => {
-          console.log(err);
-        });
-    } else {
-      axios.get(`http://localhost:8080/api/recipeboard/category/${search}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-        .then(response => {
-          console.log(response.data);
-          setCards({
-            body : 
-            response.data.map((data) => (
-              <Grid item xs={12} sm={3} md={3} key={data.id}>
-              <Card sx={{ position: 'relative' }}>
-              <CardMediaStyle
-                sx={{}}
-              >
-                <SvgIconStyle
-                  color="paper"
-                  src="/static/icons/shape-avatar.svg"
-                  sx={{
-                    width: 80,
-                    height: 36,
-                    zIndex: 9,
-                    bottom: -15,
-                    position: 'absolute',
-                  }}
-                />
-                <AvatarStyle
-                  alt={data.title}
-                  src={data.image}
-                  sx={{}}
-                />
-      
-                <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
-              </CardMediaStyle>
-      
-              <CardContent
-                sx={{
-                  pt: 4
-                }}
-              >
-                <Typography
-                  gutterBottom
-                  variant="caption"
-                  sx={{ color: 'text.disabled', display: 'block' }}
-                >
-                  {data.lastupdated_date}
-                </Typography>
-      
-                <TitleStyle
-                  to="#"
-                  color="inherit"
-                  variant="subtitle2"
-                  underline="hover"
-                  component={RouterLink}
-                  sx={{}}
-                >
-                  {data.title}
-                </TitleStyle>
-      
-                <InfoStyle>     
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        ml: 1.5
-                      }}
-                    >
-                      <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        ml: 1.5
-                      }}
-                    >
-                      <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                      <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-                    </Box>
-                    <Box
-                      sx={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        ml: 1.5
-                      }}
-                    >
-                      <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                      <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
-                    </Box>
-                </InfoStyle>
-              </CardContent>
-            </Card>
-            </Grid>
-            ))
-            
-          }) 
-        }).catch(err => {
-          console.log(err);
-        });
+    if(inView && !loading){
+      setPage(prevState => prevState + 1)
     }
-  }, [search])
+  }, [inView, loading])
 
 
   return (
-      cards.body
+    items.map((data, idx) => (
+      <Grid item xs={12} sm={3} md={3} key={idx}>
+        <Card sx={{ position: 'relative' }} ref={ref} >
+      <CardMediaStyle
+        sx={{}}
+      >
+        <SvgIconStyle
+          color="paper"
+          src="/static/icons/shape-avatar.svg"
+          sx={{
+            width: 80,
+            height: 36,
+            zIndex: 9,
+            bottom: -15,
+            position: 'absolute',
+          }}
+        />
+        <AvatarStyle
+          alt={data.title}
+          src={data.image}
+          sx={{}}
+        />
+
+        <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
+      </CardMediaStyle>
+
+      <CardContent
+        sx={{
+          pt: 4
+        }}
+      >
+        <Typography
+          gutterBottom
+          variant="caption"
+          sx={{ color: 'text.disabled', display: 'block' }}
+        >
+          {data.lastupdated_date}
+        </Typography>
+
+        <TitleStyle
+          to="#"
+          color="inherit"
+          variant="subtitle2"
+          underline="hover"
+          component={RouterLink}
+          sx={{
+            
+          }}
+        >
+          {data.title}
+        </TitleStyle>
+
+        <InfoStyle>     
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                ml: 1.5
+              }}
+            >
+              <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+              <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                ml: 1.5
+              }}
+            >
+              <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+              <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                ml: 1.5
+              }}
+            >
+              <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+              <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
+            </Box>
+        </InfoStyle>
+      </CardContent>
+    </Card>
+    </Grid>
+    ))
   );
 }
