@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
-import { Link as RouterLink, useParams} from 'react-router-dom';
+import { Link as RouterLink, useParams } from 'react-router-dom';
 import axios from 'axios';
 import shareFill from '@iconify/icons-eva/share-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
@@ -58,132 +58,154 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 
-export default function BlogPostCard({search }) {
-  const [cards, setCards] = useState({
-    body: ""
-  });
+let page = 0;
+
+export default function BlogPostCard({ category }) {
   const [items, setItems] = useState([]);
-  const [page, setPage] = useState(0);
+  // const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
 
-  const getItems = useCallback(async () => {
-    setLoading(true);
-    await axios.get(`http://localhost:8080/api/recipeboard/?page=${page}&size=20&sort=id,desc`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
-    })
-    .then(response => {
-      if(!response.data.length) return;
-      setItems(prevState => prevState.concat(response.data));
-      console.log(items);
-      setLoading(false);
-    }).catch(err => {
-      console.log(err);
-    });
-    
-  }, [page])
-
-  useEffect(() =>{
-    getItems()
-  }, [getItems])
+  const getItems = (async () => {
+    console.log(page);
+    if (category === "전체") {
+      setLoading(true);
+      await axios.get(`http://localhost:8080/api/recipeboard/?page=${page}&size=8&sort=id,desc`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+        .then(response => {
+          if (!response.data.length) return;
+          setItems(prevState => prevState.concat(response.data));
+          // setPage(prevState => prevState + 1)
+          page += 1;
+          setLoading(false);
+        }).catch(err => {
+          console.log(err);
+        });
+    } else {
+      setLoading(true);
+      await axios.get(`http://localhost:8080/api/recipeboard/category/${category}?page=${page}&size=8&sort=id,desc`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+        .then(response => {
+          if (!response.data.length) return;
+          setItems(prevState => prevState.concat(response.data));
+          // setPage(prevState => prevState + 1)
+          page += 1;
+          setLoading(false);
+        }).catch(err => {
+          console.log(err);
+        });
+    }
+  })
 
   useEffect(() => {
-    if(inView && !loading){
-      setPage(prevState => prevState + 1)
+    console.log("카테고리 콜백");
+    setItems([]);
+    // setPage(prevState => 0);
+    page = 0;
+    getItems();
+  }, [category])
+  
+
+  useEffect(() => {
+    if (inView && !loading) {
+      getItems();
     }
   }, [inView, loading])
-
 
   return (
     items.map((data, idx) => (
       <Grid item xs={12} sm={3} md={3} key={idx}>
         <Card sx={{ position: 'relative' }} ref={ref} >
-      <CardMediaStyle
-        sx={{}}
-      >
-        <SvgIconStyle
-          color="paper"
-          src="/static/icons/shape-avatar.svg"
-          sx={{
-            width: 80,
-            height: 36,
-            zIndex: 9,
-            bottom: -15,
-            position: 'absolute',
-          }}
-        />
-        <AvatarStyle
-          alt={data.title}
-          src={data.image}
-          sx={{}}
-        />
-
-        <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
-      </CardMediaStyle>
-
-      <CardContent
-        sx={{
-          pt: 4
-        }}
-      >
-        <Typography
-          gutterBottom
-          variant="caption"
-          sx={{ color: 'text.disabled', display: 'block' }}
-        >
-          {data.lastupdated_date}
-        </Typography>
-
-        <TitleStyle
-          to="#"
-          color="inherit"
-          variant="subtitle2"
-          underline="hover"
-          component={RouterLink}
-          sx={{
-            
-          }}
-        >
-          {data.title}
-        </TitleStyle>
-
-        <InfoStyle>     
-            <Box
+          <CardMediaStyle
+            sx={{}}
+          >
+            <SvgIconStyle
+              color="paper"
+              src="/static/icons/shape-avatar.svg"
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ml: 1.5
+                width: 80,
+                height: 36,
+                zIndex: 9,
+                bottom: -15,
+                position: 'absolute',
+              }}
+            />
+            <AvatarStyle
+              alt={data.title}
+              src={data.image}
+              sx={{}}
+            />
+
+            <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
+          </CardMediaStyle>
+
+          <CardContent
+            sx={{
+              pt: 4
+            }}
+          >
+            <Typography
+              gutterBottom
+              variant="caption"
+              sx={{ color: 'text.disabled', display: 'block' }}
+            >
+              {data.lastupdated_date}
+            </Typography>
+
+            <TitleStyle
+              to="#"
+              color="inherit"
+              variant="subtitle2"
+              underline="hover"
+              component={RouterLink}
+              sx={{
+
               }}
             >
-              <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-              <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ml: 1.5
-              }}
-            >
-              <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-              <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ml: 1.5
-              }}
-            >
-              <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-              <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
-            </Box>
-        </InfoStyle>
-      </CardContent>
-    </Card>
-    </Grid>
+              {data.title}
+            </TitleStyle>
+
+            <InfoStyle>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  ml: 1.5
+                }}
+              >
+                <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  ml: 1.5
+                }}
+              >
+                <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  ml: 1.5
+                }}
+              >
+                <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
+              </Box>
+            </InfoStyle>
+          </CardContent>
+        </Card>
+      </Grid>
     ))
   );
 }

@@ -24,11 +24,11 @@ const SORT_OPTIONS = [
 
 export default function Blog() {
   const navigate = useNavigate();
-  const {search} = useParams();
+  const category = useParams().search;
   const [value, setValue] = useState("전체");
   useEffect(() => {
-    if(search){
-      setValue(search);
+    if(category){
+      setValue(category);
     }
   }, [value])
   const handleChange = (event, newValue) => {
@@ -83,7 +83,7 @@ export default function Blog() {
         </Stack>
 
         <Grid container spacing={3}>
-            <BlogPostCard search={search}/>
+            <BlogPostCard category={category}/>
         </Grid>
         
       </Container>
