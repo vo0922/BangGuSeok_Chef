@@ -15,9 +15,9 @@ import POSTS from '../_mocks_/blog';
 // ----------------------------------------------------------------------
 
 const SORT_OPTIONS = [
-  { value: 'latest', label: 'Latest' },
-  { value: 'popular', label: 'Popular' },
-  { value: 'oldest', label: 'Oldest' }
+  { value: 'id', label: '최신순' },
+  { value: 'click', label: '인기순' },
+  { value: 'recommend', label: '조회순' }
 ];
 
 // ----------------------------------------------------------------------
@@ -26,6 +26,10 @@ export default function Blog() {
   const navigate = useNavigate();
   const category = useParams().search;
   const [value, setValue] = useState("전체");
+  const [valuesort, setValueSort] = useState("id");
+  const onSort = (e) => {
+    setValueSort(e.target.value);
+  }
   useEffect(() => {
     if(category){
       setValue(category);
@@ -79,11 +83,11 @@ export default function Blog() {
 
         <Stack mb={5} direction="row" alignItems="center" justifyContent="space-between">
           <BlogPostsSearch posts={POSTS} />
-          <BlogPostsSort options={SORT_OPTIONS} />
+          <BlogPostsSort options={SORT_OPTIONS} onSort={onSort} valueSort={valuesort} />
         </Stack>
 
         <Grid container spacing={3}>
-            <BlogPostCard category={category}/>
+            <BlogPostCard category={category} valueSort={valuesort}/>
         </Grid>
         
       </Container>
