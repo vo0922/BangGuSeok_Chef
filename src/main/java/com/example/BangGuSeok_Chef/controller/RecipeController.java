@@ -6,6 +6,7 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
+import com.example.BangGuSeok_Chef.repository.RecipeBoard.CookStepRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.CookStepService;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.IngredientService;
@@ -13,13 +14,13 @@ import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeBoardService;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeContentsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,16 +32,17 @@ public class RecipeController {
     private final RecipeContentsService recipeContentsService;
     private final IngredientService ingredientService;
     private final CookStepService cookStepService;
+    private final CookStepRepository cookStepRepository;
 
 
     @PostMapping("/api/board/create")
-    public ResponseEntity<RecipeBoard> post(@RequestBody RecipeDto dto) {
+    public RecipeBoard post(@RequestBody RecipeDto dto) {
         RecipeBoard recipe_board = recipeBoardService.create(dto);
         dto.setrecipe_id(recipe_board.getId());
         RecipeContents recipeContents = recipeContentsService.create(dto, recipe_board);
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
         List<CookStep> cookSteps = cookStepService.create(dto, recipe_board);
-        return null;
+        return recipeBoardService.join(recipe_board, cookSteps, ingredient, recipeContents);
     }
 
     // 전체
@@ -64,6 +66,13 @@ public class RecipeController {
         List<RecipeBoardDto> dtos = recipeBoardService.categorySearch(category, pageable);
 
         return ResponseEntity.status(HttpStatus.OK).body(dtos);
+    }
+
+    // 카테고리별 검색
+    @GetMapping("/api/recipeboard/view/{id}")
+    public ResponseEntity<Optional<RecipeBoard>> categorySearch(@PathVariable Long id){
+        Optional<RecipeBoard> result = recipeBoardRepository.findById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
 }

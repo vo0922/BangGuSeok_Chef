@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class RecipeContents {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "recipe_id")
     private RecipeBoard recipe_board;
 

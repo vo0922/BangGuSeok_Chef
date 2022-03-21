@@ -2,7 +2,10 @@ package com.example.BangGuSeok_Chef.service.RecipeBoard;
 
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -54,4 +57,8 @@ public class RecipeBoardService {
                 .collect(Collectors.toList());
     }
 
+    public RecipeBoard join(RecipeBoard recipe_board, List<CookStep> cookSteps, List<Ingredient> ingredient, RecipeContents recipeContents) {
+        recipe_board.recipejoin(cookSteps, ingredient, recipeContents);
+        return recipeBoardRepository.save(recipe_board);
+    }
 }
