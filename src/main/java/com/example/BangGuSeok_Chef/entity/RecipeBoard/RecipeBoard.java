@@ -1,6 +1,8 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -50,12 +52,15 @@ public class RecipeBoard {
     @Column(columnDefinition = "integer default 0")
     private Integer comment;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "recipe_board")
     private List<CookStep> cookSteps = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "recipeBoard")
     private List<Ingredient> ingredients = new ArrayList<>();
 
+    @JsonManagedReference
     @OneToOne
     private RecipeContents recipeContents;
 

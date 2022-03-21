@@ -1,7 +1,8 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.IngredientDto;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ public class Ingredient {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "recipe_id")
     private RecipeBoard recipeBoard;
 

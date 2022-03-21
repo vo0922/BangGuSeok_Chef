@@ -1,7 +1,7 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,7 +20,7 @@ public class CookStep {
     private Long id;
 
     @ManyToOne
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name = "recipe_id")
     private RecipeBoard recipe_board;
 
