@@ -1,5 +1,8 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -7,6 +10,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
@@ -45,6 +51,24 @@ public class RecipeBoard {
 
     @Column(columnDefinition = "integer default 0")
     private Integer comment;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "recipe_board", fetch = FetchType.LAZY)
+    private List<CookStep> cookSteps = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "recipeBoard", fetch = FetchType.LAZY)
+    private List<Ingredient> ingredients = new ArrayList<>();
+
+    @JsonManagedReference
+    @OneToOne(mappedBy = "recipe_board", fetch = FetchType.LAZY)
+    private RecipeContents recipeContents;
+
+    public void recipejoin(List<CookStep> cookSteps, List<Ingredient> ingredients, RecipeContents recipeContents) {
+        this.cookSteps = cookSteps;
+        this.ingredients = ingredients;
+        this.recipeContents = recipeContents;
+    }
 
     @Builder
     public RecipeBoard(String title, String author, String nickname, String image, String category, String level, Integer click, Integer recommend, Integer comment) {

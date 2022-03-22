@@ -60,15 +60,14 @@ const CoverImgStyle = styled('img')({
 
 let page = 0;
 
-export default function BlogPostCard({ category, valueSort }) {
+export default function BlogPostCardSearch({ keyWord, valueSort }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
 
   const getItems = (async () => {
-    if (category === "전체") {
       setLoading(true);
-      await axios.get(`http://localhost:8080/api/recipeboard/?page=${page}&size=8&sort=${valueSort},desc`, {
+      await axios.get(`http://localhost:8080/api/recipeboard/${keyWord}?page=${page}&size=8&sort=${valueSort},desc`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -76,37 +75,19 @@ export default function BlogPostCard({ category, valueSort }) {
         .then(response => {
           if (!response.data.length) return;
           setItems(prevState => prevState.concat(response.data));
-          // setPage(prevState => prevState + 1)
           page += 1;
           setLoading(false);
         }).catch(err => {
           console.log(err);
         });
-    } else {
-      setLoading(true);
-      await axios.get(`http://localhost:8080/api/recipeboard/category/${category}?page=${page}&size=8&sort=${valueSort},desc`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-        .then(response => {
-          if (!response.data.length) return;
-          setItems(prevState => prevState.concat(response.data));
-          // setPage(prevState => prevState + 1)
-          page += 1;
-          setLoading(false);
-        }).catch(err => {
-          console.log(err);
-        });
-    }
+    
   })
 
   useEffect(() => {
     setItems([]);
-    // setPage(prevState => 0);
     page = 0;
     getItems();
-  }, [category, valueSort])
+  }, [valueSort])
   
 
   useEffect(() => {
