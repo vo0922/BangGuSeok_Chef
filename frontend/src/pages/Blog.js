@@ -49,10 +49,10 @@ export default function Blog() {
           <Button
             variant="contained"
             component={RouterLink}
-            to="#"
+            to="/home/recipe/newpost"
             startIcon={<Icon icon={plusFill} />}
           >
-            New Post
+            레시피등록
           </Button>
         </Stack>
 
