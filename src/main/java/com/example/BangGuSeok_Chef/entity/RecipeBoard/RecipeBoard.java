@@ -53,15 +53,15 @@ public class RecipeBoard {
     private Integer comment;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "recipe_board")
+    @OneToMany(mappedBy = "recipe_board", fetch = FetchType.LAZY)
     private List<CookStep> cookSteps = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "recipeBoard")
+    @OneToMany(mappedBy = "recipeBoard", fetch = FetchType.LAZY)
     private List<Ingredient> ingredients = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToOne
+    @OneToOne(mappedBy = "recipe_board", fetch = FetchType.LAZY)
     private RecipeContents recipeContents;
 
     public void recipejoin(List<CookStep> cookSteps, List<Ingredient> ingredients, RecipeContents recipeContents) {

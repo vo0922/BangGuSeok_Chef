@@ -72,6 +72,7 @@ public class RecipeController {
     @GetMapping("/api/recipeboard/view/{id}")
     public ResponseEntity<Optional<RecipeBoard>> categorySearch(@PathVariable Long id){
         Optional<RecipeBoard> result = recipeBoardRepository.findById(id);
+
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
