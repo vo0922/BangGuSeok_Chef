@@ -8,17 +8,17 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.CookStepRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
-import com.example.BangGuSeok_Chef.service.RecipeBoard.CookStepService;
-import com.example.BangGuSeok_Chef.service.RecipeBoard.IngredientService;
-import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeBoardService;
-import com.example.BangGuSeok_Chef.service.RecipeBoard.RecipeContentsService;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.*;
+import com.example.BangGuSeok_Chef.service.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,13 +26,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class RecipeController {
-
     private final RecipeBoardService recipeBoardService;
     private final RecipeBoardRepository recipeBoardRepository;
     private final RecipeContentsService recipeContentsService;
     private final IngredientService ingredientService;
     private final CookStepService cookStepService;
     private final CookStepRepository cookStepRepository;
+    private final S3Uploader s3Uploader;
 
 
     @PostMapping("/api/board/create")
@@ -75,5 +75,13 @@ public class RecipeController {
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
+
+    @PostMapping("/images")
+    public String upload(@RequestParam("images")MultipartFile multipartFile) throws IOException{
+        s3Uploader.upload(multipartFile, "static");
+        return "test";
+    }
+
+
 
 }

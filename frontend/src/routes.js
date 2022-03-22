@@ -12,6 +12,7 @@ import User from './pages/ChefRanking';
 import NotFound from './pages/Page404';
 import SocialCallback from './components/authentication/login/SocialCallback';
 import BlogSearch from './pages/BlogSearch';
+import NewPost from './pages/NewPost';
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -26,9 +27,9 @@ export default function Router() {
         { path: 'recipe/:search', element: <Blog /> },
         { path: 'recipe/search', element: <Navigate to="/home/recipe/전체" replace/>},
         { path: 'recipe/search/:search', element: <BlogSearch />},
+        { path: 'recipe/newpost', element : <NewPost/>},
         { path: 'rank', element: <User /> },
-        { path: 'qna', element: <Products />,
-      }
+        { path: 'qna', element: <Products />},
       ]
     },
     {
