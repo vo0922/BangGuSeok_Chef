@@ -1,12 +1,12 @@
 package com.example.BangGuSeok_Chef.dto.RecipeBoard;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 @Getter
+@Setter
 public class CookStepDto {
     private Long recipe_id;
 
@@ -15,5 +15,6 @@ public class CookStepDto {
     private String contents;
 
     private String image;
-
 }
+
+

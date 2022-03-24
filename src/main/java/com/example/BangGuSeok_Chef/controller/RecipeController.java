@@ -34,14 +34,19 @@ public class RecipeController {
 
     // 레시피 작성
     @PostMapping("/api/board/create")
-    public RecipeBoard post(@RequestPart(value = "data") RecipeDto dto, @RequestPart(value = "boardimage")MultipartFile boardimage, @RequestPart(value = "cookstepimage")List<MultipartFile> cookstepimage) throws IOException{
+    public RecipeBoard post(
+            @RequestPart(value = "data") RecipeDto dto,
+            @RequestPart(value = "boardimage")MultipartFile boardimage,
+            @RequestPart(value = "cookstepimage")List<MultipartFile> cookstepimage) throws IOException{
         dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
+        List<String> cookstepimages = s3Uploader.CookStepUpload(cookstepimage, "cookstepimage");
+
         RecipeBoard recipe_board = recipeBoardService.create(dto);
         dto.setrecipe_id(recipe_board.getId());
         RecipeContents recipeContents = recipeContentsService.create(dto, recipe_board);
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
-        List<CookStep> cookSteps = cookStepService.create(dto, recipe_board);
-        //List<String> cookstepimages = Collections.singletonList(s3Uploader.upload(cookstepimage, "cookstepimage"));
+        List<CookStep> cookSteps = cookStepService.create(dto, recipe_board, cookstepimages);
+
         return recipeBoardService.join(recipe_board, cookSteps, ingredient, recipeContents);
     }
 
