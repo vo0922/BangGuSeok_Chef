@@ -34,7 +34,6 @@ public class RecipeBoardDto {
 
     private Integer comment;
 
-
     @Builder
     public RecipeBoardDto(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
         this.title = title;

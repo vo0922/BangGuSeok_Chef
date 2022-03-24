@@ -50,6 +50,10 @@ public class RecipeDto {
 
     private List<CookStep> cook_steps;
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public RecipeBoard toRecipe() {
         return new RecipeBoard(title, author, nickname, image, category, level, click, recommend, comment);
     }

@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -34,12 +35,14 @@ public class RecipeController {
 
 
     @PostMapping("/api/board/create")
-    public ResponseEntity<RecipeBoard> post(@RequestBody RecipeDto dto) {
+    public ResponseEntity<RecipeBoard> post(@RequestPart(value = "data") RecipeDto dto, @RequestPart(value = "boardimage")MultipartFile boardimage, @RequestPart(value = "cookstepimage")List<MultipartFile> cookstepimage) throws IOException{
+        dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
         RecipeBoard recipe_board = recipeBoardService.create(dto);
         dto.setrecipe_id(recipe_board.getId());
         RecipeContents recipeContents = recipeContentsService.create(dto, recipe_board);
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
         List<CookStep> cookSteps = cookStepService.create(dto, recipe_board);
+//        List<String> cookstepimages = Collections.singletonList(s3Uploader.upload(cookstepimage, "cookstepimage"));
         return null;
     }
 
