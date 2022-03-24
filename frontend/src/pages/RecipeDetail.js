@@ -125,13 +125,16 @@ export default function RecipeDetail() {
                         </Card>
 
                         <Card sx={{ width: 1000, padding: 5, marginBottom: 5 }}>
-                            <Typography variant="h5">
+                            <Typography variant="h5" sx={{marginBottom: 3}}>
                                 요리순서
                             </Typography>
                             {response.data.cookSteps.map((data) => (
-                                <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }} key={data.id}>
+                                <Stack direction="row" justifyContent="space-between" mb={3} key={data.id}>
+                                <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }}>
                                     {data.step_no} : {data.contents} <br /><br /><br />
                                 </Typography>
+                                <img src={data.image} alt={title} style={{maxHeight:250}}/>
+                                </Stack>
                             ))}
                         </Card>
                     </Grid>

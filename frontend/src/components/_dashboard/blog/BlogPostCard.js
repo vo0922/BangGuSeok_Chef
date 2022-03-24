@@ -74,6 +74,7 @@ export default function BlogPostCard({ category, valueSort }) {
         }
       })
         .then(response => {
+          console.log(response);
           if (!response.data.length) return;
           setItems(prevState => prevState.concat(response.data));
           // setPage(prevState => prevState + 1)
@@ -135,11 +136,11 @@ export default function BlogPostCard({ category, valueSort }) {
             />
             <AvatarStyle
               alt={data.title}
-              src={data.image}
+              src={data.member}
               sx={{}}
             />
 
-            <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
+            <CoverImgStyle alt={data.title} src={data.image} />
           </CardMediaStyle>
 
           <CardContent

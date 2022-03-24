@@ -6,6 +6,7 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
+import com.example.BangGuSeok_Chef.repository.Member.MemberRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 public class RecipeBoardService {
 
     private final RecipeBoardRepository recipeBoardRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public RecipeBoard create(RecipeDto dto) {
@@ -37,7 +39,9 @@ public class RecipeBoardService {
 
         return recipeBoardRepository.findAll(pageable)
                 .stream()
-                .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
+                .map(
+                        recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard, memberRepository.findByEmail(recipeBoard.getAuthor()).orElse(null))
+                )
                 .collect(Collectors.toList());
     }
 
@@ -46,7 +50,7 @@ public class RecipeBoardService {
     public List<RecipeBoardDto> search(String keyword, Pageable pageable){
         return recipeBoardRepository.findByTitleContaining(keyword, pageable)
                 .stream()  // 변환 : 엔티티 -> DTO
-                .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
+                .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard, memberRepository.findByEmail(recipeBoard.getAuthor()).orElse(null)))
                 .collect(Collectors.toList());
     }
 
@@ -54,7 +58,7 @@ public class RecipeBoardService {
     public List<RecipeBoardDto> categorySearch(String category, Pageable pageable){
         return recipeBoardRepository.findByCategoryContaining(category, pageable)
                 .stream()
-                .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard))
+                .map(recipeBoard -> RecipeBoardDto.createRecipeBoardDto(recipeBoard, memberRepository.findByEmail(recipeBoard.getAuthor()).orElse(null)))
                 .collect(Collectors.toList());
     }
 
