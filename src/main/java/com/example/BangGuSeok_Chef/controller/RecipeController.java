@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,13 +34,23 @@ public class RecipeController {
 
     // 레시피 작성
     @PostMapping("/api/board/create")
+<<<<<<< HEAD
     public RecipeBoard post(@RequestBody RecipeDto dto) {
+=======
+    public ResponseEntity<RecipeBoard> post(@RequestPart(value = "data") RecipeDto dto, @RequestPart(value = "boardimage")MultipartFile boardimage, @RequestPart(value = "cookstepimage")List<MultipartFile> cookstepimage) throws IOException{
+        dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
+>>>>>>> jaemin_0301
         RecipeBoard recipe_board = recipeBoardService.create(dto);
         dto.setrecipe_id(recipe_board.getId());
         RecipeContents recipeContents = recipeContentsService.create(dto, recipe_board);
         List<Ingredient> ingredient = ingredientService.create(dto, recipe_board);
         List<CookStep> cookSteps = cookStepService.create(dto, recipe_board);
+<<<<<<< HEAD
         return recipeBoardService.join(recipe_board, cookSteps, ingredient, recipeContents);
+=======
+//        List<String> cookstepimages = Collections.singletonList(s3Uploader.upload(cookstepimage, "cookstepimage"));
+        return null;
+>>>>>>> jaemin_0301
     }
 
     // 전체
