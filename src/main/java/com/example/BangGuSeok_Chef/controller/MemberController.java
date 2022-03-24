@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.*;
 public class MemberController {
     private final MemberService memberService;
 
+    // 내정보 조회
     @GetMapping("/api/my")
     public ResponseEntity<MemberResponseDto> getMyMemberInfo() {
         return ResponseEntity.ok(memberService.getMyInfo());
     }
 
+    // 유저 조회
     @GetMapping("/api/{email}")
     public ResponseEntity<MemberResponseDto> getMemberInfo(@PathVariable String email) {
         return ResponseEntity.ok(memberService.getMemberInfo(email));

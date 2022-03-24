@@ -32,6 +32,7 @@ public class RecipeBoardService {
     }
 
     // 전체
+    @Transactional
     public List<RecipeBoardDto> index(Pageable pageable){
 
         return recipeBoardRepository.findAll(pageable)
@@ -41,6 +42,7 @@ public class RecipeBoardService {
     }
 
     // 제목 검색
+    @Transactional
     public List<RecipeBoardDto> search(String keyword, Pageable pageable){
         return recipeBoardRepository.findByTitleContaining(keyword, pageable)
                 .stream()  // 변환 : 엔티티 -> DTO
@@ -48,6 +50,7 @@ public class RecipeBoardService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public List<RecipeBoardDto> categorySearch(String category, Pageable pageable){
         return recipeBoardRepository.findByCategoryContaining(category, pageable)
                 .stream()
@@ -55,9 +58,15 @@ public class RecipeBoardService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public RecipeBoard join(RecipeBoard recipe_board, List<CookStep> cookSteps, List<Ingredient> ingredient, RecipeContents recipeContents) {
         recipe_board.recipejoin(cookSteps, ingredient, recipeContents);
         return recipeBoardRepository.save(recipe_board);
     }
 
+    @Transactional
+    public void delete(Long id) {
+        RecipeBoard recipeBoard = recipeBoardRepository.findById(id).orElse(null);
+        recipeBoardRepository.delete(recipeBoard);
+    }
 }

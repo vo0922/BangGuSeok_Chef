@@ -52,17 +52,29 @@ public class RecipeBoard {
     @Column(columnDefinition = "integer default 0")
     private Integer comment;
 
+    public void setComment(Integer comment) {
+        this.comment = comment;
+    }
+
     @JsonManagedReference
-    @OneToMany(mappedBy = "recipe_board", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipe_board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<CookStep> cookSteps = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "recipeBoard", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "recipeBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Ingredient> ingredients = new ArrayList<>();
 
     @JsonManagedReference
-    @OneToOne(mappedBy = "recipe_board", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "recipe_board", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private RecipeContents recipeContents;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy = "recipeBoard", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Comments> comments = new ArrayList<>();
+
+    public void addComment(Comments comment) {
+        comments.add(comment);
+    }
 
     public void recipejoin(List<CookStep> cookSteps, List<Ingredient> ingredients, RecipeContents recipeContents) {
         this.cookSteps = cookSteps;

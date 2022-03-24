@@ -1,11 +1,9 @@
 package com.example.BangGuSeok_Chef.controller;
 
+import com.example.BangGuSeok_Chef.dto.RecipeBoard.CommentsDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
-import com.example.BangGuSeok_Chef.entity.RecipeBoard.CookStep;
-import com.example.BangGuSeok_Chef.entity.RecipeBoard.Ingredient;
-import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
-import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.*;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.CookStepRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.*;
@@ -31,10 +29,9 @@ public class RecipeController {
     private final RecipeContentsService recipeContentsService;
     private final IngredientService ingredientService;
     private final CookStepService cookStepService;
-    private final CookStepRepository cookStepRepository;
     private final S3Uploader s3Uploader;
 
-
+    // 레시피 작성
     @PostMapping("/api/board/create")
     public RecipeBoard post(@RequestBody RecipeDto dto) {
         RecipeBoard recipe_board = recipeBoardService.create(dto);
@@ -76,12 +73,18 @@ public class RecipeController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
+    // 게시글 삭제
+    @DeleteMapping("api/recipeboard/view/delete/{id}")
+    public String deleteboard(@PathVariable Long id) {
+        recipeBoardService.delete(id);
+
+        return "삭제완료";
+    }
+
     @PostMapping("/images")
     public String upload(@RequestParam("images")MultipartFile multipartFile) throws IOException{
         s3Uploader.upload(multipartFile, "static");
         return "test";
     }
-
-
 
 }

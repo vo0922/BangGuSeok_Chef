@@ -97,8 +97,8 @@ export default function BlogPostCardSearch({ keyWord, valueSort }) {
   }, [inView, loading])
 
   return (
-    items.map((data, idx) => (
-      <Grid item xs={12} sm={3} md={3} key={idx}>
+    items.map((data) => (
+      <Grid item xs={12} sm={3} md={3} key={data.id}>
         <Card sx={{ position: 'relative' }} ref={ref} >
           <CardMediaStyle
             sx={{}}
@@ -137,7 +137,7 @@ export default function BlogPostCardSearch({ keyWord, valueSort }) {
             </Typography>
 
             <TitleStyle
-              to="#"
+              to={`/home/recipe/board/${data.id}`}
               color="inherit"
               variant="subtitle2"
               underline="hover"
@@ -158,7 +158,7 @@ export default function BlogPostCardSearch({ keyWord, valueSort }) {
                 }}
               >
                 <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-                <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+                <Typography variant="caption">{fShortenNumber(data.comment)}</Typography>
               </Box>
               <Box
                 sx={{
