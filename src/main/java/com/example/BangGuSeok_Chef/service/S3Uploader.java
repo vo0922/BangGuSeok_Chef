@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -37,6 +39,28 @@ public class S3Uploader {
         String fileName = dirName + "/" + UUID.randomUUID() + uploadFile.getName();   // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
+
+        return uploadImageUrl;
+    }
+
+    public List<String> CookStepUpload(List<MultipartFile> multipartFile, String dirName) throws IOException {
+        List<File> uploadFile = new ArrayList<>();
+        for (MultipartFile files: multipartFile) {
+            uploadFile.add(convert(files)  // 파일 변환할 수 없으면 에러
+                    .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail")));
+        }
+
+        return CookStepUploads(uploadFile, dirName);
+    }
+
+    // S3로 파일 업로드하기
+    private List<String> CookStepUploads(List<File> uploadFile, String dirName) {
+        log.info("cookstepuploads 함수 실행");
+        List<String> uploadImageUrl = new ArrayList<>();
+        uploadFile.forEach(file -> {
+            uploadImageUrl.add(putS3(file, (dirName + "/" + UUID.randomUUID() + file.getName())));
+            removeNewFile(file);
+        });
         return uploadImageUrl;
     }
 

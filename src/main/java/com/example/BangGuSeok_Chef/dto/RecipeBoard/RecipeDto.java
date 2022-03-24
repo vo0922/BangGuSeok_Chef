@@ -7,9 +7,14 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Slf4j
 @AllArgsConstructor
 @ToString
 @Getter
@@ -48,7 +53,7 @@ public class RecipeDto {
 
     private List<IngredientDto> ingredient;
 
-    private List<CookStep> cook_steps;
+    private List<CookStepDto> cook_steps;
 
     public void setImage(String image) {
         this.image = image;
@@ -71,10 +76,19 @@ public class RecipeDto {
         return newingredient.ingredients(recipe_board, ingredient);
     }
 
-    public List<CookStep> toCookstep(RecipeBoard recipe_board, RecipeDto recipeDto){
+    public List<CookStep> toCookstep(RecipeBoard recipe_board, RecipeDto recipeDto, List<String> image){
         CookStep cook_step = new CookStep();
+        List<CookStepDto> newcooksteps = new ArrayList<>();
         if(recipeDto.getRecipe_id() != recipe_board.getId())
             throw new IllegalArgumentException("레시피 순서 테이블 삽입 실패! 게시글 ID가 잘못되었습니다.");
-        return cook_step.cookSteps(recipe_board, cook_steps);
+
+        Map<CookStepDto, String> map = new HashMap<>();
+
+
+        for(int i = 0; i < cook_steps.size(); i++){
+            map.put(cook_steps.get(i), image.get(i));
+        }
+
+        return cook_step.cookSteps(recipe_board, map);
     }
 }

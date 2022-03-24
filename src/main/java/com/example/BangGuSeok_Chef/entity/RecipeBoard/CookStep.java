@@ -1,6 +1,7 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
 
+import com.example.BangGuSeok_Chef.dto.RecipeBoard.CookStepDto;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -10,7 +11,9 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Getter
@@ -35,10 +38,16 @@ public class CookStep {
 
     private String image;
 
-    public List<CookStep> cookSteps(RecipeBoard recipeBoard, List<CookStep> cook_steps){
-        List<CookStep> result = new ArrayList();
+    public void setImage(String image) {
+        this.image = image;
+    }
 
-        cook_steps.forEach(str -> result.add(new CookStep(recipeBoard, str.getStep_no(), str.getContents(), str.getImage())));
+    public List<CookStep> cookSteps(RecipeBoard recipeBoard, Map<CookStepDto, String> map){
+        List<CookStep> result = new ArrayList<>();
+        map.forEach((key,value)->
+            result.add(new CookStep(recipeBoard, key.getStep_no(), key.getContents(), value))
+        );
+
         return result;
     }
 
