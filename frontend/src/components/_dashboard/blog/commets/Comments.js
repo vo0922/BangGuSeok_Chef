@@ -147,9 +147,9 @@ export default function Comments({ data, recipeDetail, UserInfo, postOwner }) {
                 direction="row" justifyContent="center">
                 <Collapse in={reComments}>
                     <form onSubmit={(e) => onReComment(e, data.id)}>
-                        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3} sx={{ width: 800 }}>
+                        <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3} >
                             <Avatar src={UserInfo.account.photoURL} alt="photoURL" /> &nbsp;&nbsp;&nbsp;&nbsp;
-                            <TextField label="답글 작성하기..." name="recomment" fullWidth size='small' /> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <TextField label="답글 작성하기..." name="recomment" fullWidth size='small' sx={{width:600}}/> &nbsp;&nbsp;&nbsp;&nbsp;
                             <Button type="submit" size="small" variant="contained" style={{ float: "right" }}>
                                 작성
                             </Button>

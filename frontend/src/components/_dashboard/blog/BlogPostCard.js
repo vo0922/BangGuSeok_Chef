@@ -135,11 +135,11 @@ export default function BlogPostCard({ category, valueSort }) {
             />
             <AvatarStyle
               alt={data.title}
-              src={data.image}
+              src={data.member}
               sx={{}}
             />
 
-            <CoverImgStyle alt={data.title} src="/static/mock-images/covers/cover_1.jpg" />
+            <CoverImgStyle alt={data.title} src={data.image} />
           </CardMediaStyle>
 
           <CardContent
@@ -152,7 +152,7 @@ export default function BlogPostCard({ category, valueSort }) {
               variant="caption"
               sx={{ color: 'text.disabled', display: 'block' }}
             >
-              {data.lastupdated_date}
+              {data.lastupdatedDate.split('T')[0]}
             </Typography>
 
             <TitleStyle

@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.dto.RecipeBoard;
 
+import com.example.BangGuSeok_Chef.entity.Member.Member;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import lombok.*;
 
@@ -34,6 +35,8 @@ public class RecipeBoardDto {
 
     private Integer comment;
 
+    private String member;
+
     @Builder
     public RecipeBoardDto(String title, String author, String nickname, String category, String level, Integer click, Integer recommend) {
         this.title = title;
@@ -46,7 +49,7 @@ public class RecipeBoardDto {
     }
 
 
-    public static RecipeBoardDto createRecipeBoardDto(RecipeBoard recipeBoard){
+    public static RecipeBoardDto createRecipeBoardDto(RecipeBoard recipeBoard, Member member){
         return new RecipeBoardDto(
                 recipeBoard.getId(),
                 recipeBoard.getTitle(),
@@ -59,7 +62,8 @@ public class RecipeBoardDto {
                 recipeBoard.getLevel(),
                 recipeBoard.getClick(),
                 recipeBoard.getRecommend(),
-                recipeBoard.getComment()
+                recipeBoard.getComment(),
+                member.getProfile()
         );
     }
 

@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
+import com.example.BangGuSeok_Chef.entity.Member.Member;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -38,6 +39,10 @@ public class RecipeBoard {
 
     @LastModifiedDate
     private LocalDateTime lastupdatedDate;
+
+    public void setClick() {
+        this.click = ++this.click;
+    }
 
     private String category;
 
