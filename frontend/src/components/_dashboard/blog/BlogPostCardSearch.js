@@ -9,7 +9,7 @@ import shareFill from '@iconify/icons-eva/share-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
 // material
 import { alpha, styled } from '@mui/material/styles';
-import { Box, Link, Card, Grid, Avatar, Typography, CardContent } from '@mui/material';
+import { Box, Link, Card, Grid, Avatar, Typography, CardContent, Stack } from '@mui/material';
 // utils
 import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
@@ -128,14 +128,21 @@ export default function BlogPostCardSearch({ keyWord, valueSort }) {
               pt: 4
             }}
           >
-            <Typography
-              gutterBottom
-              variant="caption"
-              sx={{ color: 'text.disabled', display: 'block' }}
-            >
-              {data.lastupdated_date}
-            </Typography>
-
+            <Stack direction="row" alignItems="center" justifyContent="space-between" mb={3}>
+              <Typography
+                gutterBottom
+                variant="caption"
+                sx={{ color: 'text.disabled', display: 'block' }}>
+                {data.nickname}
+              </Typography>
+              <Typography
+                gutterBottom
+                variant="caption"
+                sx={{ color: 'text.disabled', display: 'block' }}
+              >
+                {data.lastupdatedDate.split('T')[0]}
+              </Typography>
+            </Stack>
             <TitleStyle
               to={`/home/recipe/board/${data.id}`}
               color="inherit"

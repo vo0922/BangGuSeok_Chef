@@ -1,10 +1,8 @@
 package com.example.BangGuSeok_Chef.controller;
 
-import com.example.BangGuSeok_Chef.dto.RecipeBoard.CommentsDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.*;
-import com.example.BangGuSeok_Chef.repository.RecipeBoard.CookStepRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.*;
 import com.example.BangGuSeok_Chef.service.S3Uploader;
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +27,7 @@ public class RecipeController {
     private final IngredientService ingredientService;
     private final CookStepService cookStepService;
     private final S3Uploader s3Uploader;
+    private final ReCommendService reCommendService;
 
     // 레시피 작성
     @PostMapping("/api/board/create")
@@ -90,10 +87,17 @@ public class RecipeController {
         return "삭제완료";
     }
 
-    @PostMapping("/images")
-    public String upload(@RequestParam("images")MultipartFile multipartFile) throws IOException{
-        s3Uploader.upload(multipartFile, "static");
-        return "test";
+    // 좋아요 체크
+    @GetMapping("api/recipeboard/view/like/check")
+    public Boolean recommendCheck(@RequestParam(value = "recipe_id") Long recipe_id, @RequestParam(value = "email") String email) {
+        return reCommendService.likeCheck(recipe_id, email);
+    }
+
+    // 좋아요 클릭
+    @GetMapping("api/recipeboard/view/like")
+    public Boolean recommendClick(@RequestParam(value = "recipe_id") Long recipe_id, @RequestParam(value = "email") String email) {
+        Boolean bool = reCommendService.likeClike(recipe_id, email);
+        return bool;
     }
 
 }

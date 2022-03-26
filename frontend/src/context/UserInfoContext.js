@@ -15,9 +15,9 @@ const UserInfoContext = (props) => {
         setaccount,
     }
 
-    useEffect(() => {
+    useEffect(async () => {
         if (localStorage.getItem('token')) {
-            axios.get(`http://localhost:8080/api/${localStorage.getItem('authenticatedUser')}`, {
+            await axios.get(`http://localhost:8080/api/${localStorage.getItem('authenticatedUser')}`, {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
               }
