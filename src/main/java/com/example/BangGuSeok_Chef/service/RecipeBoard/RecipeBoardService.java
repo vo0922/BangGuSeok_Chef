@@ -24,6 +24,7 @@ public class RecipeBoardService {
     private final RecipeBoardRepository recipeBoardRepository;
     private final MemberRepository memberRepository;
 
+    // 레시피 생성
     @Transactional
     public RecipeBoard create(RecipeDto dto) {
         RecipeBoard recipeBoard = dto.toRecipe();
@@ -54,6 +55,7 @@ public class RecipeBoardService {
                 .collect(Collectors.toList());
     }
 
+    // 카테고리 검색
     @Transactional
     public List<RecipeBoardDto> categorySearch(String category, Pageable pageable){
         return recipeBoardRepository.findByCategoryContaining(category, pageable)
@@ -62,15 +64,24 @@ public class RecipeBoardService {
                 .collect(Collectors.toList());
     }
 
+    // 최종 레시피 생성
     @Transactional
     public RecipeBoard join(RecipeBoard recipe_board, List<CookStep> cookSteps, List<Ingredient> ingredient, RecipeContents recipeContents) {
         recipe_board.recipejoin(cookSteps, ingredient, recipeContents);
         return recipeBoardRepository.save(recipe_board);
     }
 
+    // 레시피 삭제
     @Transactional
     public void delete(Long id) {
         RecipeBoard recipeBoard = recipeBoardRepository.findById(id).orElse(null);
         recipeBoardRepository.delete(recipeBoard);
+    }
+
+    // 조회수
+    @Transactional
+    public void click(RecipeBoard result) {
+        result.setClick();
+        recipeBoardRepository.save(result);
     }
 }

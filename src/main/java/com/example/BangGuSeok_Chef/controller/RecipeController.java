@@ -70,8 +70,9 @@ public class RecipeController {
 
     // 상세페이지 뷰
     @GetMapping("/api/recipeboard/view/{id}")
-    public ResponseEntity<Optional<RecipeBoard>> categorySearch(@PathVariable Long id){
-        Optional<RecipeBoard> result = recipeBoardRepository.findById(id);
+    public ResponseEntity<RecipeBoard> categorySearch(@PathVariable Long id){
+        RecipeBoard result = recipeBoardRepository.findById(id).orElse(null);
+        recipeBoardService.click(result);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }

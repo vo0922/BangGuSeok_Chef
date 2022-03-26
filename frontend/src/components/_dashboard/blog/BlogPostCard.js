@@ -74,7 +74,6 @@ export default function BlogPostCard({ category, valueSort }) {
         }
       })
         .then(response => {
-          console.log(response);
           if (!response.data.length) return;
           setItems(prevState => prevState.concat(response.data));
           // setPage(prevState => prevState + 1)
@@ -153,7 +152,7 @@ export default function BlogPostCard({ category, valueSort }) {
               variant="caption"
               sx={{ color: 'text.disabled', display: 'block' }}
             >
-              {data.lastupdated_date}
+              {data.lastupdatedDate.split('T')[0]}
             </Typography>
 
             <TitleStyle

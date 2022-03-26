@@ -40,6 +40,10 @@ public class RecipeBoard {
     @LastModifiedDate
     private LocalDateTime lastupdatedDate;
 
+    public void setClick() {
+        this.click = ++this.click;
+    }
+
     private String category;
 
     private String level;

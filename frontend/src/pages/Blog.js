@@ -16,8 +16,8 @@ import POSTS from '../_mocks_/blog';
 
 const SORT_OPTIONS = [
   { value: 'id', label: '최신순' },
-  { value: 'click', label: '인기순' },
-  { value: 'recommend', label: '조회순' }
+  { value: 'click', label: '조회순' },
+  { value: 'recommend', label: '인기순' }
 ];
 
 // ----------------------------------------------------------------------
