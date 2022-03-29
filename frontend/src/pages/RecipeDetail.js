@@ -6,8 +6,6 @@ import ReactPlayer from 'react-player';
 import { Grid, Button, Container, Stack, Typography, Card, CardMedia, TextField, Avatar, Divider } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import FavoriteIcon from '@mui/icons-material/Favorite';
 
 // components
 import Comments from '../components/_dashboard/blog/comments/Comments';

@@ -22,6 +22,7 @@ public class ReComments {
     private Long id;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "member_id")
     private Member member;
 

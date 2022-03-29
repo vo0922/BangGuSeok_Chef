@@ -3,7 +3,7 @@ import { Link as RouterLink, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 // material
-import { Grid, Button, Container, Stack, Typography, Card, CardMedia, TextField, Avatar, Divider } from '@mui/material';
+import { Grid, Button, Container, Stack, Typography, Card, CardMedia, TextField, Avatar, Divider, IconButton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
@@ -21,7 +21,6 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
         })
             .then(response => {
                 setlickCheck(response.data);
-                console.log(response.data)
             }).catch(err => {
                 console.log(err);
             });
@@ -81,7 +80,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                 />
                 <Stack direction="row" divider={<Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />} alignItems="center" justifyContent="center" spacing={2}>
                     {data.nickname}
-                    {likeCheck === true ? (<FavoriteIcon color='error' onClick={recommendClick} />) : (<FavoriteBorderIcon color='error' onClick={recommendClick} />)}
+                    {likeCheck === true ? (<IconButton ><FavoriteIcon color='error' onClick={recommendClick} /></IconButton>) : (<IconButton><FavoriteBorderIcon color='error' onClick={recommendClick} /></IconButton>)}
                 </Stack>
                 <Typography variant="h3" gutterBottom>
                     {data.title}
