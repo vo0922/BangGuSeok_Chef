@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Grid, Button, Container, Stack, Typography, Card, Box, TextField, Avatar, Collapse } from '@mui/material';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight'
 import ReComments from './ReComments';
 // components
 
