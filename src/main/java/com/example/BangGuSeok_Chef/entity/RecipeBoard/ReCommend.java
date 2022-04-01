@@ -1,7 +1,6 @@
 package com.example.BangGuSeok_Chef.entity.RecipeBoard;
 
 import com.example.BangGuSeok_Chef.entity.Member.Member;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,25 +15,29 @@ import javax.persistence.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReComments {
+public class ReCommend {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    private String content;
+    @JoinColumn(name = "recipe_id")
+    private RecipeBoard recipeNo;
 
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
-    @JoinColumn(name = "comments_id")
-    private Comments comments;
+    @JoinColumn(name = "member_id")
+    private Member memberNo;
+
+    private Boolean checked;
+
+    public void setcheckup() {
+        this.checked = true;
+    }
+
+    public void setcheckdown() {
+        this.checked = false;
+    }
 }

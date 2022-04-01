@@ -46,6 +46,10 @@ public class RecipeBoard {
 
     private String category;
 
+    public void setRecommend(Integer recommend) {
+        this.recommend = recommend;
+    }
+
     private String level;
 
     @Column(columnDefinition = "integer default 0")
