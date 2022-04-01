@@ -10,17 +10,19 @@ export default function CookStepPost() {
       <Typography variant="h5">{cookStepKey}</Typography>
       <Input
         id="cookstep_no"
+        name = "cookstep_no"
         type="hidden"
         value={cookStepKey}
       />
       <TextField
-          id="contents"
+          id="cookstep_contents"
+          name="cookstep_contents"
           label="요리 순서 / 고기를 재운다"
           fullWidth
           multiline
           minRows={3}
       />
-      <Input accept="image/*" id="cookstepimage" type="file" />
+      <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" />
     </Stack>
   ];
 

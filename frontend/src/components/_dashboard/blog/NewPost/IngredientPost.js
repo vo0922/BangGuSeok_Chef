@@ -11,21 +11,18 @@ export default function IngredientPost() {
     <Stack direction="row" spacing={2} sx={{width:1000}} alignItems="center" justifyContent="center" key={ingredientKey}>
       <Typography variant="h5">{ingredientKey}</Typography>
       <Input
-        id="ingredient_no"
         name = "ingredient_no"
         type="hidden"
         value={ingredientKey}
       />
       <TextField 
-        id="ingredient_title"
         name = "ingredient_title"
         label="재료명 / 예) 삼겹살" 
         variant="outlined" 
         fullWidth  
       />
       <TextField 
-        id="amount" 
-        name = "amount"
+        name = "ingredient_amount"
         label="재료양 / 예) 300g" 
         variant="outlined" 
         fullWidth  
@@ -36,7 +33,7 @@ export default function IngredientPost() {
   ingredient = newIngredient;
   
   const [ingredientAdd, setIngredientAdd] = React.useState({
-    body: ingredient
+    body: ""
   });
   
   function handleAdd(e){

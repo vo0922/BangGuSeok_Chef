@@ -4,7 +4,6 @@ import { UserInfoContextStore } from '../../../../context/UserInfoContext';
 
 
 export default function RecipeBoardPost() {
-    const UserInfo = React.useContext(UserInfoContextStore);
     const [category, setCategory] = React.useState('');
     const [level, setLevel] = React.useState('');
 
@@ -15,7 +14,6 @@ export default function RecipeBoardPost() {
         setLevel(event.target.value);
     }
 
-    
     return (
     <Card sx={{margin : 5}} >
         <Typography variant="h5" gutterBottom sx={{marginLeft : 5, marginTop : 5}}>
@@ -40,6 +38,7 @@ export default function RecipeBoardPost() {
                     <Select
                         labelId="categoryLabel"
                         id="category"
+                        name="category"
                         value={category}
                         label="카테고리"
                         onChange={categoryChange}
@@ -65,6 +64,7 @@ export default function RecipeBoardPost() {
                     <Select
                         labelId="levelLabel"
                         id="level"
+                        name="level"
                         value={level}
                         label="난이도"
                         onChange={levelChange}
@@ -77,19 +77,9 @@ export default function RecipeBoardPost() {
             </Stack>
             <Stack direction="row" spacing={2} justifyContent="center" sx={{margin:5, width:1000}}>
             <Typography variant="h6">완성요리 사진</Typography>
-            <Input accept="image/*" id="boardimage" type="file" />
+            <Input accept="image/*" name="boardimage" id="boardimage" type="file" />
             </Stack>
         </Stack>
-        <Input
-            id="author"
-            value={UserInfo.account.email}
-            type="hidden"
-        />
-        <Input
-            id="nickname"
-            value={UserInfo.account.displayName}
-            type="hidden"
-        />
     </Card> 
   )
 }

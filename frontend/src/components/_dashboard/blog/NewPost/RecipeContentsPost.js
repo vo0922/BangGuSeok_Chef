@@ -16,13 +16,15 @@ export default function RecipeContentsPost() {
         >
             <TextField
                 id="introduce"
+                name="introduce"
                 label="요리 소개 / 이 레시피가 특별한 이유를 적어주세요."
                 fullWidth
                 multiline
                 minRows={5}
             />
             <TextField 
-                id="video" 
+                id="video"
+                name="video"
                 label="동영상 주소(유튜브)" 
                 variant="outlined" 
                 fullWidth 
@@ -30,6 +32,7 @@ export default function RecipeContentsPost() {
             
             <TextField
                 id="tip"
+                name="tip"
                 label="요리를 할 때 참고하면 좋은 팁을 적어주세요!"
                 fullWidth
                 multiline
@@ -37,6 +40,7 @@ export default function RecipeContentsPost() {
             />
             <TextField
               id="tag"
+              name="tag"
               label="태그를 입력해주세요! / 예) #김치찌개 #김치"
               fullWidth
               multiline
