@@ -60,7 +60,7 @@ const CoverImgStyle = styled('img')({
 
 // ----------------------------------------------------------------------
 const settings = {
-  arrows:true,
+  arrows: true,
   dots: true,
   infinite: true,
   speed: 500,
@@ -77,21 +77,21 @@ export default function RandomRecipe() {
   const menuimgClick = () => {
     setRandomInt(getRandomIndex(categoryRandom.length))
   }
-  const randomgetimg = async() => {
-    await axios.get(`http://localhost:8080/api/recipeboard/category/${categoryRandom[randomInt]}?page=0&size=4&sort=recommend,desc`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-        .then(response => {
-          setRandomItem(      
-            response.data
-            )
-        }).catch(err => {
-          console.log(err);
-        });
-    }
-  
+  const randomgetimg = async () => {
+    await axios.get(`http://localhost:8080/api/recipeboard/category/${categoryRandom[randomInt]}?page=0&size=3&sort=recommend,desc`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(response => {
+        setRandomItem(
+          response.data
+        )
+      }).catch(err => {
+        console.log(err);
+      });
+  }
+
   useEffect(() => {
     setRandomInt(getRandomIndex(categoryRandom.length))
   }, [])
@@ -102,95 +102,91 @@ export default function RandomRecipe() {
 
   return (
     <Grid container spacing={3}>
-    <Grid item xs={12} sm={6} md={3}>
-    <Typography variant="body" onClick={menuimgClick}>
-      <img src={`/img/main_image/${categoryRandom[randomInt]}.jpg`} style={{ borderRadius: "70%" }} height="200" width="200" alt={categoryRandom[randomInt]} />
-    </Typography>
-    </Grid>
-    <Grid item xs={12} sm={6} md={9}>
-    <Stack direction="row" spacing={3}>
-    {randomItem.map((data) => (
-      <Card sx={{ position: 'relative', borderRadius:"20%" }} key={data.id}>
-        <CardMediaStyle
-          sx={{}}
-        >
-          <SvgIconStyle
-            color="paper"
-            src="/static/icons/shape-avatar.svg"
-            sx={{
-              width: 80,
-              height: 36,
-              zIndex: 9,
-              bottom: -15,
-              position: 'absolute',
-            }}
-          />
-          <AvatarStyle
-            alt={data.title}
-            src={data.member}
-            sx={{}}
-          />
-
-          <CoverImgStyle alt={data.title} src={data.image} />
-        </CardMediaStyle>
-
-        <CardContent
-
-        >
-          <Typography
-              gutterBottom
-              variant="caption"
-              sx={{ color: 'text.disabled', display: 'block' }}>
-              {data.nickname}
-            </Typography>
-          <TitleStyle
-            to={`/home/recipe/board/${data.id}`}
-            color="inherit"
-            variant="subtitle2"
-            underline="hover"
-            component={RouterLink}
-            sx={{
-
-            }}
-          >
-            {data.title}
-          </TitleStyle>
-          <InfoStyle>
-            <Box
+        <Avatar alt={categoryRandom[randomInt]} src={`/img/main_image/${categoryRandom[randomInt]}.jpg`} onClick={menuimgClick} />
+      {randomItem.map((data) => (
+        <Grid item xs={12} sm={12} md={3} key={data.id} >
+          <Card sx={{ maxHeight: 300, maxWidth: 600}} >
+            <CardMediaStyle
               sx={{
-                display: 'flex',
-                alignItems: 'center',
+                '&:after': {
+                  top: 0,
+                  content: "''",
+                  width: '100%',
+                  height: '100%',
+                  position: 'absolute',
+                  bgcolor: (theme) => alpha(theme.palette.grey[900], 0.72)
+                }
               }}
             >
-              <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-              <Typography variant="caption">{fShortenNumber(data.comment)}</Typography>
-            </Box>
-            <Box
+              <CoverImgStyle alt={data.title} src={data.image} />
+            </CardMediaStyle>
+
+            <CardContent
               sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ml: 1.5
+                pt: 4,
+                bottom: 0,
+                width: '100%',
+                position: 'absolute'
               }}
             >
-              <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-              <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                ml: 1.5
-              }}
-            >
-              <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
-              <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
-            </Box>
-          </InfoStyle>
-        </CardContent>
-      </Card>
-    ))} 
-    </Stack>
-    </Grid>
+              <Typography
+                gutterBottom
+                variant="caption"
+                sx={{ color: 'text.disabled', display: 'block' }}
+              >
+                {data.nickname}
+              </Typography>
+
+              <TitleStyle
+                to="#"
+                color="inherit"
+                variant="subtitle2"
+                underline="hover"
+                component={RouterLink}
+                sx={{
+                  typography: 'h5',
+                  color: 'common.white'
+                }}
+              >
+                {data.title}
+              </TitleStyle>
+
+              <InfoStyle>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    ml: 1.5
+                  }}
+                >
+                  <Box component={Icon} icon={messageCircleFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                  <Typography variant="caption">{fShortenNumber(data.comment)}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    ml: 1.5
+                  }}
+                >
+                  <Box component={Icon} icon={eyeFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                  <Typography variant="caption">{fShortenNumber(data.click)}</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    ml: 1.5
+                  }}
+                >
+                  <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                  <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
+                </Box>
+              </InfoStyle>
+            </CardContent>
+          </Card>
+        </Grid>
+      ))}
     </Grid>
   );
 }
