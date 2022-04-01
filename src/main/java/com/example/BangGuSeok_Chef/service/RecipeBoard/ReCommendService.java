@@ -23,10 +23,13 @@ public class ReCommendService {
     public Boolean likeCheck(Long recipe_id, String email) {
         RecipeBoard recipeBoard = recipeBoardRepository.findById(recipe_id).orElse(null);
         Member member = memberRepository.findByEmail(email).orElse(null);
-        if(likeRepository.existsLike(recipeBoard, member)==0) {
+        if(likeRepository.existsRecommend(recipeBoard, member)==0) {
             return false;
         }
-        return true;
+        if(likeRepository.findByRecipeNoAndMemberNo(recipeBoard, member).getChecked()){
+            return true;
+        }
+        return false;
     }
 
     @Transactional
@@ -34,8 +37,8 @@ public class ReCommendService {
         Boolean b = false;
         RecipeBoard recipeBoard = recipeBoardRepository.findById(recipe_id).orElse(null);
         Member member = memberRepository.findByEmail(email).orElse(null);
-        System.out.println("체크체크" + likeRepository.existsLike(recipeBoard, member));
-        if(likeRepository.existsLike(recipeBoard, member)!=0){
+        System.out.println("체크체크" + likeRepository.existsRecommend(recipeBoard, member));
+        if(likeRepository.existsRecommend(recipeBoard, member)!=0){
             ReCommend like = likeRepository.findByRecipeNoAndMemberNo(recipeBoard, member);
             if(like.getChecked()) {
                 like.setcheckdown();
@@ -46,13 +49,13 @@ public class ReCommendService {
                 b = true;
             }
             likeRepository.save(like);
-            Integer count = likeRepository.countByRecipeNo(recipeBoard);
+            Integer count = likeRepository.countByRecipeNoAndChecked(recipeBoard, true);
             recipeBoard.setRecommend(count);
         }else{
             ReCommend like = new ReCommend(null, recipeBoard, member, true);
             likeRepository.save(like);
             b = true;
-            Integer count = likeRepository.countByRecipeNo(recipeBoard);
+            Integer count = likeRepository.countByRecipeNoAndChecked(recipeBoard, true);
             recipeBoard.setRecommend(count);
         }
         return b;

@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 public interface RecommendRepository extends JpaRepository<ReCommend, Long> {
 
     @Query(value="select exists (select *from re_commend where recipe_id = :recipeBoard and member_id = :member)", nativeQuery = true)
-    Integer existsLike(RecipeBoard recipeBoard, Member member);
+    Integer existsRecommend(RecipeBoard recipeBoard, Member member);
 
     ReCommend findByRecipeNoAndMemberNo(RecipeBoard recipeBoard, Member member);
 
-    Integer countByRecipeNo(RecipeBoard recipeBoard);
+    Integer countByRecipeNoAndChecked(RecipeBoard recipeBoard, Boolean bool);
 }

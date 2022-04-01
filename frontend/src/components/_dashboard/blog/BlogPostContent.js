@@ -33,6 +33,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
         })
             .then(response => {
                 setlickCheck(response.data);
+                console.log(response.data);
             }).catch(err => {
                 console.log(err);
             });

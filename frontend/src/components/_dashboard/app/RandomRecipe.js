@@ -102,7 +102,7 @@ export default function RandomRecipe() {
 
   return (
     <Grid container spacing={3}>
-        <Avatar alt={categoryRandom[randomInt]} src={`/img/main_image/${categoryRandom[randomInt]}.jpg`} onClick={menuimgClick} />
+        <Avatar alt={categoryRandom[randomInt]} src={`/img/main_image/${categoryRandom[randomInt]}.jpg`} style={{width:250, height:250}} onClick={menuimgClick} />
       {randomItem.map((data) => (
         <Grid item xs={12} sm={12} md={3} key={data.id} >
           <Card sx={{ maxHeight: 300, maxWidth: 600}} >
