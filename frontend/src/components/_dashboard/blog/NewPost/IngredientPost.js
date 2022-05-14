@@ -1,4 +1,4 @@
-import React from 'react'
+import {React, useEffect, useState} from 'react'
 import { Card, Typography, Stack, TextField, Button, Input } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 
@@ -32,7 +32,7 @@ export default function IngredientPost() {
 
   ingredient = newIngredient;
   
-  const [ingredientAdd, setIngredientAdd] = React.useState({
+  const [ingredientAdd, setIngredientAdd] = useState({
     body: ""
   });
   
@@ -43,6 +43,7 @@ export default function IngredientPost() {
      body : ingredient
    });
   }
+
   
   return (
     <Card sx={{margin : 5}} >

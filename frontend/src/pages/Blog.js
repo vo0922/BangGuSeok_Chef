@@ -48,8 +48,7 @@ export default function Blog() {
           </Typography>
           <Button
             variant="contained"
-            component={RouterLink}
-            to="/home/recipe/newpost"
+            href="/home/recipe/newpost"
             startIcon={<Icon icon={plusFill} />}
           >
             레시피등록
