@@ -2,6 +2,7 @@ package com.example.BangGuSeok_Chef.service;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
+import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +46,7 @@ public class S3Uploader {
 
     public List<String> CookStepUpload(List<MultipartFile> multipartFile, String dirName) throws IOException {
         List<File> uploadFile = new ArrayList<>();
-        for (MultipartFile files: multipartFile) {
+        for (MultipartFile files : multipartFile) {
             uploadFile.add(convert(files)  // 파일 변환할 수 없으면 에러
                     .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail")));
         }
@@ -90,6 +91,11 @@ public class S3Uploader {
         }
 
         return Optional.empty();
+    }
+
+    private void delete(String filename) throws IOException {
+            DeleteObjectRequest request = new DeleteObjectRequest(bucket, filename);
+            amazonS3Client.deleteObject(request);
     }
 }
 

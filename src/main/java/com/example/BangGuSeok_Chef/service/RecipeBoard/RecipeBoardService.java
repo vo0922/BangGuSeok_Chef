@@ -8,6 +8,7 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeContents;
 import com.example.BangGuSeok_Chef.repository.Member.MemberRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
+import com.example.BangGuSeok_Chef.service.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class RecipeBoardService {
 
     private final RecipeBoardRepository recipeBoardRepository;
     private final MemberRepository memberRepository;
+    private final S3Uploader s3Uploader;
 
     // 레시피 생성
     @Transactional

@@ -14,9 +14,6 @@ import { Box, Link, Card, Grid, Stack, Avatar, Typography, CardContent } from '@
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgIconStyle from '../../SvgIconStyle';
-import "./slick.css";
-import "slick-carousel/slick/slick-theme.css";
-
 // ----------------------------------------------------------------------
 
 const CardMediaStyle = styled('div')({
