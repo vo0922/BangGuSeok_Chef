@@ -46,7 +46,7 @@ public class S3Uploader {
 
     public List<String> CookStepUpload(List<MultipartFile> multipartFile, String dirName) throws IOException {
         List<File> uploadFile = new ArrayList<>();
-        for (MultipartFile files: multipartFile) {
+        for (MultipartFile files : multipartFile) {
             uploadFile.add(convert(files)  // 파일 변환할 수 없으면 에러
                     .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail")));
         }
@@ -93,7 +93,7 @@ public class S3Uploader {
         return Optional.empty();
     }
 
-    public void delete(String filename) {
+    private void delete(String filename) throws IOException {
         log.info(filename);
         DeleteObjectRequest request = new DeleteObjectRequest(bucket, filename);
         amazonS3Client.deleteObject(request);

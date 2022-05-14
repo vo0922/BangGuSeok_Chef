@@ -13,14 +13,13 @@ import CookStepPost from '../components/_dashboard/blog/NewPost/CookStepPost';
 import Page from '../components/Page';
 import { UserInfoContextStore } from '../context/UserInfoContext';
 
-
 // ----------------------------------------------------------------------
 const ingredientData = [];
 const cookstepData = [];
 export default function NewPost() {
   const UserInfo = useContext(UserInfoContextStore);
   const navigate = useNavigate();
-
+  
   const handleSubmit = async(e) => {
     e.preventDefault();
     console.log(UserInfo.account);
@@ -64,7 +63,6 @@ export default function NewPost() {
     }
     console.log(JSON.stringify(postData));
     
-    
     await axios.post("http://localhost:8080/api/board/create", formData,
     {
       headers:{
@@ -73,8 +71,14 @@ export default function NewPost() {
       }
     }
   ).then((response) => {
-    alert("레시피 등록이 완료되었습니다.");
-    navigate('/home/recipe', { replace: true });
+    if(response.status === 200){
+      console.log(response);
+      alert("레시피 등록이 완료되었습니다.");
+      navigate('/home/recipe', { replace: true });
+    }
+    else{
+      alert("레시피 등록에 실패했습니다.");
+    }
   }).catch((error) => {
     console.log(error);
   });
