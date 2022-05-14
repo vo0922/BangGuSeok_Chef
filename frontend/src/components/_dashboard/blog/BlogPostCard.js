@@ -5,8 +5,9 @@ import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Link as RouterLink, useParams } from 'react-router-dom';
 import axios from 'axios';
-import shareFill from '@iconify/icons-eva/share-fill';
+import heartfill from '@iconify/icons-eva/heart-fill';
 import messageCircleFill from '@iconify/icons-eva/message-circle-fill';
+
 // material
 import { alpha, styled } from '@mui/material/styles';
 import { Box, Link, Card, Grid, Stack, Avatar, Typography, CardContent } from '@mui/material';
@@ -203,7 +204,7 @@ export default function BlogPostCard({ category, valueSort }) {
                   ml: 1.5
                 }}
               >
-                <Box component={Icon} icon={shareFill} sx={{ width: 16, height: 16, mr: 0.5 }} />
+                <Box component={Icon} icon={heartfill} sx={{ width: 16, height: 16, mr: 0.5 }} />
                 <Typography variant="caption">{fShortenNumber(data.recommend)}</Typography>
               </Box>
             </InfoStyle>

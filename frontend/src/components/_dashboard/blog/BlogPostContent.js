@@ -113,7 +113,12 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                 <Typography variant="h5" sx={{ marginBottom: 3 }}>
                     요리순서
                 </Typography>
-                {data.cookSteps.map ((data, idx) => (
+                {data
+                .cookSteps
+                .sort((a, b) => 
+                a.step_no - b.step_no
+                )
+                .map ((data, idx) => (
                     <Stack direction="row" justifyContent="space-between" mb={3} key={idx}>
                         <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }}>
                             {data.step_no} : {data.contents} <br /><br /><br />
