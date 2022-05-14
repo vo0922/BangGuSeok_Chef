@@ -33,7 +33,6 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
         })
             .then(response => {
                 setlickCheck(response.data);
-                console.log(response.data);
             }).catch(err => {
                 console.log(err);
             });
@@ -50,6 +49,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                 console.log(err);
             });
     }
+
     useEffect(() => {
         recommendCheck();
     }, [])
@@ -64,7 +64,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
             <Card sx={{ width: 1000, padding: 5, textAlign: "center", marginBottom: 5 }}>
                 {UserInfo.account.email === data.author ? (
                     <Typography variant="div">
-                        <Button variant="outlined" size="small">
+                        <Button variant="outlined" size="small" component={RouterLink} to={`/home/recipe/board/modify/${recipeId}`}>
                             레시피 수정
                         </Button>&nbsp;
                         <Button color="error" variant="outlined" size="small" onClick={() => deleteRecipe(data.id)}>
@@ -81,7 +81,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                 />
                 <Stack direction="row" divider={<Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />} alignItems="center" justifyContent="center" spacing={2}>
                     {data.nickname}
-                    {likeCheck === true ? (<IconButton ><FavoriteIcon color='error' onClick={recommendClick} /></IconButton>) : (<IconButton><FavoriteBorderIcon color='error' onClick={recommendClick} /></IconButton>)}
+                    {likeCheck === true ? (<IconButton onClick={recommendClick}><FavoriteIcon color='error' /></IconButton>) : (<IconButton onClick={recommendClick}><FavoriteBorderIcon color='error' /></IconButton>)}
                 </Stack>
                 <Typography variant="h3" gutterBottom>
                     {data.title}

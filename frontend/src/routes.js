@@ -14,6 +14,8 @@ import SocialCallback from './components/authentication/login/SocialCallback';
 import BlogSearch from './pages/BlogSearch';
 import NewPost from './pages/NewPost';
 import RecipeDetail from './pages/RecipeDetail';
+import PostModify from './pages/PostModify';
+
 // ----------------------------------------------------------------------
 
 export default function Router() {
@@ -32,6 +34,7 @@ export default function Router() {
         { path: 'recipe/newpost', element : <NewPost/>},
         { path: 'rank', element: <User /> },
         { path: 'qna', element: <Products />},
+        { path: 'recipe/board/modify/:key', element:<PostModify />},
       ]
     },
     {
