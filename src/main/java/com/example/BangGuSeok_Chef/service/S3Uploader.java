@@ -93,7 +93,7 @@ public class S3Uploader {
         return Optional.empty();
     }
 
-    private void delete(String filename) throws IOException {
+    public void delete(String filename) {
         log.info(filename);
         DeleteObjectRequest request = new DeleteObjectRequest(bucket, filename);
         amazonS3Client.deleteObject(request);
