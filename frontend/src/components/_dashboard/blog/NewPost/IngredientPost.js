@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 
 
 let ingredientKey = 1;
-let ingredient = [];
+let ingredient = [[]];
 export default function IngredientPost() {
   const ingredientData = [];
   const newIngredient = [
@@ -35,6 +35,14 @@ export default function IngredientPost() {
   const [ingredientAdd, setIngredientAdd] = useState({
     body: ""
   });
+
+  useEffect(() => {
+    setIngredientAdd({
+      body : ingredient
+    })
+    ingredientKey += 1;
+  }, [])
+  
   
   function handleAdd(e){
    ingredientKey += 1;

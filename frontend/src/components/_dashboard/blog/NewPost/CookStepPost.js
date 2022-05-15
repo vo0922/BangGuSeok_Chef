@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import { Card, Stack, Typography, TextField, Button, Input } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 
@@ -27,7 +27,7 @@ export default function CookStepPost() {
   ];
 
   cookStep = newCookStep;
-  const [cookStepAdd, setCookStepAdd] = React.useState({
+  const [cookStepAdd, setCookStepAdd] = useState({
     body : ""
   })
 
@@ -38,6 +38,14 @@ export default function CookStepPost() {
       body : cookStep
     })
   }
+
+  useEffect(() => {
+    setCookStepAdd({
+      body : cookStep
+    })
+    cookStepKey += 1;
+  }, [])
+  
 
   return (
     <Card sx={{margin : 5}} >
