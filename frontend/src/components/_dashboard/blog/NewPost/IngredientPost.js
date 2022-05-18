@@ -1,14 +1,12 @@
 import {React, useEffect, useState} from 'react'
 import { Card, Typography, Stack, TextField, Button, Input } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
-
+import RemoveIcon from '@mui/icons-material/Remove';
 
 let ingredientKey = 1;
-let ingredient = [[]];
 export default function IngredientPost() {
-  const ingredientData = [];
   const newIngredient = [
-    <Stack direction="row" spacing={2} sx={{width:1000}} alignItems="center" justifyContent="center" key={ingredientKey}>
+    <Stack direction="row" spacing={2}  width="100%" alignItems="center" justifyContent="center" key={ingredientKey}>
       <Typography variant="h5">{ingredientKey}</Typography>
       <Input
         name = "ingredient_no"
@@ -29,29 +27,24 @@ export default function IngredientPost() {
       />
     </Stack>
   ];
-
-  ingredient = newIngredient;
   
-  const [ingredientAdd, setIngredientAdd] = useState({
-    body: ""
-  });
+  const [ingredientComponent, setIngredientComponent] = useState([]);
 
   useEffect(() => {
-    setIngredientAdd({
-      body : ingredient
-    })
+    setIngredientComponent([newIngredient])
     ingredientKey += 1;
   }, [])
   
-  
   function handleAdd(e){
+   setIngredientComponent([...ingredientComponent, newIngredient]);
    ingredientKey += 1;
-   ingredient = [...ingredientAdd.body, newIngredient];
-   setIngredientAdd({
-     body : ingredient
-   });
   }
 
+  function handleMinus(e){
+    ingredientComponent.pop();
+    setIngredientComponent([...ingredientComponent])
+    ingredientKey -= 1;
+  }
   
   return (
     <Card sx={{margin : 5}} >
@@ -65,10 +58,18 @@ export default function IngredientPost() {
         spacing={4}
         padding={5}
     >
-        {ingredientAdd.body}
-        <Button size="large" variant="outlined" startIcon={<AddIcon />} onClick={() => handleAdd()}>
-          재료 추가
-        </Button>
+        {ingredientComponent}
+        <Stack
+          direction="row"
+          spacing={2}>
+          <Button size="large" variant="outlined" startIcon={<AddIcon />} onClick={() => handleAdd()}>
+            재료 추가
+          </Button>
+          {ingredientKey !== 2 ? 
+          <Button size="large" variant="outlined" startIcon={<RemoveIcon />} onClick={() => handleMinus()}>
+            재료 삭제
+          </Button> : null}        
+        </Stack>        
       </Stack>
     </Card>
   )
