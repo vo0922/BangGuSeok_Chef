@@ -33,6 +33,8 @@ public class ReCommend {
 
     private Boolean checked;
 
+    private String author;
+
     public void setcheckup() {
         this.checked = true;
     }
@@ -40,4 +42,9 @@ public class ReCommend {
     public void setcheckdown() {
         this.checked = false;
     }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
 }

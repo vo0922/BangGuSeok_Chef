@@ -96,7 +96,7 @@ public class RecipeController {
     // 좋아요 클릭
     @GetMapping("api/recipeboard/view/like")
     public Boolean recommendClick(@RequestParam(value = "recipe_id") Long recipe_id, @RequestParam(value = "email") String email) {
-        Boolean bool = reCommendService.likeClike(recipe_id, email);
+        Boolean bool = reCommendService.likeClick(recipe_id, email);
         return bool;
     }
 

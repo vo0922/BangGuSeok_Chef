@@ -38,16 +38,19 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
             });
     }
     const deleteRecipe = async (id) => {
-        await axios.delete(`http://localhost:8080/api/recipeboard/view/delete/${id}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-            .then(response => {
-                navigate("/home/recipe/전체");
-            }).catch(err => {
-                console.log(err);
-            });
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+            await axios.delete(`http://localhost:8080/api/recipeboard/view/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(response => {
+                    alert("삭제 되었습니다.");
+                    navigate("/home/recipe/전체");
+                }).catch(err => {
+                    console.log(err);
+                });
+        }
     }
 
     useEffect(() => {
@@ -114,18 +117,18 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     요리순서
                 </Typography>
                 {data
-                .cookSteps
-                .sort((a, b) => 
-                a.step_no - b.step_no
-                )
-                .map ((data, idx) => (
-                    <Stack direction="row" justifyContent="space-between" mb={3} key={idx}>
-                        <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }}>
-                            {data.step_no} : {data.contents} <br /><br /><br />
-                        </Typography>
-                        <img src={data.image} alt={title} style={{ maxHeight: 250 }} />
-                    </Stack>
-                ))}
+                    .cookSteps
+                    .sort((a, b) =>
+                        a.step_no - b.step_no
+                    )
+                    .map((data, idx) => (
+                        <Stack direction="row" justifyContent="space-between" mb={3} key={idx}>
+                            <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }}>
+                                {data.step_no} : {data.contents} <br /><br /><br />
+                            </Typography>
+                            <img src={data.image} alt={title} style={{ maxHeight: 250 }} />
+                        </Stack>
+                    ))}
             </Card>
         </Grid>
     );

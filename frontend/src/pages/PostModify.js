@@ -21,12 +21,7 @@ export default function PostModify() {
     const recipeId = useParams().key;
     const UserInfo = useContext(UserInfoContextStore);
     const navigate = useNavigate();
-    const [recipedata, setRecipedata] = useState({
-        recipeInfo:[],
-        recipeDetail:[],
-        recipeIngredient:[],
-        recipeStep:[]
-    });
+    const [recipedata, setRecipedata] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -86,7 +81,7 @@ export default function PostModify() {
         });
     }
 
-    useEffect(async ()=>{
+    useEffect(async () => {
         await axios.get(`http://localhost:8080/api/recipeboard/view/${recipeId}`,
             {
                 headers: {
@@ -96,7 +91,7 @@ export default function PostModify() {
             }
         ).then((response) => {
             setRecipedata({
-                recipeInfo: [response.data.title, response.data.category, response.data.level],
+                recipeInfo: [response.data.title, response.data.category, response.data.level, response.data.image],
                 recipeDetail: response.data.recipeContents,
                 recipeIngredient: response.data.ingredients,
                 recipeStep: response.data.cookSteps
@@ -108,33 +103,34 @@ export default function PostModify() {
 
     return (
         <Page title="새로운 레시피 등록 | 방구석 쉐프">
-            <Container>
-                <Typography variant="h4" gutterBottom>
-                    레시피 수정
-                </Typography>
-                <Grid
-                    container
-                    direction="row"
-                    justifyContent="center"
-                    alignItems="flex-start"
-                >
-                    <form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                        <RecipeBoardPost data={recipedata.recipeInfo}/>
-                        <RecipeContentsPost data={recipedata.recipeDetail}/>
-                        <IngredientPost data={recipedata.recipeIngredient}/>
-                        <CookStepPost data={recipedata.recipeStep}/>
-
-                        <Button
-                            fullWidth
-                            size="large"
-                            type="Submit"
-                            variant="contained"
-                        >
-                            등록완료
-                        </Button>
-                    </form>
-                </Grid>
-            </Container>
+            {recipedata &&
+                <Container>
+                    <Typography variant="h4" gutterBottom>
+                        레시피 수정
+                    </Typography>
+                    <Grid
+                        container
+                        direction="row"
+                        justifyContent="center"
+                        alignItems="flex-start"
+                    >
+                        <form autoComplete="off" noValidate onSubmit={handleSubmit}>
+                            <RecipeBoardPost data={recipedata.recipeInfo} />
+                            <RecipeContentsPost data={recipedata.recipeDetail} />
+                            <IngredientPost data={recipedata.recipeIngredient} />
+                            <CookStepPost data={recipedata.recipeStep} />
+                            <Button
+                                fullWidth
+                                size="large"
+                                type="Submit"
+                                variant="contained"
+                            >
+                                등록완료
+                            </Button>
+                        </form>
+                    </Grid>
+                </Container>
+            }
         </Page>
     );
 }
