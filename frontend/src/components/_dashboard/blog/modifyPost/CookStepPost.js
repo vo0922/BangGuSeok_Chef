@@ -2,83 +2,24 @@ import { React, useEffect, useState } from 'react'
 import { Card, Stack, Typography, TextField, Button, Input } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import CookStepImage from './CookStepImage';
 
 let cookStepKey = 1;
 export default function CookStepPost(data) {
-  const [imageSrc, setImageSrc] = useState(data.data.map((data) => ([data.image])));
-  const encodeFileToBase64 = (fileBlob, idx) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(fileBlob);
-    return new Promise((resolve) => {
-      reader.onload = () => {
-        setImageSrc([...imageSrc, imageSrc[idx] = [reader.result]]);
-        setCookStepComponent([...cookStepComponent])
-        resolve();
-      }
-    })
-  }
-  const newCookStep = [
-    <Stack direction="row" spacing={2} sx={{width:1000}} alignItems="center" justifyContent="center" key={cookStepKey}>
-      <Typography variant="h5">{cookStepKey}</Typography>
-      <Input
-        id="cookstep_no"
-        name = "cookstep_no"
-        type="hidden"
-        value={cookStepKey}
-      />
-      <TextField
-          id="cookstep_contents"
-          name="cookstep_contents"
-          label="요리 순서 / 고기를 재운다"
-          fullWidth
-          multiline
-          minRows={3}
-      />
-      <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" onChange={(e) => {
-        encodeFileToBase64(e.target.files[0]);
-      }} />
-      {imageSrc && <img src={imageSrc} alt="preview-img" />}
-    </Stack>
-  ];
-
-  const [cookStepComponent, setCookStepComponent] = useState([])
-
+  const [step, setStep] = useState(data.data.map((data) => ({src : [data.image], content: [data.contents]})));
   useEffect(() => {
-    setCookStepComponent(data.data.map((data, idx)=>([
-      <Stack direction="row" spacing={2} sx={{width:1000}} alignItems="center" justifyContent="center" key={idx+1}>
-      <Typography variant="h5">{idx+1}</Typography>
-      <Input
-        id="cookstep_no"
-        name = "cookstep_no"
-        type="hidden"
-        value={idx+1}
-      />
-      <TextField
-          id="cookstep_contents"
-          name="cookstep_contents"
-          label="요리 순서 / 고기를 재운다"
-          fullWidth
-          multiline
-          defaultValue={data.contents}
-          minRows={3}
-      />
-      <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" onChange={(e) => {
-        encodeFileToBase64(e.target.files[0], idx);
-      }} />
-      {imageSrc && <img src={imageSrc[idx]} alt="preview-img" width={100} height={100} />}
-    </Stack>
-    ])))
     cookStepKey = data.data.length + 1;
   }, [])
   
   const handleAdd = () => {
-    setCookStepComponent([...cookStepComponent, newCookStep]);
+    setStep([...step, {src:"1", content:"1"}]);
+    console.log(step)
     cookStepKey += 1;
   }
 
   function handleMinus(e){
-    cookStepComponent.pop();
-    setCookStepComponent([...cookStepComponent])
+    step.pop();
+    setStep([...step]);
     cookStepKey -= 1;
   }
 
@@ -94,7 +35,7 @@ export default function CookStepPost(data) {
         spacing={4}
         padding={5}
     >
-        {cookStepComponent}
+      {step.map((data, idx) => <CookStepImage src={data.src} idx={idx} content={data.content} key={idx}/>)}
         <Stack
           direction="row"
           spacing={2}>

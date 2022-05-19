@@ -27,4 +27,15 @@ public class RecipeContentsService {
         return recipeContentsRepository.save(recipeContents);
     }
 
+    @Transactional
+    public RecipeContents modify(RecipeDto dto, RecipeBoard recipe_board, Long id) {
+        recipeBoardRepository.findById(dto.getRecipe_id())
+                .orElseThrow(() -> new IllegalArgumentException("레시피 상세 테이블 삽입 실패, 대상 게시글이 없습니다.!"));
+
+        RecipeContents recipeContents = dto.toRecipe_Contents(recipe_board, dto);
+        RecipeContents target = recipeContentsRepository.findContents(id);
+        target.patch(recipeContents);
+
+        return recipeContentsRepository.save(target);
+    }
 }

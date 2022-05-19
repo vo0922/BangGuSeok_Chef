@@ -47,6 +47,24 @@ public class RecipeController {
         return recipeBoardService.join(recipe_board, cookSteps, ingredient, recipeContents);
     }
 
+    // 레시피 수정
+    @PatchMapping("/api/board/modify/{id}")
+    public RecipeBoard modify( @RequestPart(value = "data") RecipeDto dto,
+                               @RequestPart(value = "boardimage")MultipartFile boardimage,
+                               @RequestPart(value = "cookstepimage")List<MultipartFile> cookstepimage,
+                               @PathVariable Long id) throws IOException{
+        dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
+        List<String> cookstepimages = s3Uploader.CookStepUpload(cookstepimage, "cookstepimage");
+
+        RecipeBoard recipe_board = recipeBoardService.modify(dto, id);
+        dto.setrecipe_id(recipe_board.getId());
+        RecipeContents recipeContents = recipeContentsService.modify(dto, recipe_board, dto.getRecipe_id());
+        List<Ingredient> ingredient = ingredientService.modify(dto, recipe_board, dto.getRecipe_id());
+        //List<CookStep> cookSteps = cookStepService.modify(dto, recipe_board, cookstepimages);
+
+        return recipeBoardService.jointest(recipe_board, recipeContents, ingredient);
+    }
+
     // 전체
     @GetMapping("/api/recipeboard")
     public List<RecipeBoardDto> index(Pageable pageable){

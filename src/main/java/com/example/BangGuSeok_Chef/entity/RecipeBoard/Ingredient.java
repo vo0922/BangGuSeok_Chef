@@ -51,4 +51,5 @@ public class Ingredient {
         this.title = title;
         this.amount = amount;
     }
+
 }

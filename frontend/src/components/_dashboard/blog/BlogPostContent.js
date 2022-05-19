@@ -11,6 +11,7 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
+    console.log(data);
     const navigate = useNavigate();
     const [likeCheck, setlickCheck] = useState();
     const recommendClick = async () => {
@@ -96,6 +97,20 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                 </Typography>
             </Card>
 
+            <Card sx={{ width: 1000, padding: 5, textAlign: "center", marginBottom: 5 }}>
+                <Typography variant="h5" gutterBottom sx={{ color: 'text.secondary' }}>
+                    요리소개
+                </Typography>
+                <Typography variant="h6" gutterBottom sx={{ color: 'text.secondary' }}>
+                    {data.recipeContents.introduce}
+                </Typography>
+                <Typography variant="body" gutterBottom>
+                    태그 : {data.recipeContents.tag} &nbsp;&nbsp;
+                </Typography>
+                <Typography variant="body" gutterBottom>
+                    팁 : {data.recipeContents.tag}
+                </Typography>
+            </Card>
 
             <Card sx={{ width: 1000, padding: 5, textAlign: "center", marginBottom: 5 }}>
                 <ReactPlayer style={{ maxWidth: 600, margin: "auto", marginBottom: 5 }} url={data.recipeContents.video} />

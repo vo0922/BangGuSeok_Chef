@@ -91,6 +91,13 @@ public class RecipeBoard {
         this.recipeContents = recipeContents;
     }
 
+    //테스트 조인
+    public void recipejointest( RecipeContents recipeContents, List<Ingredient> ingredients) {
+        this.recipeContents = recipeContents;
+        this.ingredients = ingredients;
+    }
+
+
     @Builder
     public RecipeBoard(String title, String author, String nickname, String image, String category, String level, Integer click, Integer recommend, Integer comment) {
         this.title = title;
@@ -102,5 +109,13 @@ public class RecipeBoard {
         this.click = click;
         this.recommend = recommend;
         this.comment = comment;
+    }
+
+    @Builder
+    public void patch(RecipeBoard recipeBoard){
+        this.title = recipeBoard.title;
+        this.image = recipeBoard.image;
+        this.category = recipeBoard.category;
+        this.level = recipeBoard.level;
     }
 }

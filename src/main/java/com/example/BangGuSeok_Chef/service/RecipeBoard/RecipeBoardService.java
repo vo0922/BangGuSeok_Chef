@@ -38,6 +38,15 @@ public class RecipeBoardService {
         return recipeBoardRepository.save(recipeBoard);
     }
 
+    // 레시피 수정
+    @Transactional
+    public RecipeBoard modify(RecipeDto dto, Long id) {
+        RecipeBoard recipeBoard = dto.toRecipe();
+        RecipeBoard target = recipeBoardRepository.findById(id).orElse(null);
+        target.patch(recipeBoard);
+        return recipeBoardRepository.save(target);
+    }
+
     // 전체
     @Transactional
     public List<RecipeBoardDto> index(Pageable pageable){
@@ -72,6 +81,13 @@ public class RecipeBoardService {
     @Transactional
     public RecipeBoard join(RecipeBoard recipe_board, List<CookStep> cookSteps, List<Ingredient> ingredient, RecipeContents recipeContents) {
         recipe_board.recipejoin(cookSteps, ingredient, recipeContents);
+        return recipeBoardRepository.save(recipe_board);
+    }
+
+    // 수정 테스트
+    @Transactional
+    public RecipeBoard jointest(RecipeBoard recipe_board, RecipeContents recipeContents, List<Ingredient> ingredient) {
+        recipe_board.recipejointest(recipeContents, ingredient);
         return recipeBoardRepository.save(recipe_board);
     }
 

@@ -69,7 +69,7 @@ export default function NewPost() {
       nickname : UserInfo.account.displayName,
       category : e.target.category.value,
       level : e.target.level.value,
-      introduce : e.target.category.value,
+      introduce : e.target.introduce.value,
       click : 0,
       recomment : 0,
       video : e.target.video.value,

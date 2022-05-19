@@ -6,7 +6,6 @@ export default function RecipeBoardPost(data) {
     const [category, setCategory] = React.useState(data.data[1]);
     const [level, setLevel] = React.useState(data.data[2]);
     const [imageSrc, setImageSrc] = React.useState(data.data[3]);
-    const [titleField, setTitleField] = React.useState('');
     const categoryChange = (event) => {
         setCategory(event.target.value);
     };
@@ -87,7 +86,7 @@ export default function RecipeBoardPost(data) {
             </Stack>
             <Stack direction="row" spacing={2} justifyContent="center" sx={{margin:5, width:1000}}>
             <Typography variant="h6">완성요리 사진</Typography>
-            <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" onChange={(e) => {
+            <Input accept="image/*" name="boardimage" id="boardimage" type="file" onChange={(e) => {
             encodeFileToBase64(e.target.files[0]);
             }} />
             </Stack>
