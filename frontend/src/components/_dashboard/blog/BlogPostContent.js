@@ -11,7 +11,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 
 export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
-    console.log(data);
     const navigate = useNavigate();
     const [likeCheck, setlickCheck] = useState();
     const recommendClick = async () => {

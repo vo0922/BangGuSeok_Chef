@@ -83,11 +83,17 @@ export default function PostModify() {
         formData.append("boardimage", e.target.boardimage.files[0]);
 
         if(!e.target.cookstepimage.length){
-            formData.append("cookstepimage", (e.target.cookstepimage.files[0]));
+          if(e.target.cookstepimage.files[0]){
+            formData.append(`imageDtos[0].file`, (e.target.cookstepimage.files[0]));
+          }
+          formData.append(`imageDtos[0].id`, (e.target.cookstep_id.value));
           }
           else{
             for(let i = 0; i < e.target.cookstepimage.length; i+=1){
-              formData.append("cookstepimage", (e.target.cookstepimage[i].files[0]));
+              if(e.target.cookstepimage[i].files[0]){
+                formData.append(`imageDtos[${i}].file`, (e.target.cookstepimage[i].files[0]));
+              }
+              formData.append(`imageDtos[${i}].id`, (e.target.cookstep_id[i].value));
             }
           }
         

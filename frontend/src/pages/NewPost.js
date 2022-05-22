@@ -92,7 +92,7 @@ export default function NewPost() {
     }
     
     console.log(JSON.stringify(postData));
-    
+
     await axios.post("http://localhost:8080/api/board/create", formData,
     {
       headers:{

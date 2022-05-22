@@ -86,8 +86,8 @@ public class RecipeBoardService {
 
     // 수정 테스트
     @Transactional
-    public RecipeBoard jointest(RecipeBoard recipe_board, RecipeContents recipeContents, List<Ingredient> ingredient) {
-        recipe_board.recipejointest(recipeContents, ingredient);
+    public RecipeBoard joinModify(RecipeBoard recipe_board, RecipeContents recipeContents, List<Ingredient> ingredient, List<CookStep> cookSteps) {
+        recipe_board.recipejoinModify(recipeContents, ingredient, cookSteps);
         return recipeBoardRepository.save(recipe_board);
     }
 
@@ -118,5 +118,12 @@ public class RecipeBoardService {
     public void click(RecipeBoard result) {
         result.setClick();
         recipeBoardRepository.save(result);
+    }
+
+    // 원래 이미지 찾기
+    @Transactional
+    public String findImage(Long id) {
+        RecipeBoard recipeBoard = recipeBoardRepository.findById(id).orElse(null);
+        return recipeBoard.getImage();
     }
 }

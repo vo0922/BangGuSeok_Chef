@@ -23,6 +23,12 @@ const [imageSrc, setImageSrc] = useState(data.src);
     
       <Typography variant="h5">{data.idx + 1}</Typography>
       <Input
+        id="cookstep_id"
+        name = "cookstep_id"
+        type="hidden"
+        value={data.id}
+      />
+      <Input
         id="cookstep_no"
         name = "cookstep_no"
         type="hidden"
@@ -34,13 +40,13 @@ const [imageSrc, setImageSrc] = useState(data.src);
           label="요리 순서 / 고기를 재운다"
           fullWidth
           multiline
-          defaultValue={data.content}
+          defaultValue={data.content === " " ? null : data.content}
           minRows={3}
       />
       <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" onChange={(e) => {
         encodeFileToBase64(e.target.files[0]);
       }} />
-      {imageSrc && <img src={imageSrc} alt="preview-img" width={100} height={100} />}
+      {imageSrc !== " " && <img src={imageSrc} alt="preview-img" width={100} height={100} />}
     </Stack>
     }
     </div>

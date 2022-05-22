@@ -6,13 +6,13 @@ import CookStepImage from './CookStepImage';
 
 let cookStepKey = 1;
 export default function CookStepPost(data) {
-  const [step, setStep] = useState(data.data.map((data) => ({src : [data.image], content: [data.contents]})));
+  const [step, setStep] = useState(data.data.map((data) => ({src : [data.image], content: [data.contents], id : data.id, step_no: data.step_no})));
   useEffect(() => {
     cookStepKey = data.data.length + 1;
   }, [])
   
   const handleAdd = () => {
-    setStep([...step, {src:"1", content:"1"}]);
+    setStep([...step, {src:" ", content:" "}]);
     console.log(step)
     cookStepKey += 1;
   }
@@ -35,7 +35,10 @@ export default function CookStepPost(data) {
         spacing={4}
         padding={5}
     >
-      {step.map((data, idx) => <CookStepImage src={data.src} idx={idx} content={data.content} key={idx}/>)}
+      {step.sort((a, b) =>
+        a.step_no - b.step_no
+      )
+      .map((data, idx) => <CookStepImage src={data.src} idx={idx} content={data.content} key={idx} id={data.id}/>)}
         <Stack
           direction="row"
           spacing={2}>

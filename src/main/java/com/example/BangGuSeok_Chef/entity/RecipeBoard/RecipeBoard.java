@@ -92,9 +92,10 @@ public class RecipeBoard {
     }
 
     //테스트 조인
-    public void recipejointest( RecipeContents recipeContents, List<Ingredient> ingredients) {
+    public void recipejoinModify( RecipeContents recipeContents, List<Ingredient> ingredients, List<CookStep> cookSteps) {
         this.recipeContents = recipeContents;
         this.ingredients = ingredients;
+        this.cookSteps = cookSteps;
     }
 
 
