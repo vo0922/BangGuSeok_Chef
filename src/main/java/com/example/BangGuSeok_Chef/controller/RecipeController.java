@@ -8,6 +8,7 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.*;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.*;
 import com.example.BangGuSeok_Chef.service.S3Uploader;
+import com.sun.istack.Nullable;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -42,7 +43,6 @@ public class RecipeController {
 
         dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
         List<String> cookstepimages = s3Uploader.CookStepUpload(cookstepimage, "cookstepimage");
-
         RecipeBoard recipe_board = recipeBoardService.create(dto);
         dto.setrecipe_id(recipe_board.getId());
         RecipeContents recipeContents = recipeContentsService.create(dto, recipe_board);
