@@ -42,4 +42,12 @@ public class RecipeContents {
         this.tag = tag;
         this.tip = tip;
     }
+
+    @Builder
+    public void patch(RecipeContents recipeContents) {
+        this.introduce = recipeContents.introduce;
+        this.video = recipeContents.video;
+        this.tag = recipeContents.tag;
+        this.tip = recipeContents.tip;
+    }
 }

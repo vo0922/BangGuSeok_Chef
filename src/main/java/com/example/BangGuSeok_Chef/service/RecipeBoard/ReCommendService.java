@@ -33,13 +33,15 @@ public class ReCommendService {
     }
 
     @Transactional
-    public Boolean likeClike(Long recipe_id, String email) {
+    public Boolean likeClick(Long recipe_id, String email) {
         Boolean b = false;
         RecipeBoard recipeBoard = recipeBoardRepository.findById(recipe_id).orElse(null);
+
         Member member = memberRepository.findByEmail(email).orElse(null);
         System.out.println("체크체크" + likeRepository.existsRecommend(recipeBoard, member));
         if(likeRepository.existsRecommend(recipeBoard, member)!=0){
             ReCommend like = likeRepository.findByRecipeNoAndMemberNo(recipeBoard, member);
+            like.setAuthor(recipeBoard.getAuthor());
             if(like.getChecked()) {
                 like.setcheckdown();
                 b = false;
@@ -52,7 +54,7 @@ public class ReCommendService {
             Integer count = likeRepository.countByRecipeNoAndChecked(recipeBoard, true);
             recipeBoard.setRecommend(count);
         }else{
-            ReCommend like = new ReCommend(null, recipeBoard, member, true);
+            ReCommend like = new ReCommend(null, recipeBoard, member, true, recipeBoard.getAuthor());
             likeRepository.save(like);
             b = true;
             Integer count = likeRepository.countByRecipeNoAndChecked(recipeBoard, true);

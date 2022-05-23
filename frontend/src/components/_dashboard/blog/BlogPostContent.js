@@ -38,16 +38,19 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
             });
     }
     const deleteRecipe = async (id) => {
-        await axios.delete(`http://localhost:8080/api/recipeboard/view/delete/${id}`, {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`
-            }
-        })
-            .then(response => {
-                navigate("/home/recipe/전체");
-            }).catch(err => {
-                console.log(err);
-            });
+        if (window.confirm("정말 삭제하시겠습니까?")) {
+            await axios.delete(`http://localhost:8080/api/recipeboard/view/delete/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            })
+                .then(response => {
+                    alert("삭제 되었습니다.");
+                    navigate("/home/recipe/전체");
+                }).catch(err => {
+                    console.log(err);
+                });
+        }
     }
 
     useEffect(() => {
@@ -73,7 +76,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     </Typography>
                 ) : (null)}
                 <CardMedia
-                    sx={{ maxWidth: 600, margin: "auto", marginBottom: 5 }}
+                    sx={{ maxWidth: 600, margin: "auto", marginBottom: 5, marginTop: 3 }}
                     component="img"
                     height="400"
                     image={data.image}
@@ -93,6 +96,20 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                 </Typography>
             </Card>
 
+            <Card sx={{ width: 1000, padding: 5, textAlign: "center", marginBottom: 5 }}>
+                <Typography variant="h5" gutterBottom sx={{ color: 'text.secondary' }}>
+                    요리소개
+                </Typography>
+                <Typography variant="h6" gutterBottom sx={{ color: 'text.secondary' }}>
+                    {data.recipeContents.introduce}
+                </Typography>
+                <Typography variant="body" gutterBottom>
+                    태그 : {data.recipeContents.tag} &nbsp;&nbsp;
+                </Typography>
+                <Typography variant="body" gutterBottom>
+                    팁 : {data.recipeContents.tag}
+                </Typography>
+            </Card>
 
             <Card sx={{ width: 1000, padding: 5, textAlign: "center", marginBottom: 5 }}>
                 <ReactPlayer style={{ maxWidth: 600, margin: "auto", marginBottom: 5 }} url={data.recipeContents.video} />
@@ -114,18 +131,18 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     요리순서
                 </Typography>
                 {data
-                .cookSteps
-                .sort((a, b) => 
-                a.step_no - b.step_no
-                )
-                .map ((data, idx) => (
-                    <Stack direction="row" justifyContent="space-between" mb={3} key={idx}>
-                        <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }}>
-                            {data.step_no} : {data.contents} <br /><br /><br />
-                        </Typography>
-                        <img src={data.image} alt={title} style={{ maxHeight: 250 }} />
-                    </Stack>
-                ))}
+                    .cookSteps
+                    .sort((a, b) =>
+                        a.step_no - b.step_no
+                    )
+                    .map((data, idx) => (
+                        <Stack direction="row" justifyContent="space-between" mb={3} key={idx}>
+                            <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 25 }}>
+                                {data.step_no} : {data.contents} <br /><br /><br />
+                            </Typography>
+                            <img src={data.image} alt={title} style={{ maxHeight: 250 }} />
+                        </Stack>
+                    ))}
             </Card>
         </Grid>
     );

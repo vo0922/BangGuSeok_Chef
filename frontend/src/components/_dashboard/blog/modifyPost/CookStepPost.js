@@ -1,42 +1,26 @@
-import React from 'react'
+import { React, useEffect, useState } from 'react'
 import { Card, Stack, Typography, TextField, Button, Input } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
+import CookStepImage from './CookStepImage';
 
 let cookStepKey = 1;
-let cookStep = [];
-export default function CookStepPost() {
-  const newCookStep = [
-    <Stack direction="row" spacing={2} sx={{width:1000}} alignItems="center" justifyContent="center" key={cookStepKey}>
-      <Typography variant="h5">{cookStepKey}</Typography>
-      <Input
-        id="cookstep_no"
-        name = "cookstep_no"
-        type="hidden"
-        value={cookStepKey}
-      />
-      <TextField
-          id="cookstep_contents"
-          name="cookstep_contents"
-          label="요리 순서 / 고기를 재운다"
-          fullWidth
-          multiline
-          minRows={3}
-      />
-      <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" />
-    </Stack>
-  ];
-
-  cookStep = newCookStep;
-  const [cookStepAdd, setCookStepAdd] = React.useState({
-    body : ""
-  })
-
+export default function CookStepPost(data) {
+  const [step, setStep] = useState(data.data.map((data) => ({src : [data.image], content: [data.contents], id : data.id, step_no: data.step_no})));
+  useEffect(() => {
+    cookStepKey = data.data.length + 1;
+  }, [])
+  
   const handleAdd = () => {
+    setStep([...step, {src:" ", content:" "}]);
+    console.log(step)
     cookStepKey += 1;
-    cookStep = [...cookStepAdd.body, newCookStep];
-    setCookStepAdd({
-      body : cookStep
-    })
+  }
+
+  function handleMinus(e){
+    step.pop();
+    setStep([...step]);
+    cookStepKey -= 1;
   }
 
   return (
@@ -51,10 +35,21 @@ export default function CookStepPost() {
         spacing={4}
         padding={5}
     >
-        {cookStepAdd.body}
-        <Button size="large" variant="outlined" startIcon={<AddIcon />} onClick={() => handleAdd()}>
-          요리 순서 추가
-        </Button>
+      {step.sort((a, b) =>
+        a.step_no - b.step_no
+      )
+      .map((data, idx) => <CookStepImage src={data.src} idx={idx} content={data.content} key={idx} id={data.id}/>)}
+        <Stack
+          direction="row"
+          spacing={2}>
+          <Button size="large" variant="outlined" startIcon={<AddIcon />} onClick={() => handleAdd()}>
+            요리 순서 추가
+          </Button>
+          {cookStepKey !== 2 ? 
+            <Button size="large" variant="outlined" startIcon={<RemoveIcon />} onClick={() => handleMinus()}>
+              요리 순서 삭제
+            </Button> : null}
+        </Stack>
       </Stack>
     </Card>
   )

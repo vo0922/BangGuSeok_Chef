@@ -27,4 +27,13 @@ public class IngredientService {
 
         return ingredientRepository.saveAll(ingredient);
     }
+
+    public List<Ingredient> modify(RecipeDto dto, RecipeBoard recipe_board, Long id) {
+        recipeBoardRepository.findById(dto.getRecipe_id())
+                .orElseThrow(() -> new IllegalArgumentException("재료 테이블 삽입 실패! 대상 개시글이 없습니다.!"));
+
+        List<Ingredient> ingredient = dto.toIngredient(dto, recipe_board);
+        ingredientRepository.deleteAll(ingredientRepository.findIngredientRecipe(id));
+        return ingredientRepository.saveAll(ingredient);
+    }
 }

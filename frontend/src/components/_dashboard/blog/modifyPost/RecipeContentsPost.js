@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Typography, Stack, TextField} from '@mui/material'
 
-export default function RecipeContentsPost() {
+export default function RecipeContentsPost(data) {
   return (
     <Card sx={{margin : 5}} >
         <Typography variant="h5" gutterBottom sx={{marginLeft : 5, marginTop : 5}}>
@@ -18,6 +18,7 @@ export default function RecipeContentsPost() {
                 id="introduce"
                 name="introduce"
                 label="요리 소개 / 이 레시피가 특별한 이유를 적어주세요."
+                defaultValue={data.data.introduce}
                 fullWidth
                 multiline
                 minRows={5}
@@ -27,6 +28,7 @@ export default function RecipeContentsPost() {
                 name="video"
                 label="동영상 주소(유튜브)" 
                 variant="outlined" 
+                defaultValue={data.data.video}
                 fullWidth 
             />
             
@@ -36,12 +38,14 @@ export default function RecipeContentsPost() {
                 label="요리를 할 때 참고하면 좋은 팁을 적어주세요!"
                 fullWidth
                 multiline
+                defaultValue={data.data.tip}
                 minRows={5}
             />
             <TextField
               id="tag"
               name="tag"
               label="태그를 입력해주세요! / 예) #김치찌개 #김치"
+              defaultValue={data.data.tag}
               fullWidth
               multiline
               minRows={3}

@@ -38,6 +38,15 @@ public class RecipeBoardService {
         return recipeBoardRepository.save(recipeBoard);
     }
 
+    // 레시피 수정
+    @Transactional
+    public RecipeBoard modify(RecipeDto dto, Long id) {
+        RecipeBoard recipeBoard = dto.toRecipe();
+        RecipeBoard target = recipeBoardRepository.findById(id).orElse(null);
+        target.patch(recipeBoard);
+        return recipeBoardRepository.save(target);
+    }
+
     // 전체
     @Transactional
     public List<RecipeBoardDto> index(Pageable pageable){
@@ -75,6 +84,13 @@ public class RecipeBoardService {
         return recipeBoardRepository.save(recipe_board);
     }
 
+    // 수정 테스트
+    @Transactional
+    public RecipeBoard joinModify(RecipeBoard recipe_board, RecipeContents recipeContents, List<Ingredient> ingredient, List<CookStep> cookSteps) {
+        recipe_board.recipejoinModify(recipeContents, ingredient, cookSteps);
+        return recipeBoardRepository.save(recipe_board);
+    }
+
     // 레시피 삭제
     @Transactional
     public void delete(Long id) {
@@ -102,5 +118,12 @@ public class RecipeBoardService {
     public void click(RecipeBoard result) {
         result.setClick();
         recipeBoardRepository.save(result);
+    }
+
+    // 원래 이미지 찾기
+    @Transactional
+    public String findImage(Long id) {
+        RecipeBoard recipeBoard = recipeBoardRepository.findById(id).orElse(null);
+        return recipeBoard.getImage();
     }
 }

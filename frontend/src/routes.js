@@ -15,6 +15,7 @@ import BlogSearch from './pages/BlogSearch';
 import NewPost from './pages/NewPost';
 import RecipeDetail from './pages/RecipeDetail';
 import PostModify from './pages/PostModify';
+import MyInformation from './pages/MyInformation';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,7 @@ export default function Router() {
         { path: 'rank', element: <User /> },
         { path: 'qna', element: <Products />},
         { path: 'recipe/board/modify/:key', element:<PostModify />},
+        { path: 'myinformation', element: <MyInformation/>},
       ]
     },
     {

@@ -1,5 +1,7 @@
 package com.example.BangGuSeok_Chef.controller;
 
+import com.example.BangGuSeok_Chef.dto.RecipeBoard.CookStepImageDto;
+import com.example.BangGuSeok_Chef.dto.RecipeBoard.ImageDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeDto;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.*;
@@ -11,10 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -34,7 +38,8 @@ public class RecipeController {
     public RecipeBoard post(
             @RequestPart(value = "data") RecipeDto dto,
             @RequestPart(value = "boardimage")MultipartFile boardimage,
-            @RequestPart(value = "cookstepimage")List<MultipartFile> cookstepimage) throws IOException{
+            @RequestPart(value = "cookstepimage") @Nullable List<MultipartFile> cookstepimage) throws IOException{
+
         dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
         List<String> cookstepimages = s3Uploader.CookStepUpload(cookstepimage, "cookstepimage");
 
@@ -45,6 +50,42 @@ public class RecipeController {
         List<CookStep> cookSteps = cookStepService.create(dto, recipe_board, cookstepimages);
 
         return recipeBoardService.join(recipe_board, cookSteps, ingredient, recipeContents);
+    }
+
+    // 레시피 수정
+    @PatchMapping("/api/board/modify/{id}")
+    public RecipeBoard modify( @RequestPart(value = "data") RecipeDto dto,
+                               @RequestPart(value = "boardimage") @Nullable MultipartFile boardimage,
+                               @ModelAttribute CookStepImageDto cookstepimage,
+                               @PathVariable Long id) throws IOException{
+
+        List<ImageDto> image = cookstepimage.getImageDtos();
+        List<String> cookstepimages = new ArrayList<>();
+
+        for(ImageDto i : image){
+            if(i.getFile() != null){
+                cookstepimages.add(s3Uploader.upload(i.getFile(), "cookstepimage"));
+            }else{
+                if(i.getId()!=null)
+                    cookstepimages.add(cookStepService.geturl(i.getId()));
+                else
+                    cookstepimages.add(" ");
+            }
+        }
+
+        if(boardimage != null){
+            dto.setImage(s3Uploader.upload(boardimage, "boardimage"));
+        }else{
+            dto.setImage(recipeBoardService.findImage(id));
+        }
+
+        RecipeBoard recipe_board = recipeBoardService.modify(dto, id);
+        dto.setrecipe_id(recipe_board.getId());
+        RecipeContents recipeContents = recipeContentsService.modify(dto, recipe_board, dto.getRecipe_id());
+        List<Ingredient> ingredient = ingredientService.modify(dto, recipe_board, dto.getRecipe_id());
+        List<CookStep> cookSteps = cookStepService.modify(dto, recipe_board, cookstepimages, dto.getRecipe_id());
+
+        return recipeBoardService.joinModify(recipe_board, recipeContents, ingredient, cookSteps);
     }
 
     // 전체
@@ -96,7 +137,7 @@ public class RecipeController {
     // 좋아요 클릭
     @GetMapping("api/recipeboard/view/like")
     public Boolean recommendClick(@RequestParam(value = "recipe_id") Long recipe_id, @RequestParam(value = "email") String email) {
-        Boolean bool = reCommendService.likeClike(recipe_id, email);
+        Boolean bool = reCommendService.likeClick(recipe_id, email);
         return bool;
     }
 

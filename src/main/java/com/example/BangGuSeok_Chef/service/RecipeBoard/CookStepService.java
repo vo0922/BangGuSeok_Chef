@@ -27,4 +27,21 @@ public class CookStepService {
 
         return cook_stepRepository.saveAll(cookSteps);
     }
+
+    @Transactional
+    public String geturl(Long id) {
+        CookStep cookStep = cook_stepRepository.findById(id).orElse(null);
+        return cookStep.getImage();
+    }
+
+    @Transactional
+    public List<CookStep> modify(RecipeDto dto, RecipeBoard recipe_board, List<String> cookstepimages, Long id) {
+        recipeBoardRepository.findById(dto.getRecipe_id())
+                .orElseThrow(() -> new IllegalArgumentException("레시피 순서 테이블 삽입 실패! 대상 게시글이 없습니다.!"));
+
+        List<CookStep> cookSteps = dto.toCookstep(recipe_board, dto, cookstepimages);
+        cook_stepRepository.deleteAll(cook_stepRepository.findCookStepRecipe(id));
+        return cook_stepRepository.saveAll(cookSteps);
+
+    }
 }
