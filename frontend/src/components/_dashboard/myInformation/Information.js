@@ -15,7 +15,7 @@ export default function Information() {
 
   async function getInformation(){
     console.log(UserInfo.account.email);
-    await axios.get(`http://localhost:8080/api/myinformation/${UserInfo.account.email}`, {
+    await axios.get(`http://localhost:8080/api/myinformation/${localStorage.getItem('authenticatedUser')}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -62,7 +62,6 @@ export default function Information() {
   React.useEffect(() => {
    getInformation(); 
    console.log(UserInfo);
-   
   }, [])
     
 
