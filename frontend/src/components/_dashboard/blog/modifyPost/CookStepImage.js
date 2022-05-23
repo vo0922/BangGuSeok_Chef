@@ -46,7 +46,7 @@ const [imageSrc, setImageSrc] = useState(data.src);
       <Input accept="image/*" id="cookstepimage" name="cookstepimage" type="file" onChange={(e) => {
         encodeFileToBase64(e.target.files[0]);
       }} />
-      {imageSrc !== " " && <img src={imageSrc} alt="preview-img" width={100} height={100} />}
+      {imageSrc !== " " && <img src={imageSrc} alt="preview-img" width="100px" height="100px" />}
     </Stack>
     }
     </div>

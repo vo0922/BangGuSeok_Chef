@@ -156,7 +156,7 @@ export default function PostModify() {
                                 type="Submit"
                                 variant="contained"
                             >
-                                등록완료
+                                수정완료
                             </Button>
                         </form>
                     </Grid>

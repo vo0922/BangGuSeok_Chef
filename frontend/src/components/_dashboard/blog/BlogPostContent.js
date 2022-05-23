@@ -76,7 +76,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     </Typography>
                 ) : (null)}
                 <CardMedia
-                    sx={{ maxWidth: 600, margin: "auto", marginBottom: 5 }}
+                    sx={{ maxWidth: 600, margin: "auto", marginBottom: 5, marginTop: 3 }}
                     component="img"
                     height="400"
                     image={data.image}
