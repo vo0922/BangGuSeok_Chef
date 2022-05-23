@@ -1,19 +1,14 @@
 import React from 'react'
-import { Card, Typography, Stack, TextField} from '@mui/material'
+import { Card, Typography, Stack, TextField, Grid} from '@mui/material'
 
 export default function RecipeContentsPost() {
   return (
-    <Card sx={{margin : 5}} >
+    <Card sx={{paddingBottom : 5, marginBottom : 5}} >
         <Typography variant="h5" gutterBottom sx={{marginLeft : 5, marginTop : 5}}>
             레시피 상세 정보
         </Typography>
-        <Stack 
-            direction="column"
-            justifyContent="space-around"
-            alignItems="center"
-            spacing={4}
-            padding={5}
-        >
+        <Grid container spacing={2} justifyContent="center" alignItems="center" sx={{paddingLeft : 3, paddingRight : 3}}>
+            <Grid item xs={12}>
             <TextField
                 id="introduce"
                 name="introduce"
@@ -22,6 +17,8 @@ export default function RecipeContentsPost() {
                 multiline
                 minRows={5}
             />
+            </Grid>
+            <Grid item xs={12}>
             <TextField 
                 id="video"
                 name="video"
@@ -29,7 +26,8 @@ export default function RecipeContentsPost() {
                 variant="outlined" 
                 fullWidth 
             />
-            
+            </Grid>
+            <Grid item xs={12}>
             <TextField
                 id="tip"
                 name="tip"
@@ -38,6 +36,8 @@ export default function RecipeContentsPost() {
                 multiline
                 minRows={5}
             />
+            </Grid>
+            <Grid item xs={12}>
             <TextField
               id="tag"
               name="tag"
@@ -46,7 +46,8 @@ export default function RecipeContentsPost() {
               multiline
               minRows={3}
             />
-        </Stack>
+            </Grid>
+        </Grid>
     </Card>
   )
 }

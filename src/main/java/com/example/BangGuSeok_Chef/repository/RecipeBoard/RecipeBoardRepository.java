@@ -22,4 +22,13 @@ public interface RecipeBoardRepository extends JpaRepository<RecipeBoard, Long> 
 
     List<RecipeBoard>findByCategoryContaining(String category, Pageable pageable);
 
+    // 사람별 총 조회수 조회
+    @Query(value = "select sum(click) from recipe_board where author= :email", nativeQuery = true)
+    Integer findClickByAuthor(String email);
+
+    // 사람별 총 게시글 수 조회
+    Integer countByAuthor(String email);
+
+    // 사용자 별 게시글 조회
+    List<RecipeBoard>findByAuthor(String email);
 }
