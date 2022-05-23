@@ -102,14 +102,6 @@ public class RecipeBoardService {
         String[] str = recipeImage.split("/");
         String titleImage = str[3] + "/" + str[4];
 
-//        s3Uploader.delete(titleImage);
-//
-//        cookImage.forEach(data -> {
-//            String[] s = data.split("/");
-//            String file = s[3] + "/" + s[4];
-//            s3Uploader.delete(file);
-//        });
-
         recipeBoardRepository.delete(recipeBoard);
     }
 

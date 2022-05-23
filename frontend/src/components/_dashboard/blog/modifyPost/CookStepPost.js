@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from 'react'
-import { Card, Stack, Typography, TextField, Button, Input } from '@mui/material'
+import { Grid, Card, Stack, Typography, TextField, Button, Input } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CookStepImage from './CookStepImage';
@@ -24,33 +24,27 @@ export default function CookStepPost(data) {
   }
 
   return (
-    <Card sx={{margin : 5}} >
+    <Card sx={{paddingBottom:5, marginBottom:5}} >
       <Typography variant="h5" gutterBottom sx={{marginLeft : 5, marginTop : 5}}>
           요리 순서
       </Typography>
-    <Stack 
-        direction="column"
-        justifyContent="space-around"
-        alignItems="center"
-        spacing={4}
-        padding={5}
-    >
+      <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{paddingLeft : 3, paddingRight : 3}}>
+      <Grid item xs={12} md={12}>
       {step.sort((a, b) =>
         a.step_no - b.step_no
       )
       .map((data, idx) => <CookStepImage src={data.src} idx={idx} content={data.content} key={idx} id={data.id}/>)}
-        <Stack
-          direction="row"
-          spacing={2}>
-          <Button size="large" variant="outlined" startIcon={<AddIcon />} onClick={() => handleAdd()}>
+        </Grid>
+        <Grid item xs={12} md={12} align="center">
+          <Button size="large" variant="outlined" startIcon={<AddIcon />}sx={{margin:2}}  onClick={() => handleAdd()}>
             요리 순서 추가
           </Button>
           {cookStepKey !== 2 ? 
-            <Button size="large" variant="outlined" startIcon={<RemoveIcon />} onClick={() => handleMinus()}>
+            <Button size="large" variant="outlined" startIcon={<RemoveIcon />} sx={{margin:2}} onClick={() => handleMinus()}>
               요리 순서 삭제
             </Button> : null}
-        </Stack>
-      </Stack>
+            </Grid>
+      </Grid>
     </Card>
   )
 }
