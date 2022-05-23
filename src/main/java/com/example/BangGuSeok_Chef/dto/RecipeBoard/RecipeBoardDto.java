@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.dto.RecipeBoard;
 
+import com.example.BangGuSeok_Chef.dto.MyInformation.MyPostsDto;
 import com.example.BangGuSeok_Chef.entity.Member.Member;
 import com.example.BangGuSeok_Chef.entity.RecipeBoard.RecipeBoard;
 import lombok.*;
@@ -66,6 +67,12 @@ public class RecipeBoardDto {
                 member.getProfile()
         );
     }
+
+//    public static MyPostsDto createMyPostsDto(RecipeBoard recipeBoard){
+//        return MyPostsDto(
+//                MyPostsDto.get
+//        )
+//    }
 
 
 /*    public Recipe_Board toEntity() {
