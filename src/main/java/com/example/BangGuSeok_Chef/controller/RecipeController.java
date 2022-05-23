@@ -8,7 +8,7 @@ import com.example.BangGuSeok_Chef.entity.RecipeBoard.*;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecipeBoardRepository;
 import com.example.BangGuSeok_Chef.service.RecipeBoard.*;
 import com.example.BangGuSeok_Chef.service.S3Uploader;
-import com.sun.istack.Nullable;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -69,7 +69,7 @@ public class RecipeController {
                 if(i.getId()!=null)
                     cookstepimages.add(cookStepService.geturl(i.getId()));
                 else
-                    cookstepimages.add(" ");
+                    cookstepimages.add("https://recipeboard-image.s3.ap-northeast-2.amazonaws.com/cookstepimage/noimage.png");
             }
         }
 

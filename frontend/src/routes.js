@@ -5,7 +5,7 @@ import LogoOnlyLayout from './layouts/LogoOnlyLayout';
 //
 import Login from './pages/Login';
 import Register from './pages/Register';
-import DashboardApp from './pages/DashboardApp';
+import Home from './pages/Home';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
 import User from './pages/ChefRanking';
@@ -26,7 +26,7 @@ export default function Router() {
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/home/app" replace /> },
-        { path: 'app', element: <DashboardApp /> },
+        { path: 'app', element: <Home /> },
         { path: 'recipe', element: <Navigate to="/home/recipe/전체" replace/>},
         { path: 'recipe/:search', element: <Blog /> },
         { path: 'recipe/search', element: <Navigate to="/home/recipe/전체" replace/>},
