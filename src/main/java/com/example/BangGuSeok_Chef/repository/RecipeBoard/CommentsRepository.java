@@ -8,4 +8,6 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
 
     @Query(value="select count(*) from comments where recipe_id = :id", nativeQuery = true)
     Integer countRecipeId(Long id);
+
+
 }

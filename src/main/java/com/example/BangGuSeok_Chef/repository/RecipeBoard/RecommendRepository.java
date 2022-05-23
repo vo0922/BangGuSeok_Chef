@@ -14,4 +14,8 @@ public interface RecommendRepository extends JpaRepository<ReCommend, Long> {
     ReCommend findByRecipeNoAndMemberNo(RecipeBoard recipeBoard, Member member);
 
     Integer countByRecipeNoAndChecked(RecipeBoard recipeBoard, Boolean bool);
+
+    // 사람별 총 추천 수 조회
+    @Query(value = "select count(checked) from re_commend where checked = 1 and author= :email", nativeQuery = true)
+    Integer countCheckedByAuthor(String email);
 }

@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -29,6 +30,7 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
+    @Transactional
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
@@ -44,7 +46,7 @@ public class S3Uploader {
 
         return uploadImageUrl;
     }
-
+    @Transactional
     public List<String> CookStepUpload(List<MultipartFile> multipartFile, String dirName) throws IOException {
         List<File> uploadFile = new ArrayList<>();
         for (MultipartFile files : multipartFile) {
@@ -57,10 +59,16 @@ public class S3Uploader {
 
     // S3로 파일 업로드하기
     private List<String> CookStepUploads(List<File> uploadFile, String dirName) {
+        String noimageURL = "https://recipeboard-image.s3.ap-northeast-2.amazonaws.com/cookstepimage/noimage.png";
         log.info("cookstepuploads 함수 실행");
         List<String> uploadImageUrl = new ArrayList<>();
         uploadFile.forEach(file -> {
-            uploadImageUrl.add(putS3(file, (dirName + "/" + file.getName())));
+            if(file.getName().contains("noimage")){
+                uploadImageUrl.add(noimageURL);
+            }
+            else{
+                uploadImageUrl.add(putS3(file, (dirName + "/" + file.getName())));
+            }
             removeNewFile(file);
         });
         return uploadImageUrl;

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Stack, Paper, TextField, Typography, FormControl, Select, MenuItem, InputLabel, Input, Button } from '@mui/material'
+import { Card, Stack, Paper, TextField, Typography, FormControl, Select, MenuItem, InputLabel, Input, Button, Grid } from '@mui/material'
 import { UserInfoContextStore } from '../../../../context/UserInfoContext';
 
 
@@ -15,24 +15,20 @@ export default function RecipeBoardPost() {
     }
 
     return (
-    <Card sx={{margin : 5}} >
+    <Card sx={{paddingBottom:5, marginBottom:5 }}>
         <Typography variant="h5" gutterBottom sx={{marginLeft : 5, marginTop : 5}}>
             레시피 정보
         </Typography>
-        <Stack 
-            direction="column"
-            justifyContent="space-around"
-            alignItems="center"
-            spacing={4}
-            padding={5}
-        >
-            <TextField 
-                id="title" 
-                label="레시피 제목 / 예) 맛있는 돼지김치찌개" 
-                variant="outlined" 
-                fullWidth
-            />       
-            <Stack direction="row" spacing={2} sx={{margin:5, width:1000}}>
+        <Grid container spacing={2} alignItems="center" justifyContent="center" sx={{paddingLeft : 3, paddingRight : 3}}>
+            <Grid item xs={12} md={12}>
+                <TextField 
+                    id="title" 
+                    label="레시피 제목 / 예) 맛있는 돼지김치찌개" 
+                    variant="outlined"
+                    fullWidth 
+                />
+            </Grid>
+            <Grid item xs={6} md={6}>
                 <FormControl fullWidth>
                 <InputLabel id="categoryLabel">카테고리</InputLabel>
                     <Select
@@ -59,6 +55,8 @@ export default function RecipeBoardPost() {
                         <MenuItem value="기타">기타</MenuItem>
                     </Select>
                 </FormControl>
+            </Grid>
+            <Grid item xs={6} md={6}>
                 <FormControl fullWidth>
                     <InputLabel id="levelLabel">난이도</InputLabel>
                     <Select
@@ -74,12 +72,14 @@ export default function RecipeBoardPost() {
                         <MenuItem value="하">하</MenuItem>
                     </Select>
                 </FormControl>
-            </Stack>
-            <Stack direction="row" spacing={2} justifyContent="center" sx={{margin:5, width:1000}}>
-            <Typography variant="h6">완성요리 사진</Typography>
-            <Input accept="image/*" name="boardimage" id="boardimage" type="file" />
-            </Stack>
-        </Stack>
+            </Grid>
+            <Grid item xs={6} md={6} align="right">
+                <Typography variant="h6">완성요리 사진</Typography>
+            </Grid>
+            <Grid item xs={6} md={6}>
+                <Input accept="image/*" name="boardimage" id="boardimage" type="file" />
+            </Grid>        
+        </Grid>
     </Card> 
   )
 }

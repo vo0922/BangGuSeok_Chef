@@ -18,7 +18,8 @@ import { UserInfoContextStore } from '../context/UserInfoContext';
 export default function NewPost() {
   const UserInfo = useContext(UserInfoContextStore);
   const navigate = useNavigate();
-  
+  const dummyfile = new File(['noimage'], 'noimage', {type: 'image/png', lastModified: new Date()});
+
   const handleSubmit = async(e) => {
     e.preventDefault();
     const ingredientData = [];
@@ -83,14 +84,23 @@ export default function NewPost() {
     formData.append("boardimage", e.target.boardimage.files[0]);
     // formData.append("cookstepimage", e.target.cookstepimage.files);
     if(!e.target.cookstepimage.length){
-      formData.append("cookstepimage", (e.target.cookstepimage.files[0]));
-    }
-    else{
-      for(let i = 0; i < e.target.cookstepimage.length; i+=1){
-        formData.append("cookstepimage", (e.target.cookstepimage[i].files[0]));
+      if(e.target.cookstepimage.files[0]){
+        formData.append("cookstepimage", (e.target.cookstepimage.files[0]));
+      }else{
+        formData.append("cookstepimage", dummyfile);
       }
     }
-    
+    else{
+      for(let i = 0; i < e.target.cookstep_no.length; i+=1){
+        if(!e.target.cookstepimage[i].files[0]){
+          formData.append("cookstepimage", dummyfile);
+        }else{
+          formData.append("cookstepimage", (e.target.cookstepimage[i].files[0]));
+        }        
+        console.log(e.target.cookstepimage[i].files[0]);
+      }
+    }
+    console.log(formData);
     console.log(JSON.stringify(postData));
     
     await axios.post("http://localhost:8080/api/board/create", formData,
@@ -131,7 +141,7 @@ export default function NewPost() {
               <RecipeContentsPost/>
               <IngredientPost/>
               <CookStepPost/>
-              
+
               <Button
                 fullWidth
                 size="large"
