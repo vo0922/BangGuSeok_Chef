@@ -65,7 +65,6 @@ export default function IngredientPost() {
           <Button size="large" variant="outlined" startIcon={<AddIcon />} sx={{margin : 2}}onClick={() => handleAdd()}>
             재료 추가
           </Button>
-          
           {ingredientKey !== 2 ? 
           <Button size="large" variant="outlined" startIcon={<RemoveIcon />} sx={{margin : 2}} onClick={() => handleMinus()}>
             재료 삭제

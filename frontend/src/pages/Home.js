@@ -15,16 +15,16 @@ export default function Home() {
     <Page title="홈 | Minimal-UI">
       <Container maxWidth="xl">
         <Grid>
-        <Box sx={{ pb: 5 }}>
-          <Typography variant="h4">방구석 셰프</Typography>
-        </Box>
-        <Card sx={{ width: "100%", padding: 5, marginBottom: 5 }}>
-        <Typography variant="h6" sx={{ marginBottom: 5 }}>추천 메뉴!!</Typography>
-        <RandomRecipe />
-        </Card>
-        <Card sx={{ width: "100%", padding: 5, textAlign: "center", marginBottom: 5 }}>
-          <Feed />
-        </Card>
+          <Box sx={{ pb: 5 }}>
+            <Typography variant="h4">방구석 셰프</Typography>
+          </Box>
+          <Card sx={{ width: "100%", padding: 5, marginBottom: 5 }}>
+            <Typography variant="h6" sx={{ marginBottom: 5 }}>추천 메뉴!!</Typography>
+            <RandomRecipe />
+          </Card>
+          <Card sx={{ width: "100%", padding: 5, alignItems:"center",justifyContent:"center",display:"flex", marginBottom: 5 }}>
+            <Feed />
+          </Card>
         </Grid>
       </Container>
     </Page>
