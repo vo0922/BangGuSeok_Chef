@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 
@@ -20,16 +18,18 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "member_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Member followingMember;
+    private String followingEmail;
 
-    @ManyToOne
-    @JoinColumn(name = "email")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Member followedMember;
+    private String followedEmail;
 
     private Boolean followCheck;
+
+    public void unFollow(){
+        this.followCheck = false;
+    }
+
+    public void setFollow(){
+        this.followCheck = true;
+    }
 
 }
