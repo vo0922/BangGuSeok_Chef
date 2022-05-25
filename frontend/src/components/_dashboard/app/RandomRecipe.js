@@ -85,7 +85,6 @@ export default function RandomRecipe() {
       }
     })
       .then(response => {
-        console.log(response)
         setRandomItem(
           response.data.map((data, idx) => (
             <Card sx={{ maxHeight: 200, maxWidth: 300 }} key={idx}>

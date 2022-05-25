@@ -1,36 +1,71 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
-import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import CardActions from '@mui/material/CardActions';
-import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import TextField from '@mui/material/TextField';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import Box from '@mui/material/Box';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useInView } from 'react-intersection-observer';
+import axios from 'axios';
+import { Box, Link, Grid, Avatar, Typography } from '@mui/material';
+
+
+let page = 0;
 
 export default function RandomRecipe() {
+    const [items, setItems] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [ref, inView] = useInView();
+    const getItems = (async () => {
+        setLoading(true);
+        await axios.get(`http://localhost:8080/api/home/recipe/${localStorage.getItem('authenticatedUser')}?page=${page}&size=4`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            }
+        })
+            .then(response => {
+                if (!response.data.length) return;
+                setItems(prevState => prevState.concat(response.data));
+                // setPage(prevState => prevState + 1)
+                page += 1;
+                setLoading(false);
+            }).catch(err => {
+                console.log(err);
+            });
+    })
+
+    useEffect(()=>{
+        page = 0;
+        setItems([]);
+        getItems();
+    }, [])
+
+    useEffect(() => {
+        if (inView && !loading) {
+            getItems();
+        }
+    }, [inView, loading])
 
     return (
-        <Card sx={{ maxWidth: 700 }}>
+        <Grid item>
+        {items.map((data, idx) => (
+            <Card sx={{ width: 700, marginBottom: 5}} ref={ref} key={idx}>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe" />
+                    <Avatar src={data.authorprofile} alt="photoURL" />
                 }
-                title="레시피 제목"
+                title={data.title}
                 sx={{ marginBottom: "15px" }}
             />
             <CardMedia
                 component="img"
                 height="450"
-                image="https://recipeboard-image.s3.ap-northeast-2.amazonaws.com/boardimage/bbf9203c-7b34-4181-952c-b6459ad6f36a%EC%95%88%EC%A3%BC.jpg"
+                image={data.recipeImage}
                 alt="Paella dish"
             />
             <CardActions disableSpacing>
@@ -42,12 +77,13 @@ export default function RandomRecipe() {
                 </IconButton>
             </CardActions>
             <CardContent sx={{ textAlign: "left" }}>
-                <p style={{ fontWeight: "bold", fontSize: "15px", marginBottom: 3 }}> 좋아요 1개</p>
+                <Typography style={{ fontWeight: "bold", fontSize: "15px", marginBottom: 3 }}>좋아요 {data.recommend}개</Typography>
                 <Typography variant="body2" color="text.secondary" sx={{ display: "flex" }}>
-                    <p style={{ fontWeight: "bold" }}> 작성자</p> &nbsp;&nbsp; <p> 작성자글 </p>
+                    <span style={{ fontWeight: "bold" }}>{data.recipeAuthor}</span> &nbsp;&nbsp; 
+                    <span>{data.content}</span>
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    <p style={{ fontSize: "10px" }}> 1시간 전</p>
+                    <span style={{ fontSize: "10px" }}>{data.recipeDate}</span>
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end', marginTop: 2 }}>
                     <AccountCircle sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
@@ -55,5 +91,7 @@ export default function RandomRecipe() {
                 </Box>
             </CardContent>
         </Card>
+        ))}
+        </Grid>
     );
 }
