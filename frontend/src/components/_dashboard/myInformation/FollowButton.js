@@ -7,7 +7,7 @@ const dummyData = {
     followingEmail : "kjmin0551@gmail.com"
 }
 
-export default function Followtest() {
+export default function FollowButton() {
     const [followBtn, setFollowBtn] = React.useState()
     
 
@@ -36,11 +36,15 @@ export default function Followtest() {
         }
       })
       .then(response => {
+        console.log(response);
         if(response.data){
             setFollowBtn(<Button onClick={() => followOnClick()}>팔로우</Button>)    
         }
+        else if(response.data === ""){
+          setFollowBtn(<Button onClick={() => followOnClick()}>팔로우</Button>)   
+        }
         else{
-            setFollowBtn(<Button onClick={() => followOnClick()}>팔로우 취소</Button>)
+          setFollowBtn(<Button onClick={() => followOnClick()}>팔로우 취소</Button>)
         }
         
       }).catch(err => {

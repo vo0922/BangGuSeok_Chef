@@ -9,7 +9,7 @@ import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Page from '../components/Page'
 import Information from '../components/_dashboard/myInformation/Information'
 import MyPosts from '../components/_dashboard/myInformation/MyPosts'
-import Followtest from '../components/_dashboard/myInformation/Followtest';
+import FollowButton from '../components/_dashboard/myInformation/FollowButton';
 
 export default function MyInformation() {
   const [tabValue, setTabValue] = React.useState('1');
@@ -36,7 +36,7 @@ export default function MyInformation() {
             </TabList>
           </Box>
           <TabPanel value="1"><MyPosts/></TabPanel>
-          <TabPanel value="2"><Followtest/></TabPanel>
+          <TabPanel value="2"><FollowButton/></TabPanel>
           <TabPanel value="3">Item Three</TabPanel>
         </TabContext>
         
