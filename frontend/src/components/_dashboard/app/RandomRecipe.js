@@ -75,11 +75,8 @@ export default function RandomRecipe() {
   const getRandomIndex = function (max) {
     return Math.floor(Math.random() * (max - 0)) + 0;
   }
-  const menuimgClick = () => {
-    setRandomInt(getRandomIndex(categoryRandom.length))
-  }
   const randomgetimg = async () => {
-    await axios.get(`http://localhost:8080/api/recipeboard/category/면?page=0&size=10&sort=recommend,desc`, {
+    await axios.get(`http://localhost:8080/api/recipeboard/category/${categoryRandom[randomInt]}?page=0&size=10&sort=recommend,desc`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
