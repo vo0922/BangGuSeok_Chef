@@ -10,6 +10,8 @@ import Page from '../components/Page'
 import Information from '../components/_dashboard/myInformation/Information'
 import MyPosts from '../components/_dashboard/myInformation/MyPosts'
 import FollowButton from '../components/_dashboard/myInformation/FollowButton';
+import Follower from '../components/_dashboard/myInformation/Follower';
+import Following from '../components/_dashboard/myInformation/Following';
 
 export default function MyInformation() {
   const [tabValue, setTabValue] = React.useState('1');
@@ -36,8 +38,8 @@ export default function MyInformation() {
             </TabList>
           </Box>
           <TabPanel value="1"><MyPosts/></TabPanel>
-          <TabPanel value="2"><FollowButton/></TabPanel>
-          <TabPanel value="3">Item Three</TabPanel>
+          <TabPanel value="2"><Follower/></TabPanel>
+          <TabPanel value="3"><Following/></TabPanel>
         </TabContext>
         
       </Container>

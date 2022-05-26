@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Grid, Table, TableBody, TableCell, TableRow, Avatar, Stack, Typography, Button } from '@mui/material';
 import axios from 'axios';
+import FollowButton from './FollowButton';
 
 function createData(name, data) {
   return { name, data };
@@ -22,13 +23,14 @@ export default function Information() {
           <Stack direction="row" spacing={5}>
             <Typography variant='h4'>{response.data.nickname}</Typography>
             <Button variant='outlined' size='small'>프로필 수정</Button>
+            <FollowButton/>
           </Stack>
           <Stack direction="row" spacing={7} sx={{paddingTop : 3}}>
             <Typography variant='subtitle1'>레시피 {response.data.postCount}</Typography>
             <Typography variant='subtitle1'>조회수 {response.data.postView}</Typography>
             <Typography variant='subtitle1'>추천수 {response.data.recommendCount}</Typography>
-            <Typography variant='subtitle1'>팔로워  500</Typography>
-            <Typography variant='subtitle1'>팔로잉  800</Typography>
+            <Typography variant='subtitle1'>팔로워 {response.data.followerCount}</Typography>
+            <Typography variant='subtitle1'>팔로잉 {response.data.followingCount}</Typography>
           </Stack>
         </Stack>
       ])

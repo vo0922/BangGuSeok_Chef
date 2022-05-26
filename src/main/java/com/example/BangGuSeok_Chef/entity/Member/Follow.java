@@ -18,10 +18,13 @@ public class Follow {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="following_email")
     private String followingEmail;
 
+    @Column(name="followed_email")
     private String followedEmail;
 
+    @Column(name="follow_check")
     private Boolean followCheck;
 
     public void unFollow(){
@@ -33,3 +36,7 @@ public class Follow {
     }
 
 }
+
+
+
+

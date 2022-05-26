@@ -26,7 +26,11 @@ public class MyinformationDto {
 
     private Integer recommendCount;
 
-//    private Integer followerCount;
+    private Integer followerCount;
+
+    private Integer followingCount;
+
+
 
 
 }

@@ -4,6 +4,7 @@ import com.example.BangGuSeok_Chef.dto.MyInformation.MyPostsDto;
 import com.example.BangGuSeok_Chef.dto.MyInformation.MyinformationDto;
 import com.example.BangGuSeok_Chef.dto.RecipeBoard.RecipeBoardDto;
 import com.example.BangGuSeok_Chef.entity.Member.Member;
+import com.example.BangGuSeok_Chef.repository.Member.FollowRepository;
 import com.example.BangGuSeok_Chef.repository.Member.MemberRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.CommentsRepository;
 import com.example.BangGuSeok_Chef.repository.RecipeBoard.ReCommentsRepository;
@@ -24,23 +25,17 @@ public class MyInformationService {
     private final RecipeBoardRepository recipeBoardRepository;
     private final CommentsRepository commentsRepository;
     private final RecommendRepository recommendRepository;
+    private final FollowRepository followRepository;
 
     public MyinformationDto information(String email){
         Member member = memberRepository.findByEmail(email).orElse(null);
         Integer click = recipeBoardRepository.findClickByAuthor(email);
         Integer postCount = recipeBoardRepository.countByAuthor(email);
         Integer recommendCount = recommendRepository.countCheckedByAuthor(email);
+        Integer followerCount = followRepository.countByFollower(email);
+        Integer followingCount = followRepository.countByFollowing(email);
 
-        MyinformationDto dto = new MyinformationDto(email, member.getProfile(), member.getNickname(), member.getGender(), member.getAge(), postCount, click, recommendCount);
-
-        dto.setEmail(email);
-        dto.setProfile(member.getProfile());
-        dto.setNickname(member.getNickname());
-        dto.setGender(member.getGender());
-        dto.setAge(member.getAge());
-        dto.setPostCount(postCount);
-        dto.setPostView(click);
-        dto.setRecommendCount(recommendCount);
+        MyinformationDto dto = new MyinformationDto(email, member.getNickname(), member.getGender(), member.getProfile(),  member.getAge(), postCount, click, recommendCount, followerCount, followingCount);
 
         return dto;
     }

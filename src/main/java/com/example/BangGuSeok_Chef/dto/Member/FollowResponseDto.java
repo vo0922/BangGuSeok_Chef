@@ -1,6 +1,5 @@
 package com.example.BangGuSeok_Chef.dto.Member;
 
-import com.example.BangGuSeok_Chef.entity.Member.Member;
 import lombok.*;
 
 @NoArgsConstructor
@@ -8,9 +7,9 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class FollowerDto {
+public class FollowResponseDto {
 
-    private String followedEmail;
+    private String email;
 
     private String profile;
 

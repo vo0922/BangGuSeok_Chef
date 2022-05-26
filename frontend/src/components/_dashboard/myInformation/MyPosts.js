@@ -23,7 +23,7 @@ function createData(id, title, category, click, lastupdatedDate) {
   return { id, title, category, click, lastupdatedDate };
 }
 
-export default function StickyHeadTable() {
+export default function MyPosts() {
 
   const [postRender, setPostRender] = React.useState();
 
