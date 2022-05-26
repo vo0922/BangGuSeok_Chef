@@ -27,4 +27,7 @@ public class FollowRecipeDto {
 
     private Object authorprofile;
 
+    private Object comment;
+
+    private Boolean commendCheck;
 }

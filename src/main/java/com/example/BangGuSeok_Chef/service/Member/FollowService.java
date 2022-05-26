@@ -3,10 +3,12 @@ package com.example.BangGuSeok_Chef.service.Member;
 import com.example.BangGuSeok_Chef.dto.Member.FollowDto;
 import com.example.BangGuSeok_Chef.dto.Member.FollowRecipeDto;
 import com.example.BangGuSeok_Chef.entity.Member.Follow;
+import com.example.BangGuSeok_Chef.entity.RecipeBoard.ReCommend;
 import com.example.BangGuSeok_Chef.repository.Member.FollowRepository;
+import com.example.BangGuSeok_Chef.repository.RecipeBoard.RecommendRepository;
+import com.example.BangGuSeok_Chef.service.RecipeBoard.ReCommendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 public class FollowService {
 
     private final FollowRepository followRepository;
+    private final ReCommendService reCommendService;
 
     @Transactional
     public Follow follow(FollowDto followDto){
@@ -69,6 +72,7 @@ public class FollowService {
                 .stream()
                 .map(
                         o -> {
+                            Boolean reCommend = reCommendService.likeCheck(Long.parseLong(o[0].toString()), email);
                             String str = o[3].toString();
                             String[] oldDay = str.split("[.]");
                             LocalDateTime dateTime = LocalDateTime.parse(
@@ -76,13 +80,12 @@ public class FollowService {
                                     DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
                             );
                             String day = "";
-
                             if(Duration.between(dateTime, LocalDateTime.now()).toDays() != 0){
                                 day = Duration.between(dateTime, LocalDateTime.now()).toDays() + "일 전";
                             }else{
                                 day = Duration.between(dateTime, LocalDateTime.now()).toHours() + "시간 전";
                             }
-                            return followRecipeDtos.add(new FollowRecipeDto(o[0],o[1],o[2],day,o[4],o[5],o[6],o[7],o[8]));
+                            return followRecipeDtos.add(new FollowRecipeDto(o[0],o[1],o[2],day,o[4],o[5],o[6],o[7],o[8],(o[9] != null) ? o[9] : "",reCommend));
                         }
                 ).collect(Collectors.toList());
         return followRecipeDtos;
