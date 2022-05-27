@@ -22,7 +22,7 @@ export default function Information(userEmail) {
         <Stack spacing={2}>
           <Stack direction="row" spacing={5}>
             <Typography variant='h4'>{response.data.nickname}</Typography>
-            <Button variant='outlined' size='small'>프로필 수정</Button>
+            {userEmail.userEmail === localStorage.getItem('authenticatedUser') && <Button variant='outlined' size='small'>프로필 수정</Button>}
             <FollowButton followedUser={userEmail.userEmail}/>
           </Stack>
           <Stack direction="row" spacing={7} sx={{paddingTop : 3}}>
