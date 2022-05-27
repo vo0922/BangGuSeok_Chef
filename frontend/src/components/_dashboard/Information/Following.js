@@ -18,15 +18,15 @@ function createData(profileImage, nickname, email) {
   return { profileImage, nickname, email };
 }
 
-export default function Follower() {
+export default function Following(followingUser) {
 
-  const [followerRender, setFollowerRender] = React.useState();
-  const followedEmail = {
-      followedEmail : localStorage.getItem('authenticatedUser')
+  const [followingRender, setFollowingRender] = React.useState();
+  const followingEmail = {
+      followingEmail : followingUser.followingUser
   };
 
-  async function getFollower(){  
-    await axios.post(`http://localhost:8080/api/follower`, followedEmail, {
+  async function getFollowing(){  
+    await axios.post(`http://localhost:8080/api/following`, followingEmail, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -37,14 +37,14 @@ export default function Follower() {
           rows.push(createData(row.profile, row.nickname, row.email))
       ));
 
-      setFollowerRender(
+      setFollowingRender(
           rows.map((row) => (
               <TableRow key={row.email}>
                   <TableCell sx={{width:50}} component="th" scope="row">
                       <Avatar alt="profileImage" src={row.profileImage} />
                   </TableCell>
-                  <TableCell component="th" scope="row" align='center'><Typography variant="h6">{row.nickname}</Typography></TableCell>
-                  <TableCell component="th" scope="row"><Button onClick={() => onDelete(row.email)} variant="outlined">삭제</Button></TableCell>
+                  <TableCell component="th" scope="row" align='center'><a href={`/home/userinformation/${row.email}`}><Typography variant="h6">{row.nickname}</Typography></a></TableCell>
+                  {followingEmail.followingEmail === localStorage.getItem('authenticatedUser') && <TableCell component="th" scope="row"><Button onClick={() => onDelete(row.email)} color="error">삭제</Button></TableCell>}
               </TableRow>
           ))
       )
@@ -55,24 +55,24 @@ export default function Follower() {
   }
 
   async function onDelete(deleteEmail){
-    const data = {
-        followedEmail : localStorage.getItem('authenticatedUser'),
-        followingEmail : deleteEmail
-    }
-  await axios.post(`http://localhost:8080/api/follow`, data, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
+      const data = {
+          followedEmail : deleteEmail,
+          followingEmail : localStorage.getItem('authenticatedUser')
       }
-    })
-    .then(response => {
-     getFollower();
-    }).catch(err => {
-        console.log(err);
-    });
-}
+    await axios.post(`http://localhost:8080/api/follow`, data, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
+      .then(response => {
+       getFollowing();
+      }).catch(err => {
+          console.log(err);
+      });
+  }
 
   React.useEffect(() => {
-    getFollower();
+    getFollowing();
   }, [])
   
   
@@ -82,7 +82,7 @@ export default function Follower() {
       <TableContainer sx={{ maxHeight: 440, maxWidth:300 }}>
         <Table aria-label="Follower Table">
           <TableBody>
-            {followerRender}
+            {followingRender}
           </TableBody>
         </Table>
       </TableContainer>

@@ -7,12 +7,12 @@ function createData(name, data) {
   return { name, data };
 }
 
-export default function Information() {
+export default function Information(userEmail) {
   const [informationRender, setInformationRender] = React.useState();
   const [avatarRender, setAvatarRender] = React.useState();
 
   async function getInformation(){
-    await axios.get(`http://localhost:8080/api/myinformation/${localStorage.getItem('authenticatedUser')}`, {
+    await axios.get(`http://localhost:8080/api/myinformation/${userEmail.userEmail}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -23,7 +23,7 @@ export default function Information() {
           <Stack direction="row" spacing={5}>
             <Typography variant='h4'>{response.data.nickname}</Typography>
             <Button variant='outlined' size='small'>프로필 수정</Button>
-            <FollowButton/>
+            <FollowButton followedUser={userEmail.userEmail}/>
           </Stack>
           <Stack direction="row" spacing={7} sx={{paddingTop : 3}}>
             <Typography variant='subtitle1'>레시피 {response.data.postCount}</Typography>

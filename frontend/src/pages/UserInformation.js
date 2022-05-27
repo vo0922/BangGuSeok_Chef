@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Typography, Tabs, Tab, Box } from '@mui/material'
+import { useParams } from 'react-router-dom';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
@@ -13,7 +14,8 @@ import FollowButton from '../components/_dashboard/Information/FollowButton';
 import Follower from '../components/_dashboard/Information/Follower';
 import Following from '../components/_dashboard/Information/Following';
 
-export default function MyInformation() {
+export default function UserInformation() {
+  const userEmail = useParams().email;
   const [tabValue, setTabValue] = React.useState('1');
 
   const tabChange = (event, newValue) => {
@@ -27,7 +29,7 @@ export default function MyInformation() {
             내 정보
         </Typography>
         
-        <Information userEmail={localStorage.getItem('authenticatedUser')}/>
+        <Information userEmail={userEmail}/>
 
         <TabContext value={tabValue}>
           <Box sx={{borderBottom: 2, borderColor: 'divider', marginTop:3 }} alignContent="center"  >
@@ -37,9 +39,9 @@ export default function MyInformation() {
               <Tab label="팔로잉" value='3'/>
             </TabList>
           </Box>
-          <TabPanel value="1"><UserPosts userEmail={localStorage.getItem('authenticatedUser')}/></TabPanel>
-          <TabPanel value="2"><Follower followedUser={localStorage.getItem('authenticatedUser')}/></TabPanel> 
-          <TabPanel value="3"><Following followingUser={localStorage.getItem('authenticatedUser')}/></TabPanel>
+          <TabPanel value="1"><UserPosts userEmail={userEmail}/></TabPanel>
+          <TabPanel value="2"><Follower followedUser={userEmail}/></TabPanel> 
+          <TabPanel value="3"><Following followingUser={userEmail}/></TabPanel>
         </TabContext>
         
       </Container>

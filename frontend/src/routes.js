@@ -16,6 +16,7 @@ import NewPost from './pages/NewPost';
 import RecipeDetail from './pages/RecipeDetail';
 import PostModify from './pages/PostModify';
 import MyInformation from './pages/MyInformation';
+import UserInformation from './pages/UserInformation';
 
 // ----------------------------------------------------------------------
 
@@ -37,6 +38,7 @@ export default function Router() {
         { path: 'qna', element: <Products />},
         { path: 'recipe/board/modify/:key', element:<PostModify />},
         { path: 'myinformation', element: <MyInformation/>},
+        { path: 'userinformation/:email', element: <UserInformation/>}
       ]
     },
     {

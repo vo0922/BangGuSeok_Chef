@@ -9,24 +9,26 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
-import { Link  } from 'react-router-dom';
+import { Link, useNavigate  } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { Button, Container } from '@mui/material';
+import { replace } from 'lodash';
 
 
 function createData(profileImage, nickname, email) {
   return { profileImage, nickname, email };
 }
 
-export default function Following() {
-
-  const [followingRender, setFollowingRender] = React.useState();
-  const followingEmail = {
-      followingEmail : localStorage.getItem('authenticatedUser')
+export default function Follower(followedUser) {
+  const navigate = useNavigate();
+  const [followerRender, setFollowerRender] = React.useState();
+  const followedEmail = {
+      followedEmail : followedUser.followedUser
   };
 
-  async function getFollowing(){  
-    await axios.post(`http://localhost:8080/api/following`, followingEmail, {
+
+  async function getFollower(){  
+    await axios.post(`http://localhost:8080/api/follower`, followedEmail, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -37,14 +39,14 @@ export default function Following() {
           rows.push(createData(row.profile, row.nickname, row.email))
       ));
 
-      setFollowingRender(
+      setFollowerRender(
           rows.map((row) => (
               <TableRow key={row.email}>
                   <TableCell sx={{width:50}} component="th" scope="row">
                       <Avatar alt="profileImage" src={row.profileImage} />
                   </TableCell>
-                  <TableCell component="th" scope="row" align='center'><Typography variant="h6">{row.nickname}</Typography></TableCell>
-                  <TableCell component="th" scope="row"><Button onClick={() => onDelete(row.email)} variant="outlined">삭제</Button></TableCell>
+                  <TableCell component="th" scope="row" align='center'><a href={`/home/userinformation/${row.email}`}><Typography variant="h6">{row.nickname}</Typography></a></TableCell>
+                  {followedEmail.followedEmail === localStorage.getItem('authenticatedUser') && <TableCell component="th" scope="row"><Button onClick={() => onDelete(row.email)} color="error">삭제</Button></TableCell>}
               </TableRow>
           ))
       )
@@ -55,24 +57,24 @@ export default function Following() {
   }
 
   async function onDelete(deleteEmail){
-      const data = {
-          followedEmail : deleteEmail,
-          followingEmail : localStorage.getItem('authenticatedUser')
+    const data = {
+        followedEmail : localStorage.getItem('authenticatedUser'),
+        followingEmail : deleteEmail
+    }
+  await axios.post(`http://localhost:8080/api/follow`, data, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
       }
-    await axios.post(`http://localhost:8080/api/follow`, data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
-      .then(response => {
-       getFollowing();
-      }).catch(err => {
-          console.log(err);
-      });
-  }
+    })
+    .then(response => {
+     getFollower();
+    }).catch(err => {
+        console.log(err);
+    });
+}
 
   React.useEffect(() => {
-    getFollowing();
+    getFollower();
   }, [])
   
   
@@ -82,7 +84,7 @@ export default function Following() {
       <TableContainer sx={{ maxHeight: 440, maxWidth:300 }}>
         <Table aria-label="Follower Table">
           <TableBody>
-            {followingRender}
+            {followerRender}
           </TableBody>
         </Table>
       </TableContainer>

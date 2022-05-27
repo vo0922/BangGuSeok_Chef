@@ -23,12 +23,12 @@ function createData(id, title, category, click, lastupdatedDate) {
   return { id, title, category, click, lastupdatedDate };
 }
 
-export default function MyPosts() {
+export default function MyPosts(userEmail) {
 
   const [postRender, setPostRender] = React.useState();
 
   async function getMyposts(){  
-    await axios.get(`http://localhost:8080/api/myinformation/posts/${localStorage.getItem('authenticatedUser')}`, {
+    await axios.get(`http://localhost:8080/api/myinformation/posts/${userEmail.userEmail}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -43,7 +43,7 @@ export default function MyPosts() {
         rows.map((row) => (
             <TableRow key={row.id}>
                 <TableCell component="th" scope="row">{row.id}</TableCell>
-                <TableCell component="th" scope="row"><Link to={"../recipe/board/".concat(row.id)}>{row.title}</Link></TableCell>
+                <TableCell component="th" scope="row"><Link to={"/home/recipe/board/".concat(row.id)}>{row.title}</Link></TableCell>
                 <TableCell component="th" scope="row">{row.category}</TableCell>
                 <TableCell component="th" scope="row">{row.click}</TableCell>
                 <TableCell component="th" scope="row">{row.lastupdatedDate}</TableCell>
