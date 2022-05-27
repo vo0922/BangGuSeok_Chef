@@ -7,11 +7,11 @@ import PhoneIcon from '@mui/icons-material/Phone';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import PersonPinIcon from '@mui/icons-material/PersonPin';
 import Page from '../components/Page'
-import Information from '../components/_dashboard/Information/Information'
-import UserPosts from '../components/_dashboard/Information/UserPosts'
-import FollowButton from '../components/_dashboard/Information/FollowButton';
-import Follower from '../components/_dashboard/Information/Follower';
-import Following from '../components/_dashboard/Information/Following';
+import Information from '../components/_dashboard/UserInformation/Information'
+import UserPosts from '../components/_dashboard/UserInformation/UserPosts'
+import FollowButton from '../components/_dashboard/UserInformation/FollowButton';
+import Follower from '../components/_dashboard/UserInformation/Follower';
+import Following from '../components/_dashboard/UserInformation/Following';
 
 export default function MyInformation() {
   const [tabValue, setTabValue] = React.useState('1');
