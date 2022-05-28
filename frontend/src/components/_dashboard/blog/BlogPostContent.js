@@ -83,7 +83,9 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     alt="Paella dish"
                 />
                 <Stack direction="row" divider={<Divider orientation="vertical" flexItem sx={{ marginLeft: 2 }} />} alignItems="center" justifyContent="center" spacing={2}>
-                    {data.nickname}
+                    <RouterLink to={`/home/userinformation/${data.author}`} style={{color:"black"}}>
+                        {data.nickname}
+                    </RouterLink>
                     {likeCheck === true ? (<IconButton onClick={recommendClick}><FavoriteIcon color='error' /></IconButton>) : (<IconButton onClick={recommendClick}><FavoriteBorderIcon color='error' /></IconButton>)}
                 </Stack>
                 <Typography variant="h3" gutterBottom>

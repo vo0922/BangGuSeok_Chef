@@ -18,4 +18,5 @@ public class FollowDto {
 
     private String followingEmail;
 
+
 }

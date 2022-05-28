@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
+import {Link} from 'react-router-dom'
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
@@ -11,12 +12,13 @@ import TextField from '@mui/material/TextField';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import { useInView } from 'react-intersection-observer';
 import axios from 'axios';
-import { Box, Link, Grid, Avatar, Typography, Button, Input, Stack } from '@mui/material';
+import { Box, Grid, Avatar, Typography, Button, Input, Stack } from '@mui/material';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import { Icon } from '@iconify/react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { fShortenNumber } from '../../../utils/formatNumber'
+
 
 let page = 0;
 
@@ -33,7 +35,6 @@ export default function RandomRecipe() {
             }
         })
             .then(response => {
-                console.log(response.data);
                 if (!response.data.length) return;
                 setItems(prevState => prevState.concat(response.data));
                 // setPage(prevState => prevState + 1)
@@ -100,7 +101,9 @@ export default function RandomRecipe() {
                 <Card sx={{ maxWidth: 600, marginBottom: 5 }} ref={ref} key={idx}>
                     <CardHeader
                         avatar={
-                            <Avatar src={data.authorprofile} alt="photoURL" />
+                            <Link to={`/home/userinformation/${data.author}`}>
+                            <Avatar src={data.authorprofile} alt="photoURL"/>
+                            </Link>
                         }
                         title={<a href={`./recipe/board/${data.recipeId}`} style={{ textDecorationLine: "none", color: "black" }}>{data.title}</a>}
                         sx={{ marginBottom: "15px" }}
@@ -114,9 +117,6 @@ export default function RandomRecipe() {
                     <CardActions disableSpacing>
                         <IconButton aria-label="add to favorites" onClick={() => recommendClick(data.recipeId)}>
                             {data.commendCheck === true ? (<FavoriteIcon />) : (<FavoriteBorderIcon />)}
-                        </IconButton>
-                        <IconButton aria-label="share">
-                            <ShareIcon />
                         </IconButton>
                     </CardActions>
                     <CardContent sx={{ textAlign: "left" }}>
