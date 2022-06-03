@@ -1,49 +1,55 @@
-import { filter } from 'lodash';
-import { Icon } from '@iconify/react';
-import { sentenceCase } from 'change-case';
-import { useState } from 'react';
-import plusFill from '@iconify/icons-eva/plus-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 // material
 import {
   Card,
-  Table,
   Stack,
   Avatar,
-  ButtonGroup,
-  Button,
-  Checkbox,
-  TableRow,
-  TableBody,
-  TableCell,
+  ToggleButton,
+  ToggleButtonGroup,
   Container,
   Typography,
   Badge,
-  TableContainer,
-  TablePagination
+  Grid,
+  TextField,
+  InputAdornment,
+  Box
 } from '@mui/material';
+import { Icon } from '@iconify/react';
+import searchFill from '@iconify/icons-eva/search-fill';
 // components
 import Page from '../components/Page';
-import Label from '../components/Label';
-import Scrollbar from '../components/Scrollbar';
-import SearchNotFound from '../components/SearchNotFound';
-import { UserListHead, UserListToolbar, UserMoreMenu } from '../components/_dashboard/user';
-//
-import USERLIST from '../_mocks_/user';
+import ChefSearch from '../components/_dashboard/ChefRank/ChefSearch';
 
 // ----------------------------------------------------------------------
 
 
 export default function ChefRanking() {
-  const [selected, setSelected] = useState([]);
-  const [filterName, setFilterName] = useState('');
 
+  const [buttonValue, setButtonValue] = useState('1');
+  const [item, setItem] = useState();
 
-  const handleFilterByName = (event) => {
-    setFilterName(event.target.value);
-  };
+  const buttonClick = (e, newValue) => {
+    setButtonValue(newValue);
+  }
 
+  const getItem = async () => {
+    await axios.get(`http://localhost:8080/api/rank/${buttonValue}?size=10&page=0`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`
+      }
+    })
+      .then(response => {
+        setItem(response.data);
+      }).catch(err => {
+        console.log(err);
+      });
+  }
 
+  useEffect(() => {
+    getItem();
+  }, [buttonValue]);
 
   return (
     <Page title="쉐프랭킹 | 방구석쉐프">
@@ -52,37 +58,75 @@ export default function ChefRanking() {
           <Typography variant="h4" gutterBottom>
             쉐프 랭킹
           </Typography>
-          <ButtonGroup variant="outlined" aria-label="outlined button group">
-          <Button to="#">추천 수</Button>
-          <Button to="#">게시글 수</Button>
-          <Button to="#">조회 수</Button>
-          </ButtonGroup>
+          <ToggleButtonGroup
+            color="primary"
+            value={buttonValue}
+            exclusive
+            onChange={buttonClick}
+          >
+            <ToggleButton value="1">추천 수</ToggleButton>
+            <ToggleButton value="2">조회 수</ToggleButton>
+            <ToggleButton value="3">팔로우 수</ToggleButton>
+          </ToggleButtonGroup>
         </Stack>
-
         <Card>
-          <UserListToolbar
-            numSelected={selected.length}
-            filterName={filterName}
-            onFilterName={handleFilterByName}
-          />
-
-          <Scrollbar>
-            <Badge 
-              color="secondary" 
-              badgeContent="0"
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left'
-              }}
-              sx={{margin:10}}
-            >
-              <Avatar
-                alt="Remy Sharp"
-                src=""
-                sx={{ width: 200, height: 200 }}
-              />
-            </Badge>
-          </Scrollbar>
+          <ChefSearch />
+          <Grid container>
+            {item && item.map((data, idx) => (
+              idx < 3 ? (
+                <Grid item xs={4} key={idx}>
+                  <Badge
+                    color="secondary"
+                    badgeContent={idx + 1}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left'
+                    }}
+                    sx={{ margin: 4 }}
+                  >
+                    <Grid>
+                      <Link to={`/home/userinformation/${data.email}`}>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={data.profile}
+                          sx={{ width: 150, height: 150, margin: 2 }}
+                        />
+                      </Link>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {data.nickname}
+                      </Typography>
+                    </Grid>
+                  </Badge>
+                </Grid>
+              ) : (
+                <Grid item xs={3} key={idx}>
+                  <Badge
+                    color="secondary"
+                    badgeContent={idx + 1}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'left'
+                    }}
+                    sx={{ margin: 4 }}
+                  >
+                    <Grid>
+                      <Link to={`/home/userinformation/${data.email}`}>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={data.profile}
+                          sx={{ width: 100, height: 100, margin: 2 }}
+                        />
+                      </Link>
+                      <Typography sx={{ textAlign: "center" }}>
+                        {data.nickname}
+                      </Typography>
+                    </Grid>
+                  </Badge>
+                </Grid>
+              )
+            ))
+            }
+          </Grid>
         </Card>
       </Container>
     </Page>

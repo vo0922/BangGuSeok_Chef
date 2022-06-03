@@ -8,7 +8,7 @@ import Register from './pages/Register';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Blog from './pages/Blog';
-import User from './pages/ChefRanking';
+import ChefRanking from './pages/ChefRanking';
 import NotFound from './pages/Page404';
 import SocialCallback from './components/authentication/login/SocialCallback';
 import BlogSearch from './pages/BlogSearch';
@@ -17,7 +17,11 @@ import RecipeDetail from './pages/RecipeDetail';
 import PostModify from './pages/PostModify';
 import MyInformation from './pages/MyInformation';
 import UserInformation from './pages/UserInformation';
+<<<<<<< HEAD
 import UpdateInformation from './pages/UpdateInformation';
+=======
+import ChefRankingSearch from './pages/ChefRankingSearch';
+>>>>>>> 5a4e004d2e927285dfb8535056aac94e782179fb
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +39,8 @@ export default function Router() {
         { path: 'recipe/search/:search', element: <BlogSearch />},
         { path: 'recipe/board/:key', element: <RecipeDetail/>},
         { path: 'recipe/newpost', element : <NewPost/>},
-        { path: 'rank', element: <User /> },
+        { path: 'rank', element: <ChefRanking /> },
+        { path: 'rank/search/:search', element: <ChefRankingSearch /> },
         { path: 'qna', element: <Products />},
         { path: 'recipe/board/modify/:key', element:<PostModify />},
         { path: 'myinformation', element: <MyInformation/>},

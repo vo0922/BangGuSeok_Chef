@@ -134,11 +134,13 @@ export default function BlogPostCard({ category, valueSort }) {
                 position: 'absolute',
               }}
             />
-            <AvatarStyle
-              alt={data.title}
-              src={data.member}
-              sx={{}}
-            />
+            <RouterLink to={`/home/userinformation/${data.author}`}>
+              <AvatarStyle
+                alt={data.title}
+                src={data.member}
+                sx={{}}
+              />
+            </RouterLink>
 
             <CoverImgStyle alt={data.title} src={data.image} />
           </CardMediaStyle>
