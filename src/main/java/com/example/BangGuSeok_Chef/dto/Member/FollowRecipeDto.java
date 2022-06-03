@@ -30,4 +30,6 @@ public class FollowRecipeDto {
     private Object comment;
 
     private Boolean commendCheck;
+
+    private Object author;
 }

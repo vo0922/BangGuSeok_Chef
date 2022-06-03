@@ -9,14 +9,13 @@ import lombok.ToString;
 @AllArgsConstructor
 @Getter
 @ToString
-public class FollowDto {
+public class ChefRankDto {
+
     private Long Id;
 
-    private Boolean followCheck;
+    private String email;
 
-    private String followedEmail;
+    private String nickname;
 
-    private String followingEmail;
-
-
+    private String profile;
 }

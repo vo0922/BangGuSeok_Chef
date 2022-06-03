@@ -19,13 +19,11 @@ import java.util.List;
 public class RecipeFollowController {
     private final FollowService followService;
 
-
     // 팔로우 게시글
     @GetMapping("/api/home/recipe/{keyword}")
     public List<FollowRecipeDto> homeFeed(Pageable pageable, @PathVariable String keyword){
         List<FollowRecipeDto> page = followService.view(pageable, keyword);
         return page;
     }
-
 
 }

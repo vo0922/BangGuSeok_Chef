@@ -109,7 +109,7 @@ public class FollowService {
                             }else{
                                 day = Duration.between(dateTime, LocalDateTime.now()).toHours() + "시간 전";
                             }
-                            return followRecipeDtos.add(new FollowRecipeDto(o[0],o[1],o[2],day,o[4],o[5],o[6],o[7],o[8],(o[9] != null) ? o[9] : "",reCommend));
+                            return followRecipeDtos.add(new FollowRecipeDto(o[0],o[1],o[2],day,o[4],o[5],o[6],o[7],o[8],(o[9] != null) ? o[9] : "",reCommend, o[10]));
                         }
                 ).collect(Collectors.toList());
         return followRecipeDtos;

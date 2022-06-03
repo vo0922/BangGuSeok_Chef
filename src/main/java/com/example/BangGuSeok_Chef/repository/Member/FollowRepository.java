@@ -38,7 +38,8 @@ public interface FollowRepository extends JpaRepository<Follow, Long> {
             "(select count(*) from re_commend where recipe_id = a.id and checked = 1) as recommend, " +
             "(select introduce from recipe_contents where recipe_id = a.id) as content, " +
             "(select profile from member where email = a.author) as profile, " +
-            "(select content from comments where recipe_id = a.id order by id desc limit 1) as comment " +
+            "(select content from comments where recipe_id = a.id order by id desc limit 1) as comment, " +
+            "a.author " +
             "from recipe_board a where author in (:emails) order by id desc", nativeQuery = true)
     List<Object[]> findFollowRecipe(List<String> emails, Pageable pageable);
 }
