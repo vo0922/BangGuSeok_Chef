@@ -17,11 +17,8 @@ import RecipeDetail from './pages/RecipeDetail';
 import PostModify from './pages/PostModify';
 import MyInformation from './pages/MyInformation';
 import UserInformation from './pages/UserInformation';
-<<<<<<< HEAD
 import UpdateInformation from './pages/UpdateInformation';
-=======
 import ChefRankingSearch from './pages/ChefRankingSearch';
->>>>>>> 5a4e004d2e927285dfb8535056aac94e782179fb
 
 // ----------------------------------------------------------------------
 
