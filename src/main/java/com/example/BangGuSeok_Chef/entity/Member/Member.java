@@ -1,5 +1,6 @@
 package com.example.BangGuSeok_Chef.entity.Member;
 
+import com.example.BangGuSeok_Chef.dto.Member.MemberResponseDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    private String introduce;
+
     @Builder
     public Member(String email, String password, Authority authority, String gender, String nickname, String profile, Integer age) {
         this.email = email;
@@ -47,6 +50,15 @@ public class Member {
     public Member update(String name, String picture){
         this.nickname = name;
         this.profile = picture;
+
+        return this;
+    }
+
+    public Member userUpdate(String nickname, String profile, Integer age, String introduce){
+        this.nickname = nickname;
+        this.profile = profile;
+        this.age = age;
+        this.introduce = introduce;
 
         return this;
     }
