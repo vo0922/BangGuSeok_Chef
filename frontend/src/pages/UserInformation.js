@@ -23,10 +23,10 @@ export default function UserInformation() {
   };
 
   return (
-    <Page title="내 정보 | 방구석 쉐프">
+    <Page title="유저 정보 | 방구석 쉐프">
       <Container>
         <Typography variant="h4" gutterBottom>
-            내 정보
+            유저 정보
         </Typography>
         
         <Information userEmail={userEmail}/>

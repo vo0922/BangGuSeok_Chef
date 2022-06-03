@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Grid, Table, TableBody, TableCell, TableRow, Avatar, Stack, Typography, Button } from '@mui/material';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import FollowButton from './FollowButton';
 
 function createData(name, data) {
@@ -22,7 +23,7 @@ export default function Information(userEmail) {
         <Stack spacing={2}>
           <Stack direction="row" spacing={5}>
             <Typography variant='h4'>{response.data.nickname}</Typography>
-            {userEmail.userEmail === localStorage.getItem('authenticatedUser') && <Button variant='outlined' size='small'>프로필 수정</Button>}
+            {userEmail.userEmail === localStorage.getItem('authenticatedUser') && <Button variant='outlined' size='small'><Link to="/home/myinformation/update" style={{textDecoration:"none", color:"primary"}}>프로필 수정</Link></Button>}
             <FollowButton followedUser={userEmail.userEmail}/>
           </Stack>
           <Stack direction="row" spacing={7} sx={{paddingTop : 3}}>

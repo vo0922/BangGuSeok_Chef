@@ -43,7 +43,7 @@ export default function MyPosts(userEmail) {
         rows.map((row) => (
             <TableRow key={row.id}>
                 <TableCell component="th" scope="row">{row.id}</TableCell>
-                <TableCell component="th" scope="row"><Link to={"/home/recipe/board/".concat(row.id)}>{row.title}</Link></TableCell>
+                <TableCell component="th" scope="row"><Link style={{textDecoration:"none", color:"blue"}} to={"/home/recipe/board/".concat(row.id)}>{row.title}</Link></TableCell>
                 <TableCell component="th" scope="row">{row.category}</TableCell>
                 <TableCell component="th" scope="row">{row.click}</TableCell>
                 <TableCell component="th" scope="row">{row.lastupdatedDate}</TableCell>

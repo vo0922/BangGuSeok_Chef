@@ -43,7 +43,7 @@ export default function Following(followingUser) {
                   <TableCell sx={{width:50}} component="th" scope="row">
                       <Avatar alt="profileImage" src={row.profileImage} />
                   </TableCell>
-                  <TableCell component="th" scope="row" align='center'><a href={`/home/userinformation/${row.email}`}><Typography variant="h6">{row.nickname}</Typography></a></TableCell>
+                  <TableCell component="th" scope="row" align='center'><a style={{textDecoration:"none", color:"blue"}} href={`/home/userinformation/${row.email}`}><Typography variant="h6">{row.nickname}</Typography></a></TableCell>
                   {followingEmail.followingEmail === localStorage.getItem('authenticatedUser') && <TableCell component="th" scope="row"><Button onClick={() => onDelete(row.email)} color="error">삭제</Button></TableCell>}
               </TableRow>
           ))
