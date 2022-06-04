@@ -19,6 +19,7 @@ import MyInformation from './pages/MyInformation';
 import UserInformation from './pages/UserInformation';
 import UpdateInformation from './pages/UpdateInformation';
 import ChefRankingSearch from './pages/ChefRankingSearch';
+import Notice from './pages/Notice';
 
 // ----------------------------------------------------------------------
 
@@ -42,7 +43,8 @@ export default function Router() {
         { path: 'recipe/board/modify/:key', element:<PostModify />},
         { path: 'myinformation', element: <MyInformation/>},
         { path: 'userinformation/:email', element: <UserInformation/>},
-        { path: 'myinformation/update', element: <UpdateInformation/>}
+        { path: 'myinformation/update', element: <UpdateInformation/>},
+        { path: 'notice', element: <Notice/>}
       ]
     },
     {

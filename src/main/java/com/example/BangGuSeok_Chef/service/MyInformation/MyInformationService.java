@@ -36,7 +36,7 @@ public class MyInformationService {
         Integer followerCount = followRepository.countByFollower(email);
         Integer followingCount = followRepository.countByFollowing(email);
 
-        MyinformationDto dto = new MyinformationDto(email, member.getNickname(), member.getGender(), member.getProfile(),  member.getAge(), postCount, click, recommendCount, followerCount, followingCount);
+        MyinformationDto dto = new MyinformationDto(email, member.getNickname(), member.getGender(), member.getProfile(), member.getAge(), member.getIntroduce(), postCount, click, recommendCount, followerCount, followingCount);
 
         return dto;
     }

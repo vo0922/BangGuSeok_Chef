@@ -36,6 +36,7 @@ export default function Information(userEmail) {
             <Typography variant='subtitle1'>팔로워 {response.data.followerCount}</Typography>
             <Typography variant='subtitle1'>팔로잉 {response.data.followingCount}</Typography>
           </Stack>
+          <Typography variant='body2'>{response.data.introduce}</Typography>
         </Stack>
       ])
 

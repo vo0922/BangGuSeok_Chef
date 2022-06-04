@@ -37,7 +37,7 @@ public class Member {
     private String introduce;
 
     @Builder
-    public Member(String email, String password, Authority authority, String gender, String nickname, String profile, Integer age) {
+    public Member(String email, String password, Authority authority, String gender, String nickname, String profile, Integer age, String introduce) {
         this.email = email;
         this.password = password;
         this.authority = authority;
@@ -45,6 +45,7 @@ public class Member {
         this.nickname = nickname;
         this.profile = profile;
         this.age = age;
+        this.introduce = introduce;
     }
 
     public Member update(String name, String picture){
