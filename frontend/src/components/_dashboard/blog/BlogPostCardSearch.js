@@ -97,7 +97,7 @@ export default function BlogPostCardSearch({ keyWord, valueSort }) {
   }, [inView, loading])
 
   return (
-    items ? <div>검색결과가 없습니다.</div>: items.map((data) => (
+    items === null ? <div>검색결과가 없습니다.</div>: items.map((data) => (
       <Grid item xs={12} sm={3} md={3} key={data.id}>
         <Card sx={{ position: 'relative' }} ref={ref} >
           <CardMediaStyle

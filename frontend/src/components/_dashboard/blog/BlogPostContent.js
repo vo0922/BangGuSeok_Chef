@@ -92,7 +92,6 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     {data.title}
                 </Typography>
                 <Typography variant="body" sx={{ color: 'text.secondary', fontSize: 20 }}>
-                    {data.recipeContents.introduce}
                     <br /><br />
                     난이도 : {data.level}
                 </Typography>
@@ -109,7 +108,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
                     태그 : {data.recipeContents.tag} &nbsp;&nbsp;
                 </Typography>
                 <Typography variant="body" gutterBottom>
-                    팁 : {data.recipeContents.tag}
+                    팁 : {data.recipeContents.tip}
                 </Typography>
             </Card>
 

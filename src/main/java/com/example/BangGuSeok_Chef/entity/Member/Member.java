@@ -33,6 +33,8 @@ public class Member {
     @Enumerated(EnumType.STRING)
     private Authority authority;
 
+    private String introduce;
+
     @Builder
     public Member(String email, String password, Authority authority, String gender, String nickname, String profile, Integer age) {
         this.email = email;

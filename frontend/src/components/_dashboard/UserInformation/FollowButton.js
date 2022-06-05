@@ -43,7 +43,6 @@ export default function FollowButton(followedUser) {
         }
       })
       .then(response => {
-        console.log(response);
         if(!response.data){
             setFollowBtn(<Button onClick={() => followOnClick()}>팔로우</Button>)    
         }

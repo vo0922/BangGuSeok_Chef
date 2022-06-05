@@ -40,6 +40,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 
 export default function BlogPostsSearch({ posts }) {
+  
   let value = "";
   const handleChange = (e) => {
     value = e.target.value
