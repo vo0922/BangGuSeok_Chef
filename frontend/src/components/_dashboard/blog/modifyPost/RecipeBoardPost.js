@@ -13,6 +13,7 @@ export default function RecipeBoardPost(data) {
         setLevel(event.target.value);
     }
     const encodeFileToBase64 = (fileBlob) => {
+        if(fileBlob){
         const reader = new FileReader();
         reader.readAsDataURL(fileBlob);
         return new Promise((resolve) => {
@@ -21,6 +22,7 @@ export default function RecipeBoardPost(data) {
                 resolve();
             }
         })
+    }
     }
     return (
         <Card sx={{ paddingBottom: 5, marginBottom: 5 }}>

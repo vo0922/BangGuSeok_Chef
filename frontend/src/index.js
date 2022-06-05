@@ -20,7 +20,6 @@ ReactDOM.render(
         <App />
       </UserInfoContext>
     </BrowserRouter>
-
   </HelmetProvider>,
   document.getElementById('root')
 );

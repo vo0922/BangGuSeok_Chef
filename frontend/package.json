@@ -72,6 +72,8 @@
     "simplebar": "^5.3.5",
     "simplebar-react": "^2.3.5",
     "slick-carousel": "^1.8.1",
+    "sockjs-client": "^1.6.1",
+    "stompjs": "^2.3.3",
     "web-vitals": "^2.1.0",
     "yup": "^0.32.9"
   },

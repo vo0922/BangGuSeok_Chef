@@ -26,7 +26,7 @@ export default function ChefMemberSearch({ keyWord }) {
   }, [])
 
   return (
-    items ? <div>검색결과가 없습니다.</div> : items.map((data, idx) => (
+    items === null ? <div>검색결과가 없습니다.</div> : items.map((data, idx) => (
         <Grid item xs={3} key={idx}>
         <Badge
           color="secondary"
