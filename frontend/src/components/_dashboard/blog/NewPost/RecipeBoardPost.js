@@ -1,5 +1,6 @@
 import React from 'react'
 import { Card, Stack, Paper, TextField, Typography, FormControl, Select, MenuItem, InputLabel, Input, Button, Grid } from '@mui/material'
+import AddAPhotoIcon from '@mui/icons-material/AddAPhoto';
 import { UserInfoContextStore } from '../../../../context/UserInfoContext';
 
 
@@ -12,6 +13,17 @@ export default function RecipeBoardPost() {
     };
     const levelChange = (event) => {
         setLevel(event.target.value);
+    }
+    const [imageSrc, setImageSrc] = React.useState();
+    const encodeFileToBase64 = (fileBlob) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fileBlob);
+        return new Promise((resolve) => {
+            reader.onload = () => {
+                setImageSrc(reader.result);
+                resolve();
+            }
+        })
     }
 
     return (
@@ -73,12 +85,19 @@ export default function RecipeBoardPost() {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={6} md={6} align="right">
-                <Typography variant="h6">완성요리 사진</Typography>
+            <Grid item xs={12} md={12} justifyContent="center" alignItems="center" sx={{display:"flex"}}>
+                {imageSrc && <img src={imageSrc} alt="preview-img" height={400} width={600} />}
             </Grid>
-            <Grid item xs={6} md={6}>
-                <Input accept="image/*" name="boardimage" id="boardimage" type="file" />
-            </Grid>        
+            <Grid item xs={12} md={12} align="center">
+                <label htmlFor="boardimage">
+                <Input accept="image/*" name="boardimage" id="boardimage" type="file" sx={{display:"none"}} onChange={(e) => {
+                  encodeFileToBase64(e.target.files[0])
+                }}/>
+                <Button variant="outlined" component="span" startIcon={<AddAPhotoIcon />}>
+                  레시피 대표 사진 등록
+                </Button>
+              </label>
+            </Grid>                    
         </Grid>
     </Card> 
   )
