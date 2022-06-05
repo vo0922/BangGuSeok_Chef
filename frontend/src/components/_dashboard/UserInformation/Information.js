@@ -20,10 +20,13 @@ export default function Information(userEmail) {
     })
     .then(response => {
       setInformationRender([
-        <Stack spacing={2}>
+        <Stack spacing={2} key={userEmail.userEmail}>
           <Stack direction="row" spacing={5}>
             <Typography variant='h4'>{response.data.nickname}</Typography>
-            {userEmail.userEmail === localStorage.getItem('authenticatedUser') && <Button variant='outlined' size='small'><Link to="/home/myinformation/update" style={{textDecoration:"none", color:"primary"}}>프로필 수정</Link></Button>}
+            {userEmail.userEmail === localStorage.getItem('authenticatedUser') && 
+            <Button variant='outlined' size='small'>
+              <Link to="/home/myinformation/update" style={{textDecoration:"none", color:"primary"}}>프로필 수정</Link>
+            </Button>}
             <FollowButton followedUser={userEmail.userEmail}/>
           </Stack>
           <Stack direction="row" spacing={7} sx={{paddingTop : 3}}>
@@ -33,6 +36,7 @@ export default function Information(userEmail) {
             <Typography variant='subtitle1'>팔로워 {response.data.followerCount}</Typography>
             <Typography variant='subtitle1'>팔로잉 {response.data.followingCount}</Typography>
           </Stack>
+          <Typography variant='body2'>{response.data.introduce}</Typography>
         </Stack>
       ])
 

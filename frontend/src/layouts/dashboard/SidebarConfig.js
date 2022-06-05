@@ -34,7 +34,7 @@ const sidebarConfig = [
   },
   {
     title: '공지사항',
-    path: '/404',
+    path: '/home/notice',
     icon: getIcon(alertTriangleFill)
   }
 ];

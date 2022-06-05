@@ -20,6 +20,8 @@ public class MyinformationDto {
 
     private Integer age;
 
+    private String introduce;
+
     private Integer postCount;
 
     private Integer postView;
@@ -29,8 +31,5 @@ public class MyinformationDto {
     private Integer followerCount;
 
     private Integer followingCount;
-
-
-
 
 }
