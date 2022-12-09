@@ -26,7 +26,6 @@ public class S3Uploader {
 
     private final AmazonS3Client amazonS3Client;
 
-
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;
 
@@ -46,6 +45,14 @@ public class S3Uploader {
 
         return uploadImageUrl;
     }
+
+/*    public void deleteFile(String source) {
+        String objectKey = source.split("/")[3] + "/" + source.split("/")[4];
+        DeleteObjectRequest request = new DeleteObjectRequest(bucket, objectKey);
+        System.out.println("소스" + objectKey);
+        amazonS3Client.deleteObject(request);
+    }*/
+
     @Transactional
     public List<String> CookStepUpload(List<MultipartFile> multipartFile, String dirName) throws IOException {
         List<File> uploadFile = new ArrayList<>();
