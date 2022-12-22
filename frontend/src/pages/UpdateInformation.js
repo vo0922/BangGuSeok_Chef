@@ -1,13 +1,14 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Container, Typography, Avatar, Card, Stack, Button, TextField, Grid, FormControl, MenuItem, Select, InputLabel, Input } from '@mui/material'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Page from '../components/Page'
-
+import {BaseUrlStore} from '../context/BaseUrlContext'
 
 
 export default function UpdateInformation() {
   const navigate = useNavigate();
+  const BaseUrl = useContext(BaseUrlStore);
   const userEmail = localStorage.getItem('authenticatedUser');
   const [userData, setUserData] = React.useState()
 
@@ -27,7 +28,7 @@ export default function UpdateInformation() {
 
   async function getInformation(){
     console.log(userEmail);
-    await axios.get(`http://localhost:8080/api/${userEmail}`, {
+    await axios.get(`${BaseUrl.data.baseUrl}/api/${userEmail}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -59,7 +60,7 @@ export default function UpdateInformation() {
     formData.append("data", new Blob([JSON.stringify(data)], {type: "application/json"}));
     formData.append("profile", e.target.profile.files[0]);
 
-    await axios.patch(`http://localhost:8080/api/myinformation/update/${userEmail}`, formData,
+    await axios.patch(`${BaseUrl.data.baseUrl}/api/myinformation/update/${userEmail}`, formData,
     {
       headers:{
         "Content-Type" : "multipart/form-data",

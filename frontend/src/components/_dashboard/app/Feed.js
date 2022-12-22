@@ -18,6 +18,7 @@ import { Icon } from '@iconify/react';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { fShortenNumber } from '../../../utils/formatNumber'
+import { BaseUrlStore } from "../../../context/BaseUrlContext";
 
 
 let page = 0;
@@ -26,10 +27,11 @@ export default function RandomRecipe() {
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [ref, inView] = useInView();
+    const BaseUrl = useContext(BaseUrlStore);
 
     const getItems = (async () => {
         setLoading(true);
-        await axios.get(`http://localhost:8080/api/home/recipe/${localStorage.getItem('authenticatedUser')}?page=${page}&size=4`, {
+        await axios.get(`${BaseUrl.data.baseUrl}/api/home/recipe/${localStorage.getItem('authenticatedUser')}?page=${page}&size=4`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -46,7 +48,7 @@ export default function RandomRecipe() {
     })
 
     const recommendClick = async (recipeId) => {
-        await axios.get(`http://localhost:8080/api/recipeboard/view/like/?recipe_id=${recipeId}&email=${localStorage.getItem('authenticatedUser')}`, {
+        await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/view/like/?recipe_id=${recipeId}&email=${localStorage.getItem('authenticatedUser')}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -63,7 +65,7 @@ export default function RandomRecipe() {
         if (!e.target.comment.value) {
             return alert("댓글을 적어주세요")
         }
-        await axios.post("http://localhost:8080/api/recipeboard/comments", {
+        await axios.post(`${BaseUrl.data.baseUrl}/api/recipeboard/comments`, {
             id: e.target.recipeId.value,
             email: localStorage.getItem('authenticatedUser'),
             content: e.target.comment.value

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 // material
@@ -21,12 +21,12 @@ import searchFill from '@iconify/icons-eva/search-fill';
 // components
 import Page from '../components/Page';
 import ChefSearch from '../components/_dashboard/ChefRank/ChefSearch';
-
+import { BaseUrlStore } from "../context/BaseUrlContext";
 // ----------------------------------------------------------------------
 
 
 export default function ChefRanking() {
-
+  const BaseUrl = useContext(BaseUrlStore);
   const [buttonValue, setButtonValue] = useState('1');
   const [item, setItem] = useState();
 
@@ -35,7 +35,7 @@ export default function ChefRanking() {
   }
 
   const getItem = async () => {
-    await axios.get(`http://localhost:8080/api/rank/${buttonValue}?size=10&page=0`, {
+    await axios.get(`${BaseUrl.data.baseUrl}/api/rank/${buttonValue}?size=10&page=0`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

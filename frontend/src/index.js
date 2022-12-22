@@ -2,26 +2,29 @@
 import 'simplebar/src/simplebar.css';
 
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { HelmetProvider } from 'react-helmet-async';
+import {BrowserRouter} from 'react-router-dom';
+import {HelmetProvider} from 'react-helmet-async';
 
 //
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import reportWebVitals from './reportWebVitals';
 import UserInfoContext from './context/UserInfoContext';
+import BaseUrlContext from './context/BaseUrlContext';
 
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
-  <HelmetProvider>
-    <BrowserRouter>
-      <UserInfoContext>
-        <App />
-      </UserInfoContext>
-    </BrowserRouter>
-  </HelmetProvider>,
-  document.getElementById('root')
+    <HelmetProvider>
+        <BrowserRouter>
+            <BaseUrlContext>
+                <UserInfoContext>
+                    <App/>
+                </UserInfoContext>
+            </BaseUrlContext>
+        </BrowserRouter>
+    </HelmetProvider>,
+    document.getElementById('root')
 );
 
 // If you want to enable client cache, register instead.

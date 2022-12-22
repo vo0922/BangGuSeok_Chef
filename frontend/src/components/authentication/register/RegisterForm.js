@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import axios from 'axios';
 import { Icon } from '@iconify/react';
 import { useFormik, Form, FormikProvider } from 'formik';
@@ -13,10 +13,13 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
+
+import { BaseUrlStore } from "../../../context/BaseUrlContext";
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
   const navigate = useNavigate();
+  const BaseUrl = useContext(BaseUrlStore);
   const [showPassword, setShowPassword] = useState(false);
 
   const RegisterSchema = Yup.object().shape({
@@ -38,7 +41,7 @@ export default function RegisterForm() {
     },
     validationSchema: RegisterSchema,
     onSubmit: () => {
-      axios.post("http://localhost:8080/auth/signup", {
+      axios.post(`${BaseUrl.data.baseUrl}/auth/signup`, {
         "email" :  values.email,
         "password" : values.password,
         "gender" : values.gender,

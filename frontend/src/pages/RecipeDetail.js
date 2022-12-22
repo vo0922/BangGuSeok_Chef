@@ -11,12 +11,14 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Comments from '../components/_dashboard/blog/comments/Comments';
 import Page from '../components/Page';
 import { UserInfoContextStore } from '../context/UserInfoContext';
+import { BaseUrlStore } from '../context/BaseUrlContext'
 import BlogPostContent from '../components/_dashboard/blog/BlogPostContent'
 // ----------------------------------------------------------------------
 
 export default function RecipeDetail() {
     const navigate = useNavigate();
     const UserInfo = useContext(UserInfoContextStore);
+    const BaseUrl = useContext(BaseUrlStore)
 
     const [title, setTitle] = useState("");
     const [postOwner, setpostOwner] = useState("");
@@ -32,7 +34,7 @@ export default function RecipeDetail() {
     const recipeId = useParams().key;
     const onComment = async (e) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/api/recipeboard/comments", {
+        await axios.post(`${BaseUrl.data.baseUrl}/api/recipeboard/comments`, {
             id: recipeId,
             email: UserInfo.account.email,
             content: e.target.comment.value
@@ -57,7 +59,7 @@ export default function RecipeDetail() {
     }
 
     const recipeDetail = async () => {
-        await axios.get(`http://localhost:8080/api/recipeboard/view/${recipeId}`, {
+        await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/view/${recipeId}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }

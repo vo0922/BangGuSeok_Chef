@@ -12,7 +12,7 @@ import { Button, Box, Divider, MenuItem, Typography, Avatar, IconButton } from '
 import { UserInfoContextStore } from '../../context/UserInfoContext';
 import MenuPopover from '../../components/MenuPopover';
 //
-import Http from '../../api'
+import Http from '../../context/BaseUrlContext'
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [

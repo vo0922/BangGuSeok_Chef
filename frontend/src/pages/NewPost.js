@@ -12,11 +12,13 @@ import IngredientPost from '../components/_dashboard/blog/NewPost/IngredientPost
 import CookStepPost from '../components/_dashboard/blog/NewPost/CookStepPost';
 import Page from '../components/Page';
 import { UserInfoContextStore } from '../context/UserInfoContext';
+import { BaseUrlStore } from "../context/BaseUrlContext";
 
 // ----------------------------------------------------------------------
 
 export default function NewPost() {
   const UserInfo = useContext(UserInfoContextStore);
+  const BaseUrl = useContext(BaseUrlStore);
   const navigate = useNavigate();
   const dummyfile = new File(['noimage'], 'noimage', {type: 'image/png', lastModified: new Date()});
 
@@ -103,7 +105,7 @@ export default function NewPost() {
     console.log(formData);
     console.log(JSON.stringify(postData));
 
-    await axios.post("http://localhost:8080/api/board/create", formData,
+    await axios.post(`${BaseUrl.data.baseUrl}/api/board/create`, formData,
     {
       headers:{
         "Content-Type" : "multipart/form-data",

@@ -12,6 +12,7 @@ import IngredientPost from '../components/_dashboard/blog/modifyPost/IngredientP
 import CookStepPost from '../components/_dashboard/blog/modifyPost/CookStepPost';
 import Page from '../components/Page';
 import { UserInfoContextStore } from '../context/UserInfoContext';
+import { BaseUrlStore } from '../context/BaseUrlContext'
 
 
 // ----------------------------------------------------------------------
@@ -20,6 +21,7 @@ const cookstepData = [];
 export default function PostModify() {
     const recipeId = useParams().key;
     const UserInfo = useContext(UserInfoContextStore);
+    const BaseUrl = useContext(BaseUrlStore)
     const navigate = useNavigate();
     const [recipedata, setRecipedata] = useState(false);
 
@@ -97,7 +99,7 @@ export default function PostModify() {
             }
           }
         
-        await axios.patch(`http://localhost:8080/api/board/modify/${recipeId}`, formData,
+        await axios.patch(`${BaseUrl.data.baseUrl}/api/board/modify/${recipeId}`, formData,
             {
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -113,7 +115,7 @@ export default function PostModify() {
     }
 
     useEffect(async () => {
-        await axios.get(`http://localhost:8080/api/recipeboard/view/${recipeId}`,
+        await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/view/${recipeId}`,
             {
                 headers: {
                     "Content-Type": "multipart/form-data",

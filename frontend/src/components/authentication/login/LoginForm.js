@@ -1,11 +1,12 @@
 import * as Yup from 'yup';
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useFormik, Form, FormikProvider } from 'formik';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import axios from 'axios';
+
 // material
 import {
   Link,
@@ -20,8 +21,11 @@ import { LoadingButton } from '@mui/lab';
 
 // ----------------------------------------------------------------------
 
+import { BaseUrlStore } from '../../../context/BaseUrlContext';
+
 export default function LoginForm() {
   const navigate = useNavigate();
+  const BaseUrl = useContext(BaseUrlStore);
   const [showPassword, setShowPassword] = useState(false);
   const LoginSchema = Yup.object().shape({
     email: Yup.string().email('Email must be a valid email address').required('Email is required'),
@@ -36,7 +40,7 @@ export default function LoginForm() {
     },
     validationSchema: LoginSchema,
     onSubmit: () => {
-      axios.post("http://localhost:8080/auth/login", {
+      axios.post(`${BaseUrl.data.baseUrl}/auth/login`, {
         "email" :  values.email,
         "password" : values.password
     })
@@ -119,7 +123,6 @@ export default function LoginForm() {
             로그인
           </LoadingButton>
         </Stack>
-
 
       </Form>
     </FormikProvider>
