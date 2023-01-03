@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useEffect, useState, useCallback, useContext} from 'react';
 import { useInView } from 'react-intersection-observer';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
@@ -15,6 +15,7 @@ import { fDate } from '../../../utils/formatTime';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgIconStyle from '../../SvgIconStyle';
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 // ----------------------------------------------------------------------
 
@@ -64,10 +65,10 @@ export default function BlogPostCardSearch({ keyWord, valueSort }) {
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
-
+  const BaseUrl = useContext(BaseUrlStore);
   const getItems = (async () => {
       setLoading(true);
-      await axios.get(`http://localhost:8080/api/recipeboard/${keyWord}?page=${page}&size=8&sort=${valueSort},desc`, {
+      await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/${keyWord}?page=${page}&size=8&sort=${valueSort},desc`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

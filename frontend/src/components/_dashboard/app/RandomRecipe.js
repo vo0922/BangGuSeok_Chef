@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, {useEffect, useState, useCallback, useContext} from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Icon } from '@iconify/react';
 import eyeFill from '@iconify/icons-eva/eye-fill';
@@ -17,6 +17,7 @@ import Divider from '@mui/material/Divider';
 import { fShortenNumber } from '../../../utils/formatNumber';
 //
 import SvgIconStyle from '../../SvgIconStyle';
+import { BaseUrlStore } from '../../../context/BaseUrlContext';
 // ----------------------------------------------------------------------
 
 const settings = {
@@ -72,11 +73,12 @@ export default function RandomRecipe() {
   const categoryRandom = ["탕", "전골", "찌개", "국", "볶음", "면", "밥", "반찬", "안주", "주류", "튀김", "제과", "제빵"]
   const [randomInt, setRandomInt] = useState(0);
   const [randomItem, setRandomItem] = useState();
+  const BaseUrl = useContext(BaseUrlStore);
   const getRandomIndex = function (max) {
     return Math.floor(Math.random() * (max - 0)) + 0;
   }
   const randomgetimg = async () => {
-    await axios.get(`http://localhost:8080/api/recipeboard/category/${categoryRandom[randomInt]}?page=0&size=10&sort=recommend,desc`, {
+    await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/category/${categoryRandom[randomInt]}?page=0&size=10&sort=recommend,desc`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

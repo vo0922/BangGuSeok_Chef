@@ -6,6 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight'
 import ReComments from './ReComments';
+import {BaseUrlStore} from "../../../../context/BaseUrlContext";
 // components
 
 // ----------------------------------------------------------------------
@@ -15,7 +16,7 @@ export default function Comments({ data, recipeDetail, UserInfo, postOwner }) {
     const [editable, setEditable] = useState({
         able: false,
     });
-
+    const BaseUrl = useContext(BaseUrlStore);
     const [reComments, setReComments] = useState(false);
 
     const editClick = (id) => {
@@ -28,7 +29,7 @@ export default function Comments({ data, recipeDetail, UserInfo, postOwner }) {
         setEditable({
             able: false,
         })
-        await axios.put(`http://localhost:8080/api/recipeboard/comments/update`, {
+        await axios.put(`${BaseUrl.data.baseUrl}/api/recipeboard/comments/update`, {
             id: commentid,
             content: e.target.comment.value
         }, {
@@ -47,7 +48,7 @@ export default function Comments({ data, recipeDetail, UserInfo, postOwner }) {
 
     const onReComment = async (e, commentid) => {
         e.preventDefault();
-        await axios.post("http://localhost:8080/api/recipeboard/recomments", {
+        await axios.post(`${BaseUrl.data.baseUrl}/api/recipeboard/recomments`, {
             id: commentid,
             email: UserInfo.account.email,
             content: e.target.recomment.value
@@ -77,7 +78,7 @@ export default function Comments({ data, recipeDetail, UserInfo, postOwner }) {
     }
 
     const deleteComment = async (id) => {
-        await axios.delete(`http://localhost:8080/api/recipeboard/comments/delete/${id}`, {
+        await axios.delete(`${BaseUrl.data.baseUrl}/api/recipeboard/comments/delete/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }

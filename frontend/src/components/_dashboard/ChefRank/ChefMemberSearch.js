@@ -1,14 +1,15 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useContext } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 // material
 import { Box, Card, Grid, Avatar, Typography, CardContent, Stack, Badge } from '@mui/material';
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 export default function ChefMemberSearch({ keyWord }) {
   const [items, setItems] = useState([]);
-
+  const BaseUrl = useContext(BaseUrlStore);
   const getItems = (async () => {
-    await axios.get(`http://localhost:8080/api/rank/search/${keyWord}`, {
+    await axios.get(`${BaseUrl.data.baseUrl}/api/rank/search/${keyWord}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

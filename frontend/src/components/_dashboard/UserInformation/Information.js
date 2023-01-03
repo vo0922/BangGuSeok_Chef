@@ -3,6 +3,7 @@ import { Grid, Table, TableBody, TableCell, TableRow, Avatar, Stack, Typography,
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import FollowButton from './FollowButton';
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 function createData(name, data) {
   return { name, data };
@@ -11,9 +12,10 @@ function createData(name, data) {
 export default function Information(userEmail) {
   const [informationRender, setInformationRender] = React.useState();
   const [avatarRender, setAvatarRender] = React.useState();
+  const BaseUrl = React.useContext(BaseUrlStore);
 
   async function getInformation(){
-    await axios.get(`http://localhost:8080/api/myinformation/${userEmail.userEmail}`, {
+    await axios.get(`${BaseUrl.data.baseUrl}/api/myinformation/${userEmail.userEmail}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

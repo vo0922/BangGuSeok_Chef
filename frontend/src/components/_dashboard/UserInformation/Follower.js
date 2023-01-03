@@ -13,6 +13,7 @@ import { Link, useNavigate  } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { Button, Container } from '@mui/material';
 import { replace } from 'lodash';
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 
 function createData(profileImage, nickname, email) {
@@ -21,6 +22,7 @@ function createData(profileImage, nickname, email) {
 
 export default function Follower(followedUser) {
   const navigate = useNavigate();
+  const BaseUrl = React.useContext(BaseUrlStore);
   const [followerRender, setFollowerRender] = React.useState();
   const followedEmail = {
       followedEmail : followedUser.followedUser
@@ -28,7 +30,7 @@ export default function Follower(followedUser) {
 
 
   async function getFollower(){  
-    await axios.post(`http://localhost:8080/api/follower`, followedEmail, {
+    await axios.post(`${BaseUrl.data.baseUrl}/api/follower`, followedEmail, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -61,7 +63,7 @@ export default function Follower(followedUser) {
         followedEmail : localStorage.getItem('authenticatedUser'),
         followingEmail : deleteEmail
     }
-  await axios.post(`http://localhost:8080/api/follow`, data, {
+  await axios.post(`${BaseUrl.data.baseUrl}/api/follow`, data, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

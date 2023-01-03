@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 // material
 import { Grid, Button, Container, Stack, Typography, Card, CardMedia, TextField, Avatar, FormControlLabel, Fade, Switch } from '@mui/material';
+import {BaseUrlStore} from "../../../../context/BaseUrlContext";
 
 // components
 
@@ -9,6 +10,7 @@ import { Grid, Button, Container, Stack, Typography, Card, CardMedia, TextField,
 
 
 export default function ReComments({ data, recipeDetail, UserInfo, postOwner }) {
+    const BaseUrl = useContext(BaseUrlStore);
     const [editable, setEditable] = useState({
         able: false,
     });
@@ -23,7 +25,7 @@ export default function ReComments({ data, recipeDetail, UserInfo, postOwner }) 
         setEditable({
             able: false,
         })
-        await axios.put(`http://localhost:8080/api/recipeboard/recomments/update`, {
+        await axios.put(`${BaseUrl.data.baseUrl}/api/recipeboard/recomments/update`, {
             id: commentid,
             content: e.target.comment.value
         }, {
@@ -47,7 +49,7 @@ export default function ReComments({ data, recipeDetail, UserInfo, postOwner }) 
     }
 
     const deleteComment = async (id) => {
-        await axios.delete(`http://localhost:8080/api/recipeboard/recomments/delete/${id}`, {
+        await axios.delete(`${BaseUrl.data.baseUrl}/api/recipeboard/recomments/delete/${id}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }

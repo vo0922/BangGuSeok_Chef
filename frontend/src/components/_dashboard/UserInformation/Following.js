@@ -12,6 +12,7 @@ import axios from 'axios';
 import { Link  } from 'react-router-dom';
 import Typography from '@mui/material/Typography';
 import { Button, Container } from '@mui/material';
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 
 function createData(profileImage, nickname, email) {
@@ -19,14 +20,14 @@ function createData(profileImage, nickname, email) {
 }
 
 export default function Following(followingUser) {
-
+    const BaseUrl = React.useContext(BaseUrlStore);
   const [followingRender, setFollowingRender] = React.useState();
   const followingEmail = {
       followingEmail : followingUser.followingUser
   };
 
   async function getFollowing(){  
-    await axios.post(`http://localhost:8080/api/following`, followingEmail, {
+    await axios.post(`${BaseUrl.data.baseUrl}/api/following`, followingEmail, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }
@@ -59,7 +60,7 @@ export default function Following(followingUser) {
           followedEmail : deleteEmail,
           followingEmail : localStorage.getItem('authenticatedUser')
       }
-    await axios.post(`http://localhost:8080/api/follow`, data, {
+    await axios.post(`${BaseUrl.data.baseUrl}/api/follow`, data, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }

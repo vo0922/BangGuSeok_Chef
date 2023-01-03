@@ -6,15 +6,17 @@ import ReactPlayer from 'react-player';
 import { Grid, Button, Container, Stack, Typography, Card, CardMedia, TextField, Avatar, Divider, IconButton } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 // ----------------------------------------------------------------------
 
 
 export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
     const navigate = useNavigate();
+    const BaseUrl = useContext(BaseUrlStore);
     const [likeCheck, setlickCheck] = useState();
     const recommendClick = async () => {
-        await axios.get(`http://localhost:8080/api/recipeboard/view/like/?recipe_id=${recipeId}&email=${localStorage.getItem('authenticatedUser')}`, {
+        await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/view/like/?recipe_id=${recipeId}&email=${localStorage.getItem('authenticatedUser')}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -26,7 +28,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
             });
     }
     const recommendCheck = async () => {
-        await axios.get(`http://localhost:8080/api/recipeboard/view/like/check?recipe_id=${recipeId}&email=${localStorage.getItem('authenticatedUser')}`, {
+        await axios.get(`${BaseUrl.data.baseUrl}/api/recipeboard/view/like/check?recipe_id=${recipeId}&email=${localStorage.getItem('authenticatedUser')}`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
             }
@@ -39,7 +41,7 @@ export default function BlogPostContent({ data, UserInfo, recipeId, title }) {
     }
     const deleteRecipe = async (id) => {
         if (window.confirm("정말 삭제하시겠습니까?")) {
-            await axios.delete(`http://localhost:8080/api/recipeboard/view/delete/${id}`, {
+            await axios.delete(`${BaseUrl.data.baseUrl}/api/recipeboard/view/delete/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }

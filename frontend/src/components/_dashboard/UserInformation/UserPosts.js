@@ -9,6 +9,8 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 import { Link  } from 'react-router-dom';
+import {useContext} from "react";
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 
 const columns = [
@@ -24,11 +26,11 @@ function createData(id, title, category, click, lastupdatedDate) {
 }
 
 export default function MyPosts(userEmail) {
-
+  const BaseUrl = useContext(BaseUrlStore);
   const [postRender, setPostRender] = React.useState();
 
   async function getMyposts(){  
-    await axios.get(`http://localhost:8080/api/myinformation/posts/${userEmail.userEmail}`, {
+    await axios.get(`${BaseUrl.data.baseUrl}/api/myinformation/posts/${userEmail.userEmail}`, {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`
       }

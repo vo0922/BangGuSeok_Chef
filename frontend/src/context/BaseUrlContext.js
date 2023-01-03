@@ -4,8 +4,8 @@ export const BaseUrlStore = createContext();
 
 const BaseUrlContext = (props) => {
     const [data, setData] = useState({
-        //baseUrl: `http://localhost:8080`
-        baseUrl: `host.docker.internal:8080`
+        // baseUrl: `http://localhost:8080`
+        baseUrl: `http://13.209.43.66:8080`
 });
 
     const BaseUrl = {

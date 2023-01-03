@@ -1,6 +1,7 @@
-import React from 'react'
+import * as React from "react";
 import axios from 'axios';
 import { Button } from '@mui/material'
+import {BaseUrlStore} from "../../../context/BaseUrlContext";
 
 export default function FollowButton(followedUser) {
     const followData = {
@@ -8,14 +9,14 @@ export default function FollowButton(followedUser) {
       followingEmail : localStorage.getItem("authenticatedUser")
     }
     const [followBtn, setFollowBtn] = React.useState()
-    
+    const BaseUrl = React.useContext(BaseUrlStore);
 
   async function followOnClick(){
     if(followData.followedEmail === followData.followingEmail){
       alert("자기 자신은 팔로우 할 수 없습니다.");
       return;
     }
-    await axios.post(`http://localhost:8080/api/follow`, followData, {
+    await axios.post(`${BaseUrl.data.baseUrl}/api/follow`, followData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -37,7 +38,7 @@ export default function FollowButton(followedUser) {
       setFollowBtn(<Button variant="filled" disabled>팔로우</Button>)
       return;
     }
-    await axios.post(`http://localhost:8080/api/follow/check`, followData, {
+    await axios.post(`${BaseUrl.data.baseUrl}/api/follow/check`, followData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
